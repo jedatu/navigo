@@ -557,7 +557,7 @@ angular.module('voyager.search')
 						$timeout(function () {  //workaround for leaflet bug:  https://github.com/Leaflet/Leaflet/issues/2021
 							map.invalidateSize();  //workaround when initially hidden
 							// console.log('view change - moving');
-							if(angular.isUndefined(map.currentBounds) && angular.isUndefined(searchViewService.getUserView())) {
+							if(angular.isUndefined(map.currentBounds) && angular.isUndefined(searchViewService.getUserView()) && $attrs.origin !== 'home') {
 								$scope.resizeMap();
 							}
 							// adjust layers control placement if table view is showing map size toggle control
@@ -631,7 +631,9 @@ angular.module('voyager.search')
 
 								var emptySpace = Math.ceil(ratio - Math.floor(ratio)) + 1;
 								if (emptySpace > 0) {
-									map.setZoom(emptySpace);
+									// TODO - zooming to try and fill in empty space?
+									// this is problematic since the config defines the extent and zoom and this will ignore that
+									//map.setZoom(emptySpace);
 								}
 
 								if (isFull) {
