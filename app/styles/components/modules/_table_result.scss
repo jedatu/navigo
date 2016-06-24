@@ -38,8 +38,17 @@
 
 #resultsTable {
 	thead {
+		position: fixed;
+		z-index: 1;
+		left: 20px;
+		right: 20px;
+
 		tr {
+			display: inline-block;
+			width: 100%;
+
 			th {
+				display: inline-block;
 				border-width: 0 0 2px 0;
 				line-height: 1em;
 				a.flyout_trigger {
@@ -88,6 +97,10 @@
 				border-width: 0 5px 5px 5px;
 			}
 		}
+	}
+
+	tbody tr:first-child td{
+		padding-top: 56px;
 	}
 }
 

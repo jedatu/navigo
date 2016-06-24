@@ -4,7 +4,10 @@ angular.module('ngTableResizableColumns', [])
 
     var parseWidth = function(node) {
         return parseFloat(node.style.width.replace('%', ''));
-    }, setWidth = function(node, width) {
+    }, setWidth = function(node, table, width) {
+        if(table) {
+            table.find('.results-column')[node.cellIndex].style.width = "" + width.toFixed(2) + "%";
+        }
         return node.style.width = "" + width.toFixed(2) + "%";
     }, pointerX = function(e) {
         return (e.type.indexOf('touch') === 0) ? (e.originalEvent.touches[0] || e.originalEvent.changedTouches[0]).pageX : e.pageX;
@@ -52,11 +55,27 @@ angular.module('ngTableResizableColumns', [])
 
     ResizableColumns.prototype.assignPercentageWidths = function() {
       var _this = this;
-      return this.$tableHeaders.each(function(_, el) {
+        var variableWidthHeaders = [];
+        var totalWidth = 0;
+      return this.$tableHeaders.each(function(i, el) {
         var $el;
         $el = $(el);
+          if(!($el[0].attributes.getNamedItem("data-noresize")))
+          {
+              variableWidthHeaders.push($el);
+          }
+          var elWidth = $el.outerWidth() / _this.$table.width() * 100;
+          totalWidth = totalWidth + (Math.round(elWidth*100)/100);
           if(!_this.loading) {
-              return setWidth($el[0], $el.outerWidth() / _this.$table.width() * 100);
+              if((i === (_this.$tableHeaders.length - 1)) && (totalWidth != 100))
+              {
+                  if(variableWidthHeaders.length > 0) {
+                      var currentWidth = Number(parseWidth(variableWidthHeaders[0][0]));
+                      var fixedWidth = currentWidth + (100 - totalWidth);
+                      setWidth(variableWidthHeaders[0][0], _this.$table, currentWidth + (100 - totalWidth));
+                  }
+              }
+              return setWidth($el[0], _this.$table, elWidth);
           }
       });
     };
@@ -83,6 +102,13 @@ angular.module('ngTableResizableColumns', [])
     ResizableColumns.prototype.syncHandleWidths = function() {
       var _this = this;
       this.setHeaders();
+
+      var theColumns = this.$table.find('.results-column');
+      this.$tableHeaders.each(function(i,el){
+          var myCol = theColumns[i];
+          myCol.style.width = el.style.width;
+      });
+
       return this.$handleContainer.width(this.$table.width()).find('.rc-handle').each(function(_, el) {
         var $el;
         $el = $(el);
@@ -112,7 +138,7 @@ angular.module('ngTableResizableColumns', [])
         var $el, width;
         $el = $(el);
         if ((_this.options.store != null) && (width = _this.options.store.get(_this.getColumnId($el)))) {
-          return setWidth($el[0], width);
+          return setWidth($el[0], _this.$table, width);
         }
       });
     };
@@ -143,8 +169,8 @@ angular.module('ngTableResizableColumns', [])
       $(document).on('mousemove.rc touchmove.rc', function(e) {
         var difference;
         difference = (pointerX(e) - startPosition) / _this.$table.width() * 100;
-        setWidth($rightColumn[0], widths.right - difference);
-        return setWidth($leftColumn[0], widths.left + difference);
+        setWidth($rightColumn[0], _this.$table, widths.right - difference);
+        return setWidth($leftColumn[0], _this.$table, widths.left + difference);
       });
       return $(document).one('mouseup touchend', function() {
         $(document).off('mousemove.rc touchmove.rc');

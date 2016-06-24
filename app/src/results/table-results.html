@@ -1,5 +1,11 @@
 <div ng-controller="TableCtrl">
-    <table ng-table="tableParams" class="table ng-table-resizable-columns ng-table-rowselected table-condensed table-striped" data-resizable-columns-id="resultsTable" id="resultsTable">
+    <div id="header-space"></div>
+    <table ng-hide="tableLoading" ng-table="tableParams" class="table ng-table-resizable-columns ng-table-rowselected table-condensed table-striped" data-resizable-columns-id="resultsTable" id="resultsTable">
+        <colgroup>
+            <col style="width: 92px;" class="results-column">
+            <col ng-repeat="field in tableFields" style="width: {{field.width}};" class="results-column">
+            <col style="width: 100px;" class="results-column">
+        </colgroup>
         <thead>
             <tr>
                 <th class="semi img" style="width:92px;" data-noresize>
@@ -14,15 +20,15 @@
                             </div>
                         </div>
                     </div>
-                </th>
-                <th style="width:{{field.width}}" ng-repeat="field in tableFields" data-resizable-column-id="{{field.field}}" data-width="{{field.width}}" class="semi sortable" ng-class="{
+                </th><!--
+                --><th style="width:{{field.width}}" ng-repeat="field in tableFields" data-resizable-column-id="{{field.field}}" data-width="{{field.width}}" class="semi sortable" ng-class="{
                             'sort-asc': tableParams.isSortBy(field.field, 'asc'),
                             'sort-desc': tableParams.isSortBy(field.field, 'desc')
                           }"
                     ng-click="tableParams.sorting(field.field , tableParams.isSortBy(field.field, 'asc') ? 'desc' : 'asc')">
                     <div>{{field.display}}</div>
-                </th>
-                <th class="semi" style="width:100px;" data-noresize>Tools</th>
+                </th><!--
+                --><th class="semi" style="width:100px;" data-noresize>Tools</th>
             </tr>
         </thead>
         <tbody>

@@ -86,6 +86,7 @@ angular.module('voyager.results')
         };
 
         $scope.$on('searchResults', function (event, data) {
+            $scope.tableLoading = false;
             $scope.tableFields = configService.getTableFields();
             _setDefaultColumnWidths();
             var docs = data.response.docs;
@@ -115,6 +116,7 @@ angular.module('voyager.results')
             var view = $location.search().view;
             if (view === 'table') {
                 $scope.$emit('doSearch', {});
+                $scope.tableLoading = true;
             }
         });
 
@@ -150,6 +152,7 @@ angular.module('voyager.results')
                     $scope.$emit('doSearch', sort);
                 } else if (!loaded) {
                     $scope.$emit('doSearch', {force:true});
+                    $scope.tableLoading = true;
                 }
 
                 if(!isSort) {  //set sort icon and highlight on column header that is sorted
