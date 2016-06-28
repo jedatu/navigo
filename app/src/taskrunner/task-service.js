@@ -151,7 +151,7 @@ angular.module('taskRunner').
                     query.solrFilters = [];
                     return cartItemsQuery.fetchItems(query, items).then(function(data) {
                         var count = data.count;
-                        if (angular.isUndefined(_extent) || _extent === null){
+                        if (angular.isDefined(data.bbox)){
                             _extent = data.bbox;
                         }
 
