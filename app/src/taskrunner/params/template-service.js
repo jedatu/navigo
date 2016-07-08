@@ -9,9 +9,9 @@ angular.module('taskRunner').
         var labelTpl = '<dl style="margin-bottom: 5px"><dt>' + advancedIcon + '{{param.label}}' + requiredIcon + '<dt><dd>{{param.desc}}</dd></dl>';
         var selectTpl = '<select ui-select2="{dropdownAutoWidth: \'true\', minimumResultsForSearch: 5}" ng-model="param.value"> <option ng-repeat="option in param.choices" value="{{option}}">{{param.values[option]}}</option></select>';
         var projectionSelect = '<input type="hidden" ui-select2="select2Options" ng-model="param.selected">';
-        var textInputTpl = '<input type="text" ng-model="param.value">';
-        var intInputTpl = '<input type="number" ng-model="param.value" style="width: 30%">';
-        var pwdInputTpl = '<input type="password" ng-model="param.value">';
+        var textInputTpl = '<input type="text" class="form-control" ng-model="param.value" style="width: 40%">';
+        var intInputTpl = '<input type="number" class="form-control" ng-model="param.value" style="width: 30%">';
+        var pwdInputTpl = '<input type="password" class="form-control" style="width: 40%" ng-model="param.value">';
         var fieldList = '<input vs-field-param param="param">';
         var fieldListTpl = '<div ng-hide="param.advanced && !show">' + labelTpl + fieldList + errorTpl + '</div>';
         var field = '<input vs-field-param param="param" multi="false">';
