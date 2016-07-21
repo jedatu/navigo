@@ -20,7 +20,7 @@ describe('Run Clip Data by Polygon Task', function() {
         // Get the task parameter elements.
         var paramList = taskPage.getParams();
         // Verify we have the correct number of params
-        expect(paramList.count()).toBe(4);
+        expect(paramList.count()).toBe(5);
         verifyDefaults(['', 'FileGDB', 'Same As Input']);
         taskPage.executeTask();
     });
@@ -55,7 +55,7 @@ describe('Run Clip Data by Polygon Task', function() {
         // Get the task parameter elements.
         var paramList = taskPage.getParams();
         // Verify we have the correct number of params
-        expect(paramList.count()).toBe(4);
+        expect(paramList.count()).toBe(5);
 
         return paramList.then(function(params) {
             var outputFormat = params[1];
