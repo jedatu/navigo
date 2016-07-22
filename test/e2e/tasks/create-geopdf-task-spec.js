@@ -22,7 +22,7 @@ describe('Run Create GeoPDF Task', function() {
 
         // Verify we have the correct number of params
         var paramList = taskPage.getParams();
-        expect(paramList.count()).toBe(6);
+        expect(paramList.count()).toBe(7);
         verifyDefaults();
         taskPage.executeTask();
     });
@@ -50,7 +50,7 @@ describe('Run Create GeoPDF Task', function() {
         // Get the task parameter elements.
         var paramList = taskPage.getParams();
         // Verify we have the correct number of params
-        expect(paramList.count()).toBe(6);
+        expect(paramList.count()).toBe(7);
         return paramList.then(function(params) {
             var mapTemplate = params[1];
             mapTemplate.element(by.css('.select2-choice')).click();

@@ -22,7 +22,7 @@ describe('Run Create Esri Map or Layer Package Task', function() {
         var paramList = taskPage.getParams();
 
         // Verify we have the correct number of params & defaults
-        expect(paramList.count()).toBe(4);
+        expect(paramList.count()).toBe(5);
         Util.waitForSpinner();  //can't click until spinner is gone
         verifyDefaults();
 
@@ -58,7 +58,7 @@ describe('Run Create Esri Map or Layer Package Task', function() {
     function setParams(formatIndex, pkgFormat) {
         // Verify we have the correct number of params.
         var paramList = taskPage.getParams();
-        expect(paramList.count()).toBe(4);
+        expect(paramList.count()).toBe(5);
 
         return paramList.then(function(params) {
             var outputFormat = params[1];
