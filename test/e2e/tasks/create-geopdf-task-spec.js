@@ -17,7 +17,9 @@ describe('Run Create GeoPDF Task', function() {
 
     it('should run using default parameter values', function() {
         // Get the task parameter elements.
+        Util.waitForSpinner();
         element(by.css('[ng-click="showAdvanced = !showAdvanced"]')).click();
+        Util.waitForSpinner();
         element(by.css('[ng-click="defaultExtent($event)"]')).click();
 
         // Verify we have the correct number of params

@@ -60,11 +60,11 @@ describe('Run Clip Data by Polygon Task', function() {
         return paramList.then(function(params) {
             var outputFormat = params[1];
             outputFormat.element(by.css('.select2-choice')).click();
-
+            Util.waitForSpinner();
             var lis = element.all(by.css('li.select2-results-dept-0'));
             return lis.then(function(li) {
                 li[formatIndex-1].click();
-
+                Util.waitForSpinner();
                 // now set the projection
                 var projection = params[2];
                 return s2Util.setText(projection, proj);
