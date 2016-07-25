@@ -17,7 +17,7 @@ describe('Search', function() {
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
         var resultList = element.all(by.repeater('doc in results'));
-        expect(resultList.count()).toEqual(24);
+        expect(resultList.count()).toEqual(48);
 
         expect(totalAnchor.getAttribute('href')).not.toBeNull();
         expect($('#filterContainer').isDisplayed()).toBeFalsy();
