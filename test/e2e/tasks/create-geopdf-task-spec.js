@@ -17,6 +17,7 @@ describe('Run Create GeoPDF Task', function() {
 
     it('should run using default parameter values', function() {
         // Get the task parameter elements.
+        browser.sleep(1000);
         Util.waitForSpinner();
         element(by.css('[ng-click="showAdvanced = !showAdvanced"]')).click();
         Util.waitForSpinner();
@@ -31,7 +32,8 @@ describe('Run Create GeoPDF Task', function() {
     });
 
     it('should run using Map Template: POWER_POINT.mxd', function() {
-
+        browser.sleep(1000);
+        Util.waitForSpinner();
         setParams(2, 'POWER_POINT.mxd');
         taskPage.executeTask();
         browser.waitForAngular();

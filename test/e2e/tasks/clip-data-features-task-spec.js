@@ -40,7 +40,7 @@ describe('Run Clip Data by Features Task', function() {
     });
 
     it('should run using Format: SHP', function() {
-        browser.sleep(2000);
+        browser.sleep(1000);
         Util.waitForSpinner();
         setParams(2, 'Same As Input');
         taskPage.executeTask();
@@ -48,6 +48,8 @@ describe('Run Clip Data by Features Task', function() {
     });
 
     it('should run using Format: SHP and Projection: Web Mercator Auxiliary Sphere', function() {
+        browser.sleep(1000);
+        Util.waitForSpinner();
         setParams(2, 'WGS 1984 Web Mercator (auxiliary sphere)');
         taskPage.executeTask();
         browser.waitForAngular();
