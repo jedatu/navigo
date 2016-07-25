@@ -23,19 +23,21 @@ describe('Run Clip Data by Polygon Task', function() {
         expect(paramList.count()).toBe(5);
         verifyDefaults(['', 'FileGDB', 'Same As Input']);
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: SHP', function() {
 
         setParams(2, 'Same As Input');
-
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: SHP and Projection: Web Mercator Auxiliary Sphere', function() {
         // SHP should be 2nd item in list
         setParams(2, 'WGS 1984 Web Mercator (auxiliary sphere)');
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     afterEach(function() {

@@ -27,12 +27,14 @@ describe('Run Create GeoPDF Task', function() {
         expect(paramList.count()).toBe(7);
         verifyDefaults();
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Map Template: POWER_POINT.mxd', function() {
 
         setParams(2, 'POWER_POINT.mxd');
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     afterEach(function() {

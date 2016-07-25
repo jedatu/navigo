@@ -28,6 +28,7 @@ describe('Run Create Esri Map or Layer Package Task', function() {
 
         // Execute the task with default parameter values
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: LPK', function() {
