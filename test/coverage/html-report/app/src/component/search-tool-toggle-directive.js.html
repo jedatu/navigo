@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header low">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">./app/src/component/search-tool-toggle-directive.js</span></h1>
     <h2>
-        Statements: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">0% <small>(0 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">90% <small>(9 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">50% <small>(1 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">90% <small>(9 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/src/component/</a> &#187; search-tool-toggle-directive.js</div>
@@ -58,23 +58,23 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -84,25 +84,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global angular */
 &nbsp;
 angular.module('voyager.component')
-	.directive('vsSearchToolToggle', <span class="fstat-no" title="function not covered" >function() {</span>
+	.directive('vsSearchToolToggle', function() {
 		'use strict';
-<span class="cstat-no" title="statement not covered" >		return {</span>
+		return {
 			restrict: 'A',
-			link: <span class="fstat-no" title="function not covered" >function(scope, element, attr) {</span>
+			link: function(scope, element, attr) {
 &nbsp;
-<span class="cstat-no" title="statement not covered" >				var _update = true;</span>
+				var _update = true;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >				scope.$watch(attr.ngModel, <span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >					if (_update) {</span>
-<span class="cstat-no" title="statement not covered" >						scope.$emit('searchDrawingTypeChanged', scope.selectedDrawingType);</span>
+				scope.$watch(attr.ngModel, function() {
+					<span class="missing-if-branch" title="else path not taken" >E</span>if (_update) {
+						scope.$emit('searchDrawingTypeChanged', scope.selectedDrawingType);
 					} else {
 <span class="cstat-no" title="statement not covered" >						_update = true;</span>
 					}
 				});
 &nbsp;
-<span class="cstat-no" title="statement not covered" >				scope.$on('updateSearchDrawingType', <span class="fstat-no" title="function not covered" >function(event, args){</span></span>
-<span class="cstat-no" title="statement not covered" >					_update = false;</span>
-<span class="cstat-no" title="statement not covered" >					scope.selectedDrawingType = args;</span>
+				scope.$on('updateSearchDrawingType', function(event, args){
+					_update = false;
+					scope.selectedDrawingType = args;
 				});
 &nbsp;
 			} //link
@@ -114,7 +114,7 @@ angular.module('voyager.component')
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Aug 03 2015 16:37:56 GMT-0400 (Eastern Daylight Time)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 25 2016 07:49:13 GMT-0400 (Eastern Daylight Time)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

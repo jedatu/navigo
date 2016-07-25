@@ -4,7 +4,7 @@ angular.module('voyager.filters')
         'use strict';
 
         var button = '<a href="javascript:;" ng-click="filterResults(facet)" class="underline" ng-class="facet.isSelected ? \'active\':\'\'">';
-        button += '<span class="text">{{facet.display}} <span class="facet_count">({{facet.count}})</span></span> <span ng-show="facet.isSelected" class="icon-x"></span>';
+        button += '<span class="text">{{facet.display}} <span class="facet_count">({{facet.count}} filter items)</span></span> <span ng-show="facet.isSelected" class="icon-x"></span>';
         button += '</a>';
 
         var checkbox = '<div class="checkbox">' +

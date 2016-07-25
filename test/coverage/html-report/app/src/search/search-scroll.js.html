@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">./app/src/search/search-scroll.js</span></h1>
     <h2>
-        Statements: <span class="metric">37.04% <small>(10 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">12.5% <small>(1 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">50% <small>(5 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">37.04% <small>(10 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">48.15% <small>(13 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">25% <small>(2 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">70% <small>(7 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">48.15% <small>(13 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/src/search/</a> &#187; search-scroll.js</div>
@@ -91,41 +91,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">17</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">23</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -139,6 +123,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -153,11 +153,11 @@
         var _position = 0;
         var _actualPage = 0;
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _resetItemsPerPage(view) {</span>
-<span class="cstat-no" title="statement not covered" >            if (view === 'table') {</span>
+        function _resetItemsPerPage(view) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (view === 'table') {
 <span class="cstat-no" title="statement not covered" >                searchService.setItemsPerPage(50);</span>
             } else {
-<span class="cstat-no" title="statement not covered" >                searchService.setItemsPerPage(24);</span>
+                searchService.setItemsPerPage(48);
             }
         }
 &nbsp;
@@ -190,14 +190,14 @@
 <span class="cstat-no" title="statement not covered" >                    if(view === 'table') {</span>
 <span class="cstat-no" title="statement not covered" >                        records = 50 * _actualPage;</span>
                     } else {
-<span class="cstat-no" title="statement not covered" >                        records = 24 * _actualPage;</span>
+<span class="cstat-no" title="statement not covered" >                        records = 48 * _actualPage;</span>
                     }
                     //console.log('setting items per page: ' + records);
 <span class="cstat-no" title="statement not covered" >                    searchService.setItemsPerPage(records);</span>
                 }
             },
-            setItemsPerPage: <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >                _resetItemsPerPage();</span>
+            setItemsPerPage: function() {
+                _resetItemsPerPage();
             }
         };
     }
@@ -207,7 +207,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Aug 03 2015 16:37:56 GMT-0400 (Eastern Daylight Time)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 25 2016 07:49:13 GMT-0400 (Eastern Daylight Time)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

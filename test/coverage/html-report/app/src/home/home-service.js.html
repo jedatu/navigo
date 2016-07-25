@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header low">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">./app/src/home/home-service.js</span></h1>
     <h2>
-        Statements: <span class="metric">30.77% <small>(4 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">0% <small>(0 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">30.77% <small>(4 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">92.31% <small>(12 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">75% <small>(3 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(7 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">92.31% <small>(12 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/src/home/</a> &#187; home-service.js</div>
@@ -71,31 +71,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -104,36 +104,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
 &nbsp;
 angular.module('voyager.home')
-    .service('homeService', <span class="fstat-no" title="function not covered" >function(config, $http, $q, featureQuery, collectionsQuery) {</span>
+    .service('homeService', function(config, $http, $q, featureQuery, collectionsQuery) {
 &nbsp;
         //TODO configService should preload on ui route resolve to guarantee its loaded before this
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _collectionsAction() {</span>
-<span class="cstat-no" title="statement not covered" >            if(config.homepage &amp;&amp; config.homepage.showSidebarLinks) {</span>
-<span class="cstat-no" title="statement not covered" >                return collectionsQuery.execute();</span>
+        function _collectionsAction() {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if(config.homepage &amp;&amp; config.homepage.showSidebarLinks) {
+                return collectionsQuery.execute();
             } else {
 <span class="cstat-no" title="statement not covered" >                return $q.when(null);</span>
             }
         }
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _featuredAction() {</span>
-<span class="cstat-no" title="statement not covered" >            return featureQuery.execute();</span>
+        function _featuredAction() {
+            return featureQuery.execute();
         }
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _fetchSection(section, action) {</span>
-<span class="cstat-no" title="statement not covered" >            return action();</span>
+        function _fetchSection(section, action) {
+            return action();
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return {</span>
-            fetchCollections: <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >                return _fetchSection('collections', _collectionsAction);</span>
+        return {
+            fetchCollections: function() {
+                return _fetchSection('collections', _collectionsAction);
             },
-            fetchFeatured: <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >                return _fetchSection('featured', _featuredAction);</span>
+            fetchFeatured: function() {
+                return _fetchSection('featured', _featuredAction);
             },
 &nbsp;
-            getFeaturedQuery: <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >                return featureQuery.getFeatureQuery();</span>
+            getFeaturedQuery: function() {
+                return featureQuery.getFeatureQuery();
             }
         };
 &nbsp;
@@ -144,7 +144,7 @@ angular.module('voyager.home')
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Aug 03 2015 16:37:56 GMT-0400 (Eastern Daylight Time)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 25 2016 07:49:13 GMT-0400 (Eastern Daylight Time)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

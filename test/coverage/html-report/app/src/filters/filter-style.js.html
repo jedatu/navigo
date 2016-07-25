@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header medium">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">./app/src/filters/filter-style.js</span></h1>
     <h2>
-        Statements: <span class="metric">76.92% <small>(20 / 26)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">53.33% <small>(8 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(26 / 26)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">93.33% <small>(14 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">76.92% <small>(20 / 26)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(26 / 26)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/src/filters/</a> &#187; filter-style.js</div>
@@ -76,44 +76,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">7</span>
 <span class="cline-any cline-yes">3</span>
 <span class="cline-any cline-yes">3</span>
 <span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -124,8 +124,8 @@
         function _decorateFacets(facetValues, filter) {
             $.each(facetValues, function (i, facet) {
                 facet.style = filter.style;
-                <span class="missing-if-branch" title="if path not taken" >I</span>if(filter.style === 'RANGE') {
-<span class="cstat-no" title="statement not covered" >                    facet.numeric = parseInt(facet.name);</span>
+                if(filter.style === 'RANGE') {
+                    facet.numeric = parseInt(facet.name);
                 }
             });
         }
@@ -134,19 +134,19 @@
             var selectedFilters = filterService.getFilters();
             $.each(systemFilters, function (index, filter) {
                 var facetValues = facets[filter.field], selectedFilter;
-                <span class="missing-if-branch" title="else path not taken" >E</span>if (facetValues &amp;&amp; facetValues.length &gt; 0) {
+                if (facetValues &amp;&amp; facetValues.length &gt; 0) {
                     facetValues.multivalued = filter.multivalued;
                     facetValues.stype = filter.stype;
 &nbsp;
                     _decorateFacets(facetValues, filter);
-                    <span class="missing-if-branch" title="else path not taken" >E</span>if(filter.style !== 'RANGE' &amp;&amp; filter.style !== 'STATS' &amp;&amp; filter.style !== 'HIERARCHY') {
+                    if(filter.style !== 'RANGE' &amp;&amp; filter.style !== 'STATS' &amp;&amp; filter.style !== 'HIERARCHY') {
                         filter.values = facetValues;
-                    } else <span class="cstat-no" title="statement not covered" >if (filter.style !== 'HIERARCHY') {  //hierarchy filters are loaded async via tree service</span>
-<span class="cstat-no" title="statement not covered" >                        selectedFilter = _.find(selectedFilters,{'filter':filter.field});</span>
-<span class="cstat-no" title="statement not covered" >                        if (filter.stype === 'date') {</span>
-<span class="cstat-no" title="statement not covered" >                            filter.values = [rangeService.buildCalendarFilter(filter, selectedFilter)];</span>
+                    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (filter.style !== 'HIERARCHY') {  //hierarchy filters are loaded async via tree service
+                        selectedFilter = _.find(selectedFilters,{'filter':filter.field});
+                        if (filter.stype === 'date') {
+                            filter.values = [rangeService.buildCalendarFilter(filter, selectedFilter)];
                         } else {
-<span class="cstat-no" title="statement not covered" >                            filter.values = [rangeService.buildRangeFilter(filter, selectedFilter)];</span>
+                            filter.values = [rangeService.buildRangeFilter(filter, selectedFilter)];
                         }
                     }
                 }
@@ -168,7 +168,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Aug 03 2015 16:37:56 GMT-0400 (Eastern Daylight Time)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 25 2016 07:49:13 GMT-0400 (Eastern Daylight Time)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

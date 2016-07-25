@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header low">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">./app/src/home/collections-query.js</span></h1>
     <h2>
-        Statements: <span class="metric">21.43% <small>(3 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">92.86% <small>(13 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">0% <small>(0 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">21.43% <small>(3 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">83.33% <small>(5 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">92.86% <small>(13 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/src/home/</a> &#187; collections-query.js</div>
@@ -61,25 +61,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -88,28 +88,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
 &nbsp;
 angular.module('voyager.home')
-    .service('collectionsQuery', <span class="fstat-no" title="function not covered" >function(config, $http) {</span>
+    .service('collectionsQuery', function(config, $http) {
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _getQueryString() {</span>
-<span class="cstat-no" title="statement not covered" >            var rows = 6;</span>
-<span class="cstat-no" title="statement not covered" >            var label = config.homepage.sidebarLinksLabel;</span>
-<span class="cstat-no" title="statement not covered" >            var queryString = config.root + 'solr/ssearch/select?fq=labels:' + label + '&amp;fl=id,title,query,count:[count]';</span>
-<span class="cstat-no" title="statement not covered" >            queryString += '&amp;rows=' + rows + '&amp;rand=' + Math.random();</span>
-<span class="cstat-no" title="statement not covered" >            queryString += '&amp;wt=json&amp;json.wrf=JSON_CALLBACK';</span>
-<span class="cstat-no" title="statement not covered" >            return queryString;</span>
+        function _getQueryString() {
+            var rows = 1000;
+            var label = config.homepage.sidebarLinksLabel;
+            var queryString = config.root + 'solr/ssearch/select?fq=labels:' + label + '&amp;fl=id,title,query,count:[count],display:[display],*';
+            queryString += '&amp;rows=' + rows + '&amp;rand=' + Math.random();
+            queryString += '&amp;wt=json&amp;json.wrf=JSON_CALLBACK';
+            return queryString;
         }
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _execute() {</span>
-<span class="cstat-no" title="statement not covered" >            return $http.jsonp(_getQueryString()).then(<span class="fstat-no" title="function not covered" >function (data) {</span></span>
-<span class="cstat-no" title="statement not covered" >                return data.data.response.docs;</span>
+        function _execute() {
+            return $http.jsonp(_getQueryString()).then(function (data) {
+                return data.data.response.docs;
             }, <span class="fstat-no" title="function not covered" >function(error) {</span>
 <span class="cstat-no" title="statement not covered" >                return error;</span>
             });
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return {</span>
-            execute: <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >                return _execute();</span>
+        return {
+            execute: function() {
+                return _execute();
             }
         };
 &nbsp;
@@ -120,7 +120,7 @@ angular.module('voyager.home')
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Aug 03 2015 16:37:56 GMT-0400 (Eastern Daylight Time)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 25 2016 07:49:13 GMT-0400 (Eastern Daylight Time)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

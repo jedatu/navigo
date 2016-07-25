@@ -340,6 +340,11 @@ angular.module('voyager.search')
             return $scope.canEditPermission() || $scope.flagPermission() || $scope.canCart();
         };
 
+        $scope.canAdmin = function()
+        {
+            return $scope.hasPermission('manage');
+        };
+
         $scope.canEditPermission = function() {
             return !hasRemoteShard() && $scope.hasPermission('edit_fields');
         };
@@ -444,6 +449,14 @@ angular.module('voyager.search')
                 urlUtil.removeParam('filter', 'true');
             }
             _setPageClass();
+        };
+
+        $scope.viewLastSearchQuery = function()
+        {
+            var lastSearch = searchService.getResults();
+
+            var theWindow = $window.open('data:application/json,' + encodeURIComponent(JSON.stringify(lastSearch, null, '  ')), '_blank');
+            theWindow.focus();
         };
 
         $scope.hideSearchError = function($event) {

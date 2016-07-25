@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header low">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">./app/src/details/tags-directive.js</span></h1>
     <h2>
-        Statements: <span class="metric">12% <small>(3 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">0% <small>(0 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">12% <small>(3 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">84% <small>(21 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">50% <small>(4 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">80% <small>(8 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">84% <small>(21 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/src/details/</a> &#187; tags-directive.js</div>
@@ -80,44 +80,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -125,48 +125,48 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* global angular */
 angular.module('voyager.details')
-    .directive('vgTags', <span class="fstat-no" title="function not covered" >function($timeout, tagService, $window, searchService) {</span>
+    .directive('vgTags', function($timeout, tagService, $window, searchService) {
         'use strict';
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _decorateTags() {</span>
-<span class="cstat-no" title="statement not covered" >            var $container = $('#s2id_labels');</span>
-<span class="cstat-no" title="statement not covered" >            var $tags = $container.children('.select2-choices').children('.select2-search-choice').children('div');</span>
-<span class="cstat-no" title="statement not covered" >            var hasTags = false;</span>
-<span class="cstat-no" title="statement not covered" >            $.each($tags, <span class="fstat-no" title="function not covered" >function(name, value) {</span></span>
-<span class="cstat-no" title="statement not covered" >                $(value).hover( <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+        function _decorateTags() {
+            var $container = $('#s2id_labels');
+            var $tags = $container.children('.select2-choices').children('.select2-search-choice').children('div');
+            var hasTags = false;
+            $.each($tags, function(name, value) {
+                $(value).hover( <span class="fstat-no" title="function not covered" >function(e) {</span>
 <span class="cstat-no" title="statement not covered" >                    $(e.currentTarget).css({'text-decoration':'underline', 'cursor':'pointer'});</span>
                 }, <span class="fstat-no" title="function not covered" >function(e) {</span>
 <span class="cstat-no" title="statement not covered" >                    $(e.currentTarget).css({'text-decoration':'none', 'cursor':'auto'});</span>
                 });
-<span class="cstat-no" title="statement not covered" >                hasTags = true;</span>
+                hasTags = true;
             });
-<span class="cstat-no" title="statement not covered" >            return hasTags;</span>
+            return hasTags;
         }
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function _searchByTag() {</span>
-<span class="cstat-no" title="statement not covered" >            $('#labels').off('choice-selected');</span>
-<span class="cstat-no" title="statement not covered" >            $('#labels').on('choice-selected', <span class="fstat-no" title="function not covered" >function(e,v) {</span></span>
-<span class="cstat-no" title="statement not covered" >                var tag = $(v).text().trim();</span>
-<span class="cstat-no" title="statement not covered" >                if (searchService.getLastSearch().indexOf('?') === -1) {</span>
-<span class="cstat-no" title="statement not covered" >                    $window.location.href = searchService.getLastSearch() + '?fq=tag_tags:' + tag;</span>
+        function _searchByTag() {
+            $('#labels').off('choice-selected');
+            $('#labels').on('choice-selected', function(e,v) {
+                var tag = $(v).text().trim();
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (searchService.getLastSearch().indexOf('?') === -1) {
+                    $window.location.href = searchService.getLastSearch() + '?fq=tag_tags:' + tag;
                 } else {
 <span class="cstat-no" title="statement not covered" >                    $window.location.href = searchService.getLastSearch() + '&amp;fq=tag_tags:' + tag;</span>
                 }
             });
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return {</span>
+        return {
             restrict: 'A',
             require: 'ngModel',
-            link: <span class="fstat-no" title="function not covered" >function (scope, el, attrs) {</span>
-<span class="cstat-no" title="statement not covered" >                return scope.$watch(attrs.ngModel, <span class="fstat-no" title="function not covered" >function (newValues, last) {</span></span>
-<span class="cstat-no" title="statement not covered" >                    $timeout(<span class="fstat-no" title="function not covered" >function() {</span>  //defer until scope is done</span>
-<span class="cstat-no" title="statement not covered" >                        if (_decorateTags()) {</span>
-<span class="cstat-no" title="statement not covered" >                            _searchByTag();</span>
+            link: function (scope, el, attrs) {
+                return scope.$watch(attrs.ngModel, function (newValues, last) {
+                    $timeout(function() {  //defer until scope is done
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (_decorateTags()) {
+                            _searchByTag();
                         }
                     },0);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                    if(!_.isEqual(newValues, last) &amp;&amp; !scope.loading) {</span>
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if(!_.isEqual(newValues, last) &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!scope.loading)</span> {
 <span class="cstat-no" title="statement not covered" >                        tagService.saveLabels(scope.doc.id, newValues);</span>
                     }
                 });
@@ -177,7 +177,7 @@ angular.module('voyager.details')
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Aug 03 2015 16:37:56 GMT-0400 (Eastern Daylight Time)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 25 2016 07:49:13 GMT-0400 (Eastern Daylight Time)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

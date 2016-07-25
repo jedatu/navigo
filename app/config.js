@@ -2,6 +2,7 @@
 /* jshint ignore:start */
 var config = {
     'root': 'http://voyagerdemo.com/daily/',
+    //'root': 'http://voyagerdemo.com/198/',
     //'root': 'http://localhost:8888/',
     'explorePath': 'voyager',
     'enableEmail': true,
