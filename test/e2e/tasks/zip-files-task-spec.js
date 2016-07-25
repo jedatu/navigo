@@ -20,7 +20,7 @@ describe('Zip Files Task', function() {
         var paramList = taskPage.getParams();
 
         // Verify we have the correct number of params
-        expect(paramList.count()).toBe(2);
+        expect(paramList.count()).toBe(3);
         Util.waitForSpinner();  //can't click until spinner is gone
 
         // Execute the task with default parameter values

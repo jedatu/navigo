@@ -19,7 +19,7 @@ describe('Run Clip Data by Features Task', function() {
     it('should run using default parameter values', function() {
         // Verify we have the correct number of params & defaults.
         var paramList = taskPage.getParams();
-        expect(paramList.count()).toBe(5);
+        expect(paramList.count()).toBe(6);
         verifyDefaults(['', 'FileGDB', 'Same As Input']);
 
         // Set the clip features
@@ -33,6 +33,7 @@ describe('Run Clip Data by Features Task', function() {
         var searchInput = element(by.css('[ng-model="searchInput"]'));
         searchInput.sendKeys('Countries.shp');
         element(by.css('[ng-click="searchClick()"]')).click();
+        Util.waitForSpinner();
         setClipFeatures(0);
         taskPage.executeTask();
     });
@@ -74,7 +75,7 @@ describe('Run Clip Data by Features Task', function() {
         var paramList = taskPage.getParams();
 
         // Verify we have the correct number of params
-        expect(paramList.count()).toBe(5);
+        expect(paramList.count()).toBe(6);
 
         return paramList.then(function(params) {
             var outputFormat = params[2];
