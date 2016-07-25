@@ -40,14 +40,14 @@ describe('Run Clip Data by Features Task', function() {
     });
 
     it('should run using Format: SHP', function() {
-
+        browser.sleep(2000);
+        Util.waitForSpinner();
         setParams(2, 'Same As Input');
         taskPage.executeTask();
         browser.waitForAngular();
     });
 
     it('should run using Format: SHP and Projection: Web Mercator Auxiliary Sphere', function() {
-
         setParams(2, 'WGS 1984 Web Mercator (auxiliary sphere)');
         taskPage.executeTask();
         browser.waitForAngular();
@@ -65,19 +65,6 @@ describe('Run Clip Data by Features Task', function() {
             expect(s2Elements.get(i).getText()).toEqual(expectedValues[i]);
         }
     }
-
-    this.clickWhenClickable = function(element) {
-        return browser.wait(function() {
-            return element.click().then(
-                function() {
-                    return true;
-                },
-                function() {
-                    console.log('not clickable');
-                    return false;
-                });
-        });
-    };
 
     function setClipFeatures(itemIndex) {
        element(by.xpath('//*[@id="resultsTable"]/tbody/tr[2]/td[3]/span')).click();
