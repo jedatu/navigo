@@ -31,7 +31,7 @@ describe('Run Clip Data by Features Task', function() {
         var expectedFilters = element.all(by.css('[ng-click="toggleDisplayState(filter)"]'));
         expect(expectedFilters.count()).toBe(2);
         var searchInput = element(by.css('[ng-model="searchInput"]'));
-        searchInput.sendKeys('Countries.shp');
+        searchInput.sendKeys('Countries');
         element(by.css('[ng-click="searchClick()"]')).click();
         Util.waitForSpinner();
         setClipFeatures(0);
@@ -63,11 +63,21 @@ describe('Run Clip Data by Features Task', function() {
         }
     }
 
-    function setClipFeatures(itemIndex) {
-        var items = element.all(by.css('[ng-repeat="field in fields"]'));
-        return items.then(function(item) {
-            item[itemIndex].click();
+    this.clickWhenClickable = function(element) {
+        return browser.wait(function() {
+            return element.click().then(
+                function() {
+                    return true;
+                },
+                function() {
+                    console.log('not clickable');
+                    return false;
+                });
         });
+    };
+
+    function setClipFeatures(itemIndex) {
+       element(by.xpath('//*[@id="resultsTable"]/tbody/tr[2]/td[3]/span')).click();
     }
 
     function setParams(formatIndex, proj) {
