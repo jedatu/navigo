@@ -69,7 +69,7 @@ describe('Run Clip Data by Features Task', function() {
     }
 
     function setClipFeatures(itemIndex) {
-       element(by.xpath('//*[@id="resultsTable"]/tbody/tr[2]/td[3]/span')).click();
+       element(by.xpath('//*[@id="resultsTable"]/tbody/tr[1]/td[2]/span')).click();
     }
 
     function setParams(formatIndex, proj) {
