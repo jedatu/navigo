@@ -14,6 +14,7 @@ describe('Zip Files Task', function() {
     it('should load zip_files task', function() {
         searchPage.addAllToQueue('title:Hydrography_Lines');
         browser.get(server + '#/queue?disp=default&task=zip_files');
+        browser.sleep(1000);
         Util.waitForSpinner();
 
         // Get list of parameters

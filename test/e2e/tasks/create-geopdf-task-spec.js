@@ -17,7 +17,10 @@ describe('Run Create GeoPDF Task', function() {
 
     it('should run using default parameter values', function() {
         // Get the task parameter elements.
+        browser.sleep(1000);
+        Util.waitForSpinner();
         element(by.css('[ng-click="showAdvanced = !showAdvanced"]')).click();
+        Util.waitForSpinner();
         element(by.css('[ng-click="defaultExtent($event)"]')).click();
 
         // Verify we have the correct number of params
@@ -25,12 +28,15 @@ describe('Run Create GeoPDF Task', function() {
         expect(paramList.count()).toBe(7);
         verifyDefaults();
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Map Template: POWER_POINT.mxd', function() {
-
+        browser.sleep(1000);
+        Util.waitForSpinner();
         setParams(2, 'POWER_POINT.mxd');
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     afterEach(function() {

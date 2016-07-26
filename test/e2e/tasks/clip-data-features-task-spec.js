@@ -31,23 +31,28 @@ describe('Run Clip Data by Features Task', function() {
         var expectedFilters = element.all(by.css('[ng-click="toggleDisplayState(filter)"]'));
         expect(expectedFilters.count()).toBe(2);
         var searchInput = element(by.css('[ng-model="searchInput"]'));
-        searchInput.sendKeys('Countries.shp');
+        searchInput.sendKeys('Countries');
         element(by.css('[ng-click="searchClick()"]')).click();
         Util.waitForSpinner();
         setClipFeatures(0);
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: SHP', function() {
-
+        browser.sleep(1000);
+        Util.waitForSpinner();
         setParams(2, 'Same As Input');
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: SHP and Projection: Web Mercator Auxiliary Sphere', function() {
-
+        browser.sleep(1000);
+        Util.waitForSpinner();
         setParams(2, 'WGS 1984 Web Mercator (auxiliary sphere)');
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     afterEach(function() {
@@ -64,10 +69,7 @@ describe('Run Clip Data by Features Task', function() {
     }
 
     function setClipFeatures(itemIndex) {
-        var items = element.all(by.css('[ng-repeat="field in fields"]'));
-        return items.then(function(item) {
-            item[itemIndex].click();
-        });
+       element(by.xpath('//*[@id="resultsTable"]/tbody/tr[2]/td[3]/span')).click();
     }
 
     function setParams(formatIndex, proj) {

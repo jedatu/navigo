@@ -16,7 +16,7 @@ describe('Run Create Esri Map or Layer Package Task', function() {
         Util.waitForSpinner();
     });
 
-    // Load and run Convert to KML task
+    // Load and run Create Esri Package task
     it('should run using Format: MPK', function() {
         // Get list of parameters
         var paramList = taskPage.getParams();
@@ -28,9 +28,12 @@ describe('Run Create Esri Map or Layer Package Task', function() {
 
         // Execute the task with default parameter values
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: LPK', function() {
+        browser.sleep(1000);
+        Util.waitForSpinner();
         setParams(2, 'LPK');
         taskPage.executeTask();
     });
@@ -63,7 +66,7 @@ describe('Run Create Esri Map or Layer Package Task', function() {
         return paramList.then(function(params) {
             var outputFormat = params[1];
             outputFormat.element(by.css('.select2-choice')).click();
-
+            Util.waitForSpinner();
             var lis = element.all(by.css('li.select2-results-dept-0'));
             return lis.then(function(li) {
                 li[formatIndex-1].click();

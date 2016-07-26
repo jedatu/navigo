@@ -23,19 +23,24 @@ describe('Run Clip Data by Polygon Task', function() {
         expect(paramList.count()).toBe(5);
         verifyDefaults(['', 'FileGDB', 'Same As Input']);
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: SHP', function() {
-
+        browser.sleep(1000);
+        Util.waitForSpinner();
         setParams(2, 'Same As Input');
-
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     it('should run using Format: SHP and Projection: Web Mercator Auxiliary Sphere', function() {
+        browser.sleep(1000);
+        Util.waitForSpinner();
         // SHP should be 2nd item in list
         setParams(2, 'WGS 1984 Web Mercator (auxiliary sphere)');
         taskPage.executeTask();
+        browser.waitForAngular();
     });
 
     afterEach(function() {
@@ -60,11 +65,11 @@ describe('Run Clip Data by Polygon Task', function() {
         return paramList.then(function(params) {
             var outputFormat = params[1];
             outputFormat.element(by.css('.select2-choice')).click();
-
+            Util.waitForSpinner();
             var lis = element.all(by.css('li.select2-results-dept-0'));
             return lis.then(function(li) {
                 li[formatIndex-1].click();
-
+                Util.waitForSpinner();
                 // now set the projection
                 var projection = params[2];
                 return s2Util.setText(projection, proj);
