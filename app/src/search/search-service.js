@@ -6,6 +6,7 @@ angular.module('voyager.search').
         var _page = 1;
         var _idsPage = _page;
         var _itemsPerPage = 48;
+        var _solrService = '';
         var _lastResult = {};
         var _recordIds = [];
         var _sortDirection = angular.isDefined(config.defaultSortDirection)? config.defaultSortDirection : 'desc';
@@ -69,6 +70,7 @@ angular.module('voyager.search').
             doSearch2: function (params, append) {
                 _setParams(params);
                 var service = queryBuilder.doBuild2(_searchParams, _page, _itemsPerPage, _sortDirection, _sortField);
+                _solrService = service;
                 var solrPage = service.substring(service.indexOf('solr')-1);
                 urlUtil.buildSearchUrl2(_searchParams, _page, getMapView(params.vw), params.view, _sortField); //keeps the url in sync
                 var startTime = Date.now();
@@ -96,6 +98,10 @@ angular.module('voyager.search').
             clear: function () {
                 filterService.clear();
                 _page = 1;
+            },
+
+            getLastQuery: function () {
+                return _solrService;
             },
 
             getLastSearch: function () {

@@ -451,12 +451,11 @@ angular.module('voyager.search')
             _setPageClass();
         };
 
-        $scope.viewLastSearchQuery = function()
+        $scope.getLastQuery = function()
         {
-            var lastSearch = searchService.getResults();
+            var solrQuery = searchService.getLastQuery();
 
-            var theWindow = $window.open('data:application/json,' + encodeURIComponent(JSON.stringify(lastSearch, null, '  ')), '_blank');
-            theWindow.focus();
+            return solrQuery;
         };
 
         $scope.hideSearchError = function($event) {
