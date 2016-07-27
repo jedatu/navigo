@@ -10,7 +10,7 @@ describe('Run Create Layer Files Task', function() {
     var server = Util.getServer();
 
     beforeEach(function() {
-        searchPage.addAllToQueue('title:Hydrography_Lines');
+        searchPage.addAllToQueue('title:test_polygon_102100');
         browser.get(server + '#/queue?disp=default&task=create_layer_files');
         Util.waitForSpinner();
     });
