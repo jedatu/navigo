@@ -15,7 +15,7 @@ var Util = (function () {
 
         getServer: function() {
             //return 'http://localhost:8888/navigo/';
-            return 'http://voyagerdemo.com/protractor/navigo/';
+            return browser.params.url;
         },
 
         loginToVoyager: function(username, password) {
