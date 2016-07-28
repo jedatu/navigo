@@ -27,9 +27,10 @@ describe('Zip Files Task', function() {
         // Execute the task with default parameter values
         taskPage.getTaskButton().click();
         browser.waitForAngular();
-
+        browser.sleep(1000);
         // Open task report page and confirm number of files zipped.
         taskStatusPage.getShowReportLink().click();
+        browser.waitForAngular();
         var grid = taskReportPage.getTableGrid();
         grid.each(function(row) {
             var rowElements = row.$$('td');
