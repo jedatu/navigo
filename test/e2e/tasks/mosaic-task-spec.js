@@ -11,39 +11,28 @@ describe('Run Mosaic Task', function() {
 
     beforeEach(function() {
         searchPage.addAllToQueue('title:n39w105f2dem and fileExtension:img');
-        // Open Clip Data by Polygon task UI
         browser.get(server + '#/queue?disp=default&task=mosaic');
         Util.waitForSpinner();
     });
 
-    //it('should run using default parameter values', function() {
-    //    browser.sleep(1000);
-    //    Util.waitForSpinner();
-    //    // Get the task parameter elements.
-    //    var paramList = taskPage.getParams();
-    //    // Verify we have the correct number of params
-    //    expect(paramList.count()).toBe(6);
-    //    verifyDefaults(['', 'Same As Input', 'FileGDB']);
-    //    taskPage.executeTask();
-    //    browser.waitForAngular();
-    //});
+    it('should run using default parameter values - output format is FileGDB', function() {
+        browser.sleep(1000);
+        element(by.css('[ng-click="showAdvanced = !showAdvanced"]')).click();
+        Util.waitForSpinner();
+        var paramList = taskPage.getParams();
+        expect(paramList.count()).toBe(6);
+        verifyDefaults(['', 'Same As Input', 'FileGDB', 'LZ77', 75, 'mosaic_results']);
+        taskPage.executeTask();
+        browser.waitForAngular();
+    });
 
-    it('should run using Format: TIF', function() {
+    it('should run using output format: TIF', function() {
         browser.sleep(1000);
         Util.waitForSpinner();
         setParams(10, 'Same As Input');
         taskPage.executeTask();
         browser.waitForAngular();
     });
-    //
-    //it('should run using Format: SHP and Projection: Web Mercator Auxiliary Sphere', function() {
-    //    browser.sleep(1000);
-    //    Util.waitForSpinner();
-    //    // SHP should be 2nd item in list
-    //    setParams(2, 'WGS 1984 Web Mercator (auxiliary sphere)');
-    //    taskPage.executeTask();
-    //    browser.waitForAngular();
-    //});
 
     afterEach(function() {
         verifyStatus();
@@ -52,16 +41,15 @@ describe('Run Mosaic Task', function() {
     function verifyDefaults() {
         // Verify default values for output format and projection
         var s2Elements = taskPage.getParameterValues();
-        var expectedValues = ['', 'Same As Input', 'FileGDB',];
+        var expectedValues = ['', 'Same As Input', 'FileGDB'];
         for (var i = 0; i < expectedValues.length; ++i) {
             expect(s2Elements.get(i).getText()).toEqual(expectedValues[i]);
         }
     }
 
     function setParams(formatIndex, proj) {
-        // Get the task parameter elements.
-        var paramList = taskPage.getParams();
         // Verify we have the correct number of params
+        var paramList = taskPage.getParams();
         expect(paramList.count()).toBe(6);
 
         return paramList.then(function(params) {
@@ -72,7 +60,7 @@ describe('Run Mosaic Task', function() {
             return lis.then(function(li) {
                 li[formatIndex-1].click();
                 Util.waitForSpinner();
-                // now set the projection
+                // Set the projection
                 var projection = params[1];
                 return s2Util.setText(projection, proj);
             });
