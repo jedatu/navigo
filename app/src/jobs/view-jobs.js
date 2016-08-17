@@ -14,22 +14,16 @@ angular.module('taskRunner')
             switch(status)
             {
                 case 'PENDING':
-                case 'voyager.api.process.ProcessState:PENDING':
                     return {'icon':'icon-queue_status_waiting','color':'black'};
                 case 'RUNNING':
-                case 'voyager.api.process.ProcessState:RUNNING':
                     return {'icon':'fa fa-cog fa-spin','color':'#337ab7'};
                 case 'FAILED':
-                case 'voyager.api.process.ProcessState:FAILED':
                     return {'icon':'icon-queue_status_error','color':'red'};
                 case 'CANCELED':
-                case 'voyager.api.process.ProcessState:CANCELED':
                     return {'icon':'icon-queue_status_cancled','color':'black'};
                 case 'WARNING':
-                case 'voyager.api.process.ProcessState:WARNING':
                     return {'icon':'icon-queue_status_complete','color':'orange'};
                 case 'SUCCESS':
-                case 'voyager.api.process.ProcessState:SUCCESS':
                     return {'icon':'icon-queue_status_complete','color':'green'};
                 default:
                     return {'icon':'icon-queue_status_radioactive','color':'slategray'};
