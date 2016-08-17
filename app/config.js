@@ -1,8 +1,8 @@
 // Note: when running in Voyager, this static file is partially overwritten with voyager config settings
 /* jshint ignore:start */
 var config = {
-    //'root': 'http://voyagerdemo.com/daily/',
-    'root': 'http://voyagerdemo.com/198/',
+    'root': 'http://voyagerdemo.com/daily/',
+    //'root': 'http://voyagerdemo.com/198/',
     //'root': 'http://localhost:8888/',
     'explorePath': 'voyager',
     'enableEmail': true,
@@ -81,6 +81,6 @@ var config = {
     excludeDetails : ['_', 'allow_', 'deny_', 'http_header', 'tree', 'links', 'geo', 'path_to_', 'debug_properties', 'linkcount_', 'hasThumb', 'hasPreview', 'hasMetadata', 'md5', 'worker', 'extractor', 'hasLayerFile', 'id', 'extent', 'root', 'indexing_warning'],
     chartData: 'http://voyagerdemo.com/sql/solr/v0/select?q=*:*&fl=name,meta_Field_Name,meta_Operator,meta_Producing,fl_Well_Depth,meta_Well_Statu,%20meta_Well_Type&wt=json&rows=1000&json.wrf=JSON_CALLBACK',
     rememberMe: true,
-    editAll: true
+    editAll: false
 };
 /* jshint ignore:end */
