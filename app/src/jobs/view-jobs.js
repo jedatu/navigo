@@ -32,7 +32,7 @@ angular.module('taskRunner')
                 case 'voyager.api.process.ProcessState:SUCCESS':
                     return {'icon':'icon-queue_status_complete','color':'green'};
                 default:
-                    return {'icon':'icon-queue_status_radioactive','color':'complete'};
+                    return {'icon':'icon-queue_status_radioactive','color':'slategray'};
             }
         }
 

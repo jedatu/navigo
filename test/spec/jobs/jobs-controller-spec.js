@@ -35,6 +35,8 @@ describe('Controller: JobsCtrl', function () {
     jobs.push({id:'id4', task:'task4', state:'CANCELED'});
     jobs.push({id:'id5', task:'task5', state:'WARNING'});
     jobs.push({id:'id6', task:'task6', state:'COMPLETE'});
+    jobs.push({id:'id7', task:'task7', state:'SUCCESS'});
+    jobs.push({id:'id8', task:'task8', state:'UNKNOWN'});
 
     function initJobsCtrl() {
         $controller('JobsCtrl', {$scope: $scope, $window: $window, $stateParams: {q: 'text'}});
