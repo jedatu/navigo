@@ -21,7 +21,11 @@ describe('Run Mosaic Task', function() {
         Util.waitForSpinner();
         var paramList = taskPage.getParams();
         expect(paramList.count()).toBe(6);
-        verifyDefaults(['', 'Same As Input', 'FileGDB', 'LZ77', 75, 'mosaic_results']);
+        verifyDefaults(['', 'Same As Input', 'FileGDB', 'LZ77']);
+
+        var compression_element = element(by.css('[type="number"]'));
+        expect(compression_element.getAttribute('value')).toEqual('75');
+
         taskPage.executeTask();
         browser.waitForAngular();
     });
