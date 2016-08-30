@@ -40,8 +40,11 @@ angular.module('voyager.search').
 			queryString += '&fl=id';
 
 			//prevent adding extra comma when table field name is empty
-			if (configService.getTableFieldNames().length) {
-				queryString += ',' + configService.getTableFieldNames().join(',');
+			var tableFieldNames = configService.getTableFieldNames();
+			if (tableFieldNames.length) {
+				queryString += ',' + tableFieldNames.join(',');
+				// add known augmented fields
+				queryString += ',absolute_path:[absolute]';
 			}
 
 			queryString += '&rows=' + itemsPerPage;

@@ -68,7 +68,7 @@ angular.module('voyager.util').
                 var start = (page - 1) * itemsPerPage;
                 rows = itemsPerPage;
                 queryString += '&start=' + start;
-                queryString += '&fl=id,title, name:[name],format,abstract,fullpath:[absolute],thumb:[thumbURL], path_to_thumb, subject,download:[downloadURL],format_type,bytes,modified,shard:[shard],bbox,geo:[geo],format_category, component_files, ags_fused_cache, linkcount__children, contains_name, wms_layer_name,tag_flags,hasMissingData,layerURL:[lyrURL]';
+                queryString += '&fl=id,title, name:[name],format,abstract,fullpath:[absolute],absolute_path:[absolute],thumb:[thumbURL], path_to_thumb, subject,download:[downloadURL],format_type,bytes,modified,shard:[shard],bbox,geo:[geo],format_category, component_files, ags_fused_cache, linkcount__children, contains_name, wms_layer_name,tag_flags,hasMissingData,layerURL:[lyrURL]';
                 queryString += configService.getSolrFields();
 
                 //prevent adding extra comma when table field name is empty

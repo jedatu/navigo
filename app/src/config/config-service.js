@@ -1,6 +1,6 @@
 'use strict';
 angular.module('voyager.config').
-    factory('configService', function (config, translateService, $http, $q, catalogService, $location) {
+    factory('configService', function (config, translateService, $http, $q, catalogService, $location, solrUtil) {
         var _configId = null;
         var _systemFilters = null;
         var _systemFilterMap = {};
@@ -75,7 +75,9 @@ angular.module('voyager.config').
         function _setTableFields(table) {
             _tableFields = [];
             $.each(table, function (index, value) {
-                var tableField = {field:value.name, display:translateService.getFieldName(value.name), width: value.width};
+                var name = value.name;
+                value.name = solrUtil.stripAugmented(value.name);
+                var tableField = {field:value.name, display:translateService.getFieldName(value.name), width: value.width, sortable: name === value.name};
                 _tableFields.push(tableField);
                 if(angular.isDefined(value.width)) {
                     _tableColumnWidthMap[value.field] = {value:parseFloat(value.width)};
