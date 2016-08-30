@@ -10,7 +10,7 @@ describe('Run Clip Data by Features Task', function() {
     var server = Util.getServer();
 
     beforeEach(function() {
-        searchPage.addAllToQueue('title:Hydrography_Lines');
+        searchPage.addAllToQueue('title:Hydrography_Lines and format:application/vnd.esri.shapefile');
         // Open Clip Data by Features task UI
         browser.get(server + '#/queue?disp=default&task=clip_data_by_features');
         Util.waitForSpinner();
