@@ -299,21 +299,16 @@ angular.module('voyager.details')
                     }
                 }
 
-                if($scope.doc.content) {
-                    $scope.metadataUrl = $scope.doc.content;
+                $scope.metadataUrl = $scope.doc.content;
 
-                    if(!($scope.metadataUrl.endsWith('/'))) {
-                        $scope.metadataUrl += '/';
-                    }
-
-                    $scope.metadataUrl += 'meta.xml?style=' + $scope.theme.selected;
-
-                    if($scope.doc.shard) {
-                        $scope.metadataUrl += '&shard=' + $scope.doc.shard;
-                    }
+                if(!($scope.metadataUrl.endsWith('/'))) {
+                    $scope.metadataUrl += '/';
                 }
-                else {
-                    $scope.metadataUrl = root + 'content/' + $scope.doc.id + '/meta.xml?style=' + $scope.theme.selected;
+
+                $scope.metadataUrl += 'meta.xml?style=' + $scope.theme.selected;
+
+                if($scope.doc.shard) {
+                    $scope.metadataUrl += '&shard=' + $scope.doc.shard;
                 }
 
             });
