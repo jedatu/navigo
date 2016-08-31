@@ -63,6 +63,10 @@ var searchPage = (function () {
 
             // Stop if no results
             expect(this.getQueueCount()).toBeGreaterThan(0);
+        },
+
+        getUser: function() {
+            return element(by.binding('vm.user.name'));
         }
 
     };

@@ -13,6 +13,16 @@ var Util = (function () {
             }, 30000);
         },
 
+        waitForUser: function() {
+            //wait for the user to be populated
+            var user = element(by.binding('vm.user.name'))
+            return browser.wait(function () {
+                return user.getText().then(function (text) {
+                    return text === 'admin';
+                });
+            }, 30000);
+        },
+
         getServer: function() {
             //return 'http://localhost:8888/navigo/';
             return browser.params.url;
@@ -34,6 +44,8 @@ var Util = (function () {
                     user.sendKeys(username);
                     pass.sendKeys(password);
                     element(by.css('[ng-click="ok()"]')).click();
+                } else {
+                    return Util.waitForUser();
                 }
                 return !isVisible;
             });
