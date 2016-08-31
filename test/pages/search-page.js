@@ -51,6 +51,7 @@ var searchPage = (function () {
             // Login into Voyager
             Util.loginToVoyager('admin', 'admin');
             browser.waitForAngular();
+            browser.waitForAngular();
 
             // Stop if no results
             expect(this.getResultsCount()).toBeGreaterThan(0);
