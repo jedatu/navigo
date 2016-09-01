@@ -49,4 +49,7 @@
 			<li ng-show="vm.isAnonymous"><a href="http://voyagersearch.zendesk.com/hc" target="_blank"><i class="fa fa-question-circle" aria-label="Help and Support"></i></a></li>
 		</ul>
 	</div>
+	<div ng-if="vm.debug" style="position: fixed; z-index: 1000; background-color: yellow; top: 70%; width: 75%; word-break: break-all">
+		State: {{vm.state}} User: {{vm.user}}
+	</div>
 </div>

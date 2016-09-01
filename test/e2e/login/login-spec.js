@@ -16,15 +16,86 @@ describe('Login', function() {
     }
 
     it('should login', function() {
-
         login();
-
     });
 
     it('should be authenticated with token', function() {
-
         login();
-
     });
 
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
+
+    it('should be authenticated with token', function() {
+        login();
+    });
 });
