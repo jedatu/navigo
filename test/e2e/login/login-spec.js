@@ -7,7 +7,7 @@ describe('Login', function() {
     var server = util.getServer();
 
     function login() {
-        browser.get(server + '#/search');
+        browser.get(server + '#/search?debug=true');
 
         util.loginToVoyager('admin', 'admin');
         //util.waitForUser();
