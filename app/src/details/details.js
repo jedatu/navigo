@@ -301,14 +301,16 @@ angular.module('voyager.details')
 
                 $scope.metadataUrl = $scope.doc.content;
 
-                if(($scope.metadataUrl.indexOf('/', $scope.metadataUrl.length - 1)) === -1) {
-                    $scope.metadataUrl += '/';
-                }
+                if($scope.metadataUrl) {
+                    if (($scope.metadataUrl.indexOf('/', $scope.metadataUrl.length - 1)) === -1) {
+                        $scope.metadataUrl += '/';
+                    }
 
-                $scope.metadataUrl += 'meta.xml?style=' + $scope.theme.selected;
+                    $scope.metadataUrl += 'meta.xml?style=' + $scope.theme.selected;
 
-                if($scope.doc.shard) {
-                    $scope.metadataUrl += '&shard=' + $scope.doc.shard;
+                    if ($scope.doc.shard) {
+                        $scope.metadataUrl += '&shard=' + $scope.doc.shard;
+                    }
                 }
 
             });
