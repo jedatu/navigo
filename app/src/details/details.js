@@ -301,7 +301,7 @@ angular.module('voyager.details')
 
                 $scope.metadataUrl = $scope.doc.content;
 
-                if(!($scope.metadataUrl.endsWith('/'))) {
+                if(($scope.metadataUrl.indexOf('/', $scope.metadataUrl.length - 1)) === -1) {
                     $scope.metadataUrl += '/';
                 }
 
