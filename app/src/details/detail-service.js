@@ -12,7 +12,7 @@ angular.module('voyager.details').
 
         var buildRequest = function(id, displayFields, shard, disp) {
             var service = config.root + 'solr/v0/select?q=id:' + id;
-            var fields = '&fl=id,name:[name],fullpath:[absolute],absolute_path:[absolute],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox,format,hasMetadata,root,tree,tag_tags,links,geo:[geo],hasMissingData,schema,layerURL:[lyrURL]';
+            var fields = '&fl=id,name:[name],fullpath:[absolute],absolute_path:[absolute],content:[contentURL],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox,format,hasMetadata,root,tree,tag_tags,links,geo:[geo],hasMissingData,schema,layerURL:[lyrURL]';
             fields += displayFields;
             var shards = '';
             if (angular.isDefined(shard)) {
@@ -34,7 +34,7 @@ angular.module('voyager.details').
 
         function _buildRelationshipRequest(id, shard, type, direction, displayFields) {
             var service = config.root + 'solr/v0/select?links.' + direction + '=' + id + ':' + type;
-            var fields = '&fl=id,name:[name],path:[absolute],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox, format, hasMetadata, root, tree, tag_tags, links, hasMissingData';
+            var fields = '&fl=id,name:[name],path:[absolute],content:[contentURL],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox, format, hasMetadata, root, tree, tag_tags, links, hasMissingData';
             fields += displayFields;
             var shards = '';
             if (angular.isDefined(shard)) {

@@ -298,7 +298,21 @@ angular.module('voyager.details')
                         root = 'http://' + root;
                     }
                 }
-                $scope.metadataUrl = root + 'content/' + $scope.doc.id + '/meta.xml?style=' + $scope.theme.selected;
+
+                $scope.metadataUrl = $scope.doc.content;
+
+                if($scope.metadataUrl) {
+                    if (($scope.metadataUrl.indexOf('/', $scope.metadataUrl.length - 1)) === -1) {
+                        $scope.metadataUrl += '/';
+                    }
+
+                    $scope.metadataUrl += 'meta.xml?style=' + $scope.theme.selected;
+
+                    if ($scope.doc.shard) {
+                        $scope.metadataUrl += '&shard=' + $scope.doc.shard;
+                    }
+                }
+
             });
         }
 

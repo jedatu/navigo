@@ -15,10 +15,12 @@ angular.module('voyager.security').
         var _PERMISSIONS = ['manage','download','process','configure_view','save_search','share_saved_search','view','tag','edit_fields','flag','view_tags','show_metadata','export'];
         var _PERMISSIONS_LIST = 'check=' + _PERMISSIONS.join('&check=');
         var _methods = [];
+        var _state;
 
         function _setLoginState(response) {
             if (response) {
                 _isAnonymous = angular.isUndefined(response.data.state) || response.data.state === 'anonymous';
+                _state = response.data.state;
                 _user = response.data.user;
                 if(response.data.permissions) {
                     permissions = response.data.permissions;
@@ -215,6 +217,10 @@ angular.module('voyager.security').
                     });
                 }
                 return show;
+            },
+
+            getState: function() {
+                return _state;
             }
         };
 
