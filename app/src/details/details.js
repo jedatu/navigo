@@ -276,7 +276,15 @@ angular.module('voyager.details')
                     doc.defaultThumb = true;
                 }
 
-                $scope.actions = detailsActions.getActions($scope.doc);
+                $scope.doc.canCart = authService.hasPermission('process');
+
+                $scope.actions = detailsActions.getActions($scope.doc, $scope);
+
+                var addAction = _.find($scope.actions, {'action': 'add'});
+                $scope.canCart = $scope.doc.canCart && !$scope.isRemote && addAction.visible;
+
+                // don't show add action in drop down.  Has its own button.  Visible by canCart above.
+                addAction.visible = false;
 
                 cartService.fetchQueued([{id:doc.id}]).then(function(items) {
                     doc.inCart = items.length > 0;
@@ -320,10 +328,6 @@ angular.module('voyager.details')
             // TODO what to do here to authenticate to the remote?
             // TODO what about display config?
             $window.open($scope.doc.remoteDetails, '_blank');
-        };
-
-        $scope.canCart = function () {
-            return authService.hasPermission('process') && !$scope.isRemote;
         };
 
         $scope.addToCart = function () {
