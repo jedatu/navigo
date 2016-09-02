@@ -72,7 +72,7 @@ angular.module('voyager.util').
                     });
                 }
             });
-            actionFields = fields.join('&');
+            actionFields = fields.join(',');
             return actionFields;
         }
 
