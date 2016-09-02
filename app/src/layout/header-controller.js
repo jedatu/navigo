@@ -61,6 +61,7 @@ angular.module('voyager.layout')
 		_init();
 
 		function _init() {
+			_updateUserInfo();
 			//add queue observer
 			cartService.addObserver(_updateQueueTotal);
 			authService.addObserver(_updateUserInfo);
