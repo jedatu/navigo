@@ -1,8 +1,8 @@
-/*global angular, $, _ */
+'use strict';
 
 angular.module('voyager.filters').
     factory('filterService', function (translateService, facetService, $q, configService, rangeService, converter, $filter, sugar) {
-        'use strict';
+
         var filters = [];  //user selected filters
         var filterMap = {}; //quick lookup for filters
         var filterState = {};  //expanded/collapsed
