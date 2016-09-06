@@ -1,6 +1,7 @@
+'use strict';
+
 angular.module('voyager.filters').
     factory('filterStyle', function (config, facetService, configService, rangeService, filterService) {
-        'use strict';
 
         function _decorateFacets(facetValues, filter) {
             $.each(facetValues, function (i, facet) {
