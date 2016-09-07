@@ -1,8 +1,8 @@
-/*global angular */
+'use strict';
+
 angular.module('voyager.filters')
     .controller('FacetsCtrl', function ($scope, $uibModalInstance, selectedFilter, updateFilters, facetService, $location, translateService, usSpinnerService) {
 
-        'use strict';
         $scope.selectedFilter = translateService.getFieldName(selectedFilter.field);
         $scope.updateFilters = updateFilters;
 
