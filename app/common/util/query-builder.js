@@ -1,7 +1,7 @@
-/*global angular, $, _ */
+'use strict';
+
 angular.module('voyager.util').
     factory('queryBuilder', function (config, filterService, configService, sugar) {
-        'use strict';
 
         var actionFields = null;
         var selectPath = 'solr/v0/select';
