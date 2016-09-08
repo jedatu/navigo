@@ -35,6 +35,7 @@ describe('Open Publish to Portal for ArcGIS task', function() {
         element.all(by.css('[ng-model="param.value"]')).filter(function(ele){
             return ele.isDisplayed();
         }).then(function(filteredElement){
+            filteredElement[0].clear();
             filteredElement[0].sendKeys("https://voyager.maps.arcgis.com");
             filteredElement[1].sendKeys("jason_voyager");
             filteredElement[2].sendKeys("ago4jason");
