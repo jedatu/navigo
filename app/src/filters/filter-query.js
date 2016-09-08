@@ -1,6 +1,7 @@
+'use strict';
+
 angular.module('voyager.filters').
     factory('filterQuery', function (config, facetService, configService, sugar, $http, queryBuilder) {
-        'use strict';
 
         function _getQueryString(params, filters, bounds) {
             delete params.fq; //use filter params

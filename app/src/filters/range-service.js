@@ -1,8 +1,8 @@
-/*global angular, $ */
+'use strict';
 
 angular.module('voyager.filters').
     factory('rangeService', function (config, $http, configService, translateService, $q) {
-        'use strict';
+
         var _rangeLimits = {};
         var _statsFields = {};
 

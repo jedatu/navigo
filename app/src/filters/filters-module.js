@@ -1,4 +1,3 @@
-/*global angular */
 'use strict';
 angular.module('voyager.filters', ['voyager.util','ui-rangeSlider', 'voyager.config', 'blockUI'])
     .config(function(blockUIConfig) {

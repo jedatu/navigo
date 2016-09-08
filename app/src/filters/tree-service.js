@@ -1,8 +1,8 @@
-/*global angular, $, _, console */
+'use strict';
 
 angular.module('voyager.filters').
     factory('treeService', function (config, $http, configService, $q, solrGrunt, sugar, facetService) {
-        'use strict';
+
         var _tree= {};
         var _fields = {};
         var _trees = {};

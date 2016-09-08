@@ -1,8 +1,7 @@
-/*global angular, $ */
+'use strict';
 
 angular.module('voyager.filters').
     factory('facetService', function ($http, config, translateService, $injector) {
-        'use strict';
 
         var QueryBuilder;
 

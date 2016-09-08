@@ -1,6 +1,7 @@
+'use strict';
+
 angular.module('taskRunner')
     .controller('JobsCtrl', function ($scope, jobService, $stateParams, config, $window, taskService, sugar, usSpinnerService, urlUtil, $location) {
-        'use strict';
 
         $scope.display = $location.search().disp || 'default';
 
