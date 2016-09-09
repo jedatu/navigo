@@ -10,7 +10,7 @@ describe('Run Create GeoPDF Task', function() {
     var server = Util.getServer();
 
     beforeEach(function() {
-        searchPage.addAllToQueue('title:Hydrography_Lines');
+        searchPage.addAllToQueue('title:Hydrography_Lines and format:application/vnd.esri.shapefile');
         browser.get(server + '#/queue?disp=default&task=create_geopdf');
         Util.waitForSpinner();
     });

@@ -11,6 +11,7 @@ angular.module('voyager.component')
 				var windowEl;
 				var detailTopStickyContent;
 				var detailTabContentNav;
+				var detailTabContentNavClone;
 				var detailTabContentNavTipPoint;
 				var detailTabContentNavHeight;
 				var detailSecondaryColumn;
@@ -79,8 +80,6 @@ angular.module('voyager.component')
 
 				function _scroll() {
 
-					var scrollTop = $document.scrollTop();
-
 					var $nameHeader = angular.element('h1[name=doc-header]');
 					var $floatingNav = angular.element('.floating-nav');
 
@@ -96,15 +95,18 @@ angular.module('voyager.component')
 					}
 
 					// fix the tabs to remain visible if scrolled below
-					if(detailTabContentNav.offset().top < floatingNavBottom) {
-						var fixedTop = floatingNavBottom - scrollTop;
-						detailTabContentNav.css({ top: fixedTop + 'px', position: 'fixed'});
+					if((detailTabContentNav.offset().top < floatingNavBottom) && (!detailTabContentNavClone)) {
+						detailTabContentNavClone = detailTabContentNav.clone().prop('id', detailTabContentNav.prop('id') + '-clone');
+						detailTabContentNavClone = detailTabContentNavClone.insertBefore(detailTabContentNav);
+						detailTabContentNav.addClass('fixed');
 					}
 
 					// remove the fixed tabs if scrolled back up
 					var $divider = angular.element('hr[name=divider]');
-					if($divider.offset().top > detailTabContentNav.offset().top) {
-						detailTabContentNav.css({ top: 'auto', position: 'static'});
+					if(($divider.offset().top > detailTabContentNav.offset().top) && (detailTabContentNavClone)) {
+						detailTabContentNavClone.remove();
+						detailTabContentNavClone = null;
+						detailTabContentNav.removeClass('fixed');
 					}
 				}
 

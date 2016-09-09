@@ -10,7 +10,7 @@ angular.module('voyager.details')
 
         loading.show('#working');
         $scope.imagePrefix = config.root + 'vres/mime/icon/';
-        $scope.showTab = 'summary';
+        $scope.showTab = '';
 
         $scope.demo = config.demo;
         $scope.rate = {};
@@ -276,7 +276,15 @@ angular.module('voyager.details')
                     doc.defaultThumb = true;
                 }
 
-                $scope.actions = detailsActions.getActions($scope.doc);
+                $scope.doc.canCart = authService.hasPermission('process');
+
+                $scope.actions = detailsActions.getActions($scope.doc, $scope);
+
+                var addAction = _.find($scope.actions, {'action': 'add'});
+                $scope.canCart = $scope.doc.canCart && !$scope.isRemote && addAction.visible;
+
+                // don't show add action in drop down.  Has its own button.  Visible by canCart above.
+                addAction.visible = false;
 
                 cartService.fetchQueued([{id:doc.id}]).then(function(items) {
                     doc.inCart = items.length > 0;
@@ -298,7 +306,21 @@ angular.module('voyager.details')
                         root = 'http://' + root;
                     }
                 }
-                $scope.metadataUrl = root + 'content/' + $scope.doc.id + '/meta.xml?style=' + $scope.theme.selected;
+
+                $scope.metadataUrl = $scope.doc.content;
+
+                if($scope.metadataUrl) {
+                    if (($scope.metadataUrl.indexOf('/', $scope.metadataUrl.length - 1)) === -1) {
+                        $scope.metadataUrl += '/';
+                    }
+
+                    $scope.metadataUrl += 'meta.xml?style=' + $scope.theme.selected;
+
+                    if ($scope.doc.shard) {
+                        $scope.metadataUrl += '&shard=' + $scope.doc.shard;
+                    }
+                }
+
             });
         }
 
@@ -306,10 +328,6 @@ angular.module('voyager.details')
             // TODO what to do here to authenticate to the remote?
             // TODO what about display config?
             $window.open($scope.doc.remoteDetails, '_blank');
-        };
-
-        $scope.canCart = function () {
-            return authService.hasPermission('process') && !$scope.isRemote;
         };
 
         $scope.addToCart = function () {
@@ -456,8 +474,10 @@ angular.module('voyager.details')
         }
 
         function _setSelectedTab() {
-            if (!$scope.displayFields.length) {
-                if ($scope.doc.hasMetadata && $scope.canViewMetadata) {
+            if(!$scope.showTab) {
+                if ($scope.displayFields.length) {
+                    $scope.showTab = 'summary';
+                } else if ($scope.doc.hasMetadata && $scope.canViewMetadata) {
                     $scope.showTab = 'metadata';
                 } else if ($scope.hasRelationships) {
                     $scope.showTab = 'relationship';

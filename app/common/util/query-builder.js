@@ -1,8 +1,9 @@
-/*global angular, $, _ */
+'use strict';
+
 angular.module('voyager.util').
     factory('queryBuilder', function (config, filterService, configService, sugar) {
-        'use strict';
 
+        var actionFields = null;
         var selectPath = 'solr/v0/select';
 
         var getFacetParams = function (field) {
@@ -54,6 +55,27 @@ angular.module('voyager.util').
             return input;
         };
 
+        function getActionFields() {
+            if (actionFields !== null) {
+                return actionFields;
+            }
+            var fields = [];
+            var actions = config.docActions;
+            var pos = -1;
+            var fieldArr = [];
+            actions.forEach(function(action) {
+                pos = action.visible.indexOf('doc.');
+                if (pos > -1) {
+                    fieldArr = action.visible.split('doc.');
+                    fieldArr.forEach(function(field) {
+                        fields.push(field.substring(0, field.indexOf(' ')));
+                    });
+                }
+            });
+            actionFields = fields.join(',');
+            return actionFields;
+        }
+
         function build2(solrParams, page, itemsPerPage, sortDirection, sortField) {
             if(solrParams) {
                 delete solrParams.fq; //filter service will apply filter params below
@@ -68,9 +90,9 @@ angular.module('voyager.util').
                 var start = (page - 1) * itemsPerPage;
                 rows = itemsPerPage;
                 queryString += '&start=' + start;
-                queryString += '&fl=id,title, name:[name],format,abstract,fullpath:[absolute],thumb:[thumbURL], path_to_thumb, subject,download:[downloadURL],format_type,bytes,modified,shard:[shard],bbox,geo:[geo],format_category, component_files, ags_fused_cache, linkcount__children, contains_name, wms_layer_name,tag_flags,hasMissingData,layerURL:[lyrURL]';
+                queryString += '&fl=id,title, name:[name],format,abstract,fullpath:[absolute],absolute_path:[absolute],thumb:[thumbURL], path_to_thumb, subject,download:[downloadURL],format_type,bytes,modified,shard:[shard],bbox,geo:[geo],format_category, component_files, ags_fused_cache, linkcount__children, contains_name, wms_layer_name,tag_flags,hasMissingData,layerURL:[lyrURL]';
                 queryString += configService.getSolrFields();
-
+                queryString += getActionFields();  // add fields configured for action display
                 //prevent adding extra comma when table field name is empty
                 if (configService.getTableFieldNames().length) {
                     queryString += ',' + configService.getTableFieldNames().join(',');

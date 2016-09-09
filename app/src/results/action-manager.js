@@ -7,9 +7,14 @@
     function actionManager($window, $analytics, $uibModal, authService, sugar) {
 
         function _isVisible(action, scope) {
-            if (action.visible === true) {
+            var visible = action.visible;
+            if (visible === true) {
                 return true;
+            } else if (visible.indexOf('doc.') > -1) {
+                // expression
+                return scope.$eval(visible);
             }
+
             return scope.doc[action.visible];
         }
 

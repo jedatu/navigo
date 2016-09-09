@@ -226,9 +226,7 @@ describe('DetailsCtrl', function () {
             spyOn(authServiceSpy, 'hasPermission').and.returnValue(true);
             loadController();
 
-            var canCart = scope.canCart();
-
-            expect(canCart).toBeTruthy();  //auth http mock response has process = true above
+            expect(scope.canCart).toBeTruthy();  //auth http mock response has process = true above
         });
 
         it('should add to cart', function() {
