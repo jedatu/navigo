@@ -1,5 +1,3 @@
-/*global angular, _ */
-
 'use strict';
 
 angular.module('voyager.home')

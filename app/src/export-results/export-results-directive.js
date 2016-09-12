@@ -1,4 +1,3 @@
-/*global angular, _ */
 'use strict';
 angular.module('voyager.search')
 	.directive('vsExportResults', function(usSpinnerService, searchService, $location, exportService) {

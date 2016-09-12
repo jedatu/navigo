@@ -1,9 +1,8 @@
-/*global angular, _*/
+'use strict';
 
 angular.module('cart')
     .controller('CartCtrl', function ($scope, cartService, searchService, $location, config, $log) {
 
-        'use strict';
         $scope.hasError = false;
         $scope.loading = true;
         $scope.cartName = config.ui.list.name.toLowerCase();
