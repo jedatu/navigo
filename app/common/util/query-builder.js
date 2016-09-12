@@ -68,7 +68,9 @@ angular.module('voyager.util').
                 if (pos > -1) {
                     fieldArr = action.visible.split('doc.');
                     fieldArr.forEach(function(field) {
-                        fields.push(field.substring(0, field.indexOf(' ')));
+                        if (field !== '' && !sugar.containsAny(field, ['canCart','isService','hasDownload','isEsriLayer'])) {
+                            fields.push(field.substring(0, field.indexOf(' ')));
+                        }
                     });
                 }
             });

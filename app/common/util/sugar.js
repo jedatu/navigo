@@ -244,6 +244,21 @@ angular.module('voyager.util').
             isValidDate: function(dateString) {
                 var regEx = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/;
                 return dateString.match(regEx) !== null;
+            },
+
+            contains: function(check, value) {
+                return check.indexOf(value) > -1;
+            },
+
+            containsAny: function(check, values) {
+                var contains = false;
+                for (var i=0; i<values.length; i++) {
+                    contains = check.indexOf(values[i]) > -1;
+                    if (contains) {
+                        break;
+                    }
+                }
+                return contains;
             }
 
         };
