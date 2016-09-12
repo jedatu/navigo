@@ -138,6 +138,9 @@
 .icon-queue_status_waiting:before {
 	content: "\e623";
 }
+.icon-queue_status_radioactive:before {
+	content: "\e633";
+}
 .icon-map_pan:before {
 	content: "\e624";
 }
@@ -200,6 +203,15 @@
 }
 .icon-content_database:before {
 	content: "\e631";
+}
+.icon-content_web_service:before {
+	content: "\e630";
+}
+.icon-content_database:before {
+	content: "\e631";
+}
+.icon-cone:before {
+	content: "\e634";
 }
 
 .icon-map_pan:before {

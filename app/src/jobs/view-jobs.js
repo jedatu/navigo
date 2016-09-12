@@ -24,8 +24,10 @@ angular.module('taskRunner')
                     return {'icon':'icon-queue_status_cancled','color':'black'};
                 case 'WARNING':
                     return {'icon':'icon-queue_status_complete','color':'orange'};
-                default:
+                case 'SUCCESS':
                     return {'icon':'icon-queue_status_complete','color':'green'};
+                default:
+                    return {'icon':'icon-queue_status_radioactive','color':'slategray'};
             }
         }
 
