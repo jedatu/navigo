@@ -330,11 +330,19 @@ angular.module('voyager.search')
 						}
 
 						_searchBoundaryLayer.addTo(map);
+
 						$scope.search.place = $scope._bbox;
 
 						_addLayerMarkers(map, pointInx);
 
 						$scope._drawing = false;
+					});
+
+					map.on('layeradd', function () {
+						// dynamic basemaps produce image layers which overlap drawing and jeojson - force image layers behind
+						if(!config.map.config.cached) {
+							$('.leaflet-image-layer').css('z-index','-1');
+						}
 					});
 				}
 
