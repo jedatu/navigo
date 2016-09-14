@@ -16,6 +16,9 @@ angular.module('voyager.map').
 
         return {
             getMapService: function (mapInfo) {
+                if (angular.isUndefined(mapInfo.path)) {
+                    mapInfo.path = mapInfo.fullpath;
+                }
                 mapInfo.path = mapInfo.path.replace(/\+/g, '%20');
                 mapInfo.root = mapInfo.path;
                 if (mapInfo.format.indexOf('layer') > -1) {
