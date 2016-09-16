@@ -108,11 +108,6 @@
             if(angular.isDefined(doc.shard) && doc.shard !== '[not a shard request]') {
                 link += '&shard=' + doc.shard;
                 doc.isRemote = catalogService.isRemote(doc.shard);
-                //var local = config.root;
-                //local = local.replace('http://','').replace('https://','');
-                //if (doc.shard.toLowerCase().indexOf('local') === -1 && doc.shard.indexOf(local) === -1) {
-                //    doc.isRemote = true;
-                //}
             }
             return link;
         }
