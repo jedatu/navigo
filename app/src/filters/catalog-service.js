@@ -2,10 +2,26 @@
 angular.module('voyager.filters')
     .factory('catalogService', function (config, $http, $location, $q) {
 
+        var _catalogLookup = {};
+        var _cachedCatalogs = [];
+        var _fetched = false;
+
         function _fetch() {
-            return $http.get(config.root + 'api/rest/index/config/federation.json').then(function(res) {
-                return res.data.servers;
-            });
+            if (!_fetched) {
+                return $http.get(config.root + 'api/rest/index/config/federation.json').then(function(res) {
+                    var catalogs = res.data.servers;
+                    catalogs.forEach(function(catalog) {
+                        if (angular.isDefined(catalog.url)) {
+                            _catalogLookup[catalog.url.replace('http://','').replace('https://','')] = true;
+                        }
+                    });
+                    _cachedCatalogs = res.data.servers;
+                    _fetched = true;
+                    return res.data.servers;
+                });
+            } else {
+                return $q.when(_cachedCatalogs);
+            }
         }
 
         function _loadRemoteLocations() {
@@ -34,8 +50,18 @@ angular.module('voyager.filters')
             }
         }
 
+        function _isRemote(shard) {
+            var catalog = shard.replace('http://','').replace('https://','').toLowerCase();
+            var pos = catalog.indexOf('solr');
+            if (pos > -1) {
+                catalog = catalog.substring(0, pos);
+            }
+            return angular.isDefined(_catalogLookup[catalog]);
+        }
+
         return {
             fetch: _fetch,
-            loadRemoteLocations: _loadRemoteLocations
+            loadRemoteLocations: _loadRemoteLocations,
+            isRemote: _isRemote
         };
     });

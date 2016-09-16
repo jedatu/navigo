@@ -227,8 +227,6 @@ describe('Filters:', function () {
             var url = new RegExp(escapeRegExp('root/solr/v0/select?shards=shard,shard&voyager.config.id=default&rows=0&facet=true'));
             httpMock.expectJSONP(url).respond(res);  // solr filter query
 
-            // TODO why called again?
-            httpMock.expectGET(new RegExp(escapeRegExp('root/api/rest/index/config/federation.json'))).respond({servers:[{url:'url/'}]}); // catalogs call
             _flushHttp(httpMock);
 
             cfg.settings.data.showFederatedSearch = false; // set false so it doesn't affect other tests
@@ -249,6 +247,7 @@ describe('Filters:', function () {
             var res = {facet_counts:{facet_fields:{rangeField:['facet',1]}}};
             var url = new RegExp(escapeRegExp('root/solr/v0/select?voyager.config.id=default&rows=0&facet=true'));
             httpMock.expectJSONP(url).respond(res);  // solr filter query
+
             _flushHttp(httpMock);
 
             cfg.settings.data.filters = [];
@@ -288,6 +287,7 @@ describe('Filters:', function () {
 
             var url = new RegExp(escapeRegExp('root/solr/v0/select?voyager.config.id=default&rows=0&facet=true'));
             httpMock.expectJSONP(url).respond(res);  // solr filter query
+
             _flushHttp(httpMock);
 
             cfg.settings.data.filters = [];
@@ -334,6 +334,7 @@ describe('Filters:', function () {
 
             res = {facet_counts:{facet_fields:{field1:['facet2',5]}}};
             httpMock.expectJSONP(url).respond(res);  // solr filter query
+
             _flushHttp(httpMock);
 
             expect(scope.filters[0].name).toBe(facet.name);

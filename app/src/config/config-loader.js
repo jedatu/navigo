@@ -1,6 +1,6 @@
 'use strict';
 angular.module('voyager.config').
-    factory('configLoader', function ($http, $q, config, configService, savedSearchQuery, $location, $timeout, translateService, savedSearchService) {
+    factory('configLoader', function ($http, $q, config, configService, savedSearchQuery, $location, $timeout, translateService, savedSearchService, catalogService) {
 
         var _configId;
         var _prepared = false;
@@ -46,6 +46,7 @@ angular.module('voyager.config').
                 });
                 promises.push(promise);
             });
+            promises.push(catalogService.fetch());
 
             return $q.all(promises);
         }
