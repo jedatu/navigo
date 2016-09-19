@@ -7,12 +7,13 @@ angular.module('voyager.search')
 	function _loadSavedSearches() {
 		savedSearchService.getSavedSearches().then(function(savedSearches) {
 			var global = [], personal = [], permissions, all = '_EVERYONE';
+			var userHasSaveSearch = authService.hasPermission('save_search');
 			$.each(savedSearches, function(index, saved) {
-				permissions = _.indexBy(saved.share);
-				if(angular.isDefined(permissions[all])) {
-					global.push(saved);
-				} else {
+				if((saved.owner === authService.getUser().name) && (userHasSaveSearch))
+				{
 					personal.push(saved);
+				} else {
+					global.push(saved);
 				}
 
 				if (global.length === 6 && personal.length === 6) {
