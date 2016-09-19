@@ -143,14 +143,13 @@ describe('Details', function() {
 
                 nextLink.click();
                 browser.waitForAngular();
-
-                var firstRecentlyViewedElement = element.all(by.repeater('doc in recent')).first();
+                var firstRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(0).element(by.binding('doc.name'));
                 firstRecentlyViewedElement.click();
                 browser.waitForAngular();
 
                 expect(detailsPage.getDocName().getInnerHtml()).toEqual(firstName);
 
-                var secondRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(1);
+                var secondRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(1).element(by.binding('doc.name'));
                 secondRecentlyViewedElement.click();
                 browser.waitForAngular();
 
@@ -338,38 +337,25 @@ describe('Details', function() {
         firstResult.click();
         browser.waitForAngular();
 
-        //var detailFields = element.all(by.binding('field.name'));
-        var detailFields = element.all(by.repeater('field in displayFields'));
-        detailFields.getText().then(function(data) {
-            var pathData;
-
-            var dataLength = data.length;
-            for(var i=0; i<dataLength; i++)
-            {
-                var dataSplit = data[i].split('\n');
-                if(dataSplit[0] === 'Path')
-                {
-                    pathData = dataSplit[1];
-                    break;
-                }
-            }
-
-            $('a.flyout_trigger span.icon-tools').click();
+        var pathField = element(by.cssContainingText('tr[ng-repeat*="field in displayFields"]', 'Absolute Path')).element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
+        pathField.getText().then(function(data) {
+            var pathData = data;
 
             var openButton = element.all(by.cssContainingText('a', 'Open')).first();
+            $('a.flyout_trigger span.icon-tools').click();
             browser.wait(protractor.ExpectedConditions.elementToBeClickable(openButton), 10000);
             openButton.click().then(function() {
+
                 browser.getAllWindowHandles().then(function (handles) {
                     var newWindowHandle = handles[1];
                     browser.switchTo().window(newWindowHandle).then(function () {
-                        expect(browser.driver.getCurrentUrl()).toEqual(pathData);
+                        expect(browser.getWindowHandle()).toBe(handles[1]);
+                        //expect(browser.driver.getCurrentUrl()).toBe(pathData);
                     });
 
                 });
 
             });
-
         });
-
     });
 });

@@ -17,7 +17,8 @@ var Util = (function () {
             //return 'http://localhost:8888/navigo/';
             //console.log("BROWSER URL", browser.params.url);
             //return browser.params.url;
-            return 'http://127.0.0.1:9000/';
+            return 'http://localhost:9000/';
+            //return 'http://voyagerdemo.com/daily/';
         },
 
         loginToVoyager: function(username, password) {
