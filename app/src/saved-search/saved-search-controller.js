@@ -6,7 +6,7 @@ angular.module('voyager.search')
 
 	function _loadSavedSearches() {
 		savedSearchService.getSavedSearches().then(function(savedSearches) {
-			var global = [], personal = [], permissions, all = '_EVERYONE';
+			var global = [], personal = [];
 			var userHasSaveSearch = authService.hasPermission('save_search');
 			$.each(savedSearches, function(index, saved) {
 				if((saved.owner === authService.getUser().name) && (userHasSaveSearch))
