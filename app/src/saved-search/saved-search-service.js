@@ -59,7 +59,6 @@ angular.module('voyager.search').
                 queryString += '&fq=title:' + name;
             }
             queryString += '&wt=json&json.wrf=JSON_CALLBACK';
-            console.log("SAVED SEARCH QUERY: ", queryString);
             return queryString;
         }
 
