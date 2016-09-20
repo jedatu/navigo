@@ -1,28 +1,18 @@
-/*global angular, $, _ */
+/*global angular*/
 'use strict';
 
 angular.module('voyager.search')
 .controller('SavedSearchCtrl', function ($scope, $location, filterService, savedSearchService, authService, $analytics, recentSearchService) {
 
+	var vm = this;
+
 	function _loadSavedSearches() {
-		savedSearchService.getSavedSearches().then(function(savedSearches) {
-			var global = [], personal = [], permissions, all = '_EVERYONE';
-			$.each(savedSearches, function(index, saved) {
-				permissions = _.indexBy(saved.share);
-				if(angular.isDefined(permissions[all])) {
-					global.push(saved);
-				} else {
-					personal.push(saved);
-				}
-
-				if (global.length === 6 && personal.length === 6) {
-					return false;
-				}
-			});
-			$scope.savedSearches = global;
-			$scope.personalSavedSearches = personal;
+		savedSearchService.getSavedSearches().then(function(savedSearches){
+			var sortedSavedSearches = savedSearchService.sortSavedSearches(savedSearches);
+			vm.savedSearches = sortedSavedSearches.global;
+			vm.personalSavedSearches = sortedSavedSearches.personal;
 		});
-
+		
 		$scope.isAnonymous = authService.isAnonymous();
 	}
 
@@ -32,11 +22,11 @@ angular.module('voyager.search')
 	savedSearchService.addObserver(_loadSavedSearches);
 	recentSearchService.addObserver(_loadSavedSearches);
 
-	$scope.applySavedSearch = function(saved) {
+	vm.applySavedSearch = function(saved) {
 		savedSearchService.applySavedSearch(saved, $scope);
 	};
 
-	$scope.deleteSearch = function(id) {
+	vm.deleteSearch = function(id) {
 		savedSearchService.deleteSearch(id).then(function(){
 			_loadSavedSearches();
 			$analytics.eventTrack('saved-search', {
@@ -45,13 +35,13 @@ angular.module('voyager.search')
 		});
 	};
 
-	$scope.dragControlListeners = {
+	vm.dragControlListeners = {
 		enabled: true,
 		accept: function() {
-			return $scope.dragControlListeners.enabled;
+			return vm.dragControlListeners.enabled;
 		},
 	    orderChanged: function(eventObj) {
-			var list = $scope.personalSavedSearches,
+			var list = vm.personalSavedSearches,
 				index = eventObj.dest.index,
 				beforeId = null,
 				afterId = null;
@@ -63,10 +53,10 @@ angular.module('voyager.search')
 				afterId = list[index+1].id;
 			}
 
-			$scope.dragControlListeners.enabled = false;
+			vm.dragControlListeners.enabled = false;
 
 			savedSearchService.order(list[index].id, beforeId, afterId).then(function(){
-				$scope.dragControlListeners.enabled = true;
+				vm.dragControlListeners.enabled = true;
 			});
 	    }
 	};
@@ -77,7 +67,7 @@ angular.module('voyager.search')
 		recentSearchService.removeObserver(_loadSavedSearches);
 	});
 
-	$scope.criteriaMatch = function(term) {
+	vm.criteriaMatch = function(term) {
 		return function(item) {
 			return angular.isUndefined(term) ? true : (item.title.toLowerCase().indexOf(term.toLowerCase()) > -1);
 		};

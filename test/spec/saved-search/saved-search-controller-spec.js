@@ -33,7 +33,7 @@ describe('Controller: SavedSearchCtrl', function () {
     var item = {id: 'id', place: '0 0 0 0'};
 
     function initCtrl() {
-        $controller('SavedSearchCtrl', {
+        var savedSearchController = $controller('SavedSearchCtrl', {
             $scope: $scope
         });
 
@@ -45,33 +45,35 @@ describe('Controller: SavedSearchCtrl', function () {
 
         $http.flush();
         $timeout.flush();
+
+        return savedSearchController;
     }
 
     it('should init', function () {
         //cartService.addItems([{id:'id'}]);
-        initCtrl();
+        var ctrl = initCtrl();
 
-        expect($scope.personalSavedSearches).toEqual([item]);
+        expect(ctrl.savedSearches).toEqual([item]);
 
     });
 
     it('should apply saved search', function () {
         //cartService.addItems([{id:'id'}]);
-        initCtrl();
+        var ctrl = initCtrl();
 
         spyOn(savedSearchService,'applySavedSearch').and.callThrough();
 
         var saved = {id: 'id', query:'query'};
         saved.display = cfg.settings.data;
 
-        $scope.applySavedSearch(saved);
+        ctrl.applySavedSearch(saved);
 
         expect(savedSearchService.applySavedSearch).toHaveBeenCalledWith(saved, $scope);
     });
 
     it('should delete saved search', function () {
         //cartService.addItems([{id:'id'}]);
-        initCtrl();
+        var ctrl = initCtrl();
 
         spyOn(savedSearchService,'deleteSearch').and.callThrough();
 
@@ -80,7 +82,7 @@ describe('Controller: SavedSearchCtrl', function () {
         $http.expectJSONP(new RegExp('ssearch')).respond({response: {docs: [item]}}); //reload
         $http.expectJSONP(new RegExp('ssearch')).respond({response: {docs: [item]}}); //TODO firing too many?
 
-        $scope.deleteSearch(saved.id);
+        ctrl.deleteSearch(saved.id);
 
         $http.flush();
 
@@ -91,14 +93,14 @@ describe('Controller: SavedSearchCtrl', function () {
         //cartService.addItems([{id:'id'}]);
         spyOn(savedSearchService,'order').and.callThrough();
 
-        initCtrl();
+        var ctrl = initCtrl();
 
         $http.expectPOST(new RegExp('ssearch')).respond({response: {docs: [item]}}); //order
 
-        $scope.personalSavedSearches = [{id:1},{id:2}];
+        ctrl.personalSavedSearches = [{id:1},{id:2}];
 
-        $scope.dragControlListeners.accept();
-        $scope.dragControlListeners.orderChanged({dest:{index:1}});
+        ctrl.dragControlListeners.accept();
+        ctrl.dragControlListeners.orderChanged({dest:{index:1}});
 
         $http.flush();
 

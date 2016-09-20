@@ -247,6 +247,30 @@ angular.module('voyager.search').
                     data += 'after=' + afterId;
                 }
                 return sugar.postForm('api/rest/display/ssearch/' + id + '/order', data);
+            },
+            sortSavedSearches: function(savedSearches) {
+                var global = [], personal = [];
+                var userHasSaveSearch = authService.hasPermission('save_search');
+                var authUser = authService.getUser();
+                $.each(savedSearches, function(index, saved) {
+                    if((authUser) && (userHasSaveSearch))
+                    {
+                        if(saved.owner === authUser.name) {
+                            personal.push(saved);
+                        } else {
+                            global.push(saved);
+                        }
+                    } else {
+                        global.push(saved);
+                    }
+                });
+
+                var sortedSavedSearches = {
+                    global: global,
+                    personal: personal
+                };
+
+                return sortedSavedSearches;
             }
         };
     });
