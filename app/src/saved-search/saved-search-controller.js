@@ -7,7 +7,7 @@ angular.module('voyager.search')
 	var vm = this;
 
 	function _loadSavedSearches() {
-		vm.isAnonymous = authService.isAnonymous();
+		$scope.isAnonymous = authService.isAnonymous();
 
 		return savedSearchService.getSavedSearches().then(function(savedSearches){
 			var sortedSavedSearches = savedSearchService.sortSavedSearches(savedSearches);
