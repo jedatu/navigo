@@ -61,21 +61,21 @@
 						</li>
 					</ul>
 				</article>
-				<article ng-hide="showRecent" ng-controller="HomeSavedSearchCtrl">
-					<ul ng-show="personalSavedSearches.length">
-						<li ng-repeat="search in personalSavedSearches">
-							<a href="javascript:;" ng-if="hasPermission('save_search')" ng-click="deleteSearch(search.id)" class="favorite_link">
+				<article ng-hide="showRecent" ng-controller="SavedSearchCtrl as homeSavedSearch">
+					<ul ng-show="homeSavedSearch.personalSavedSearches.length">
+						<li ng-repeat="search in homeSavedSearch.personalSavedSearches | limitTo:6">
+							<a href="javascript:;" ng-if="homeSavedSearch.hasPermission('save_search')" ng-click="homeSavedSearch.deleteSearch(search.id)" class="favorite_link">
 								<span class="icon-heart_filled"></span>
 							</a>
-							<a href="javascript:;" class="underline" ng-click="applySavedSearch(search)"><em class="txt" ng-bind="::search.title"></em></a>
+							<a href="javascript:;" class="underline" ng-click="homeSavedSearch.applySavedSearch(search)"><em class="txt" ng-bind="::search.title"></em></a>
 						</li>
 					</ul>
-					<ul ng-hide="personalSavedSearches.length">
-						<li ng-repeat="search in savedSearches">
-							<a href="javascript:;" ng-if="hasPermission('manage')" ng-click="deleteSearch(search.id)" class="favorite_link">
+					<ul ng-hide="homeSavedSearch.personalSavedSearches.length">
+						<li ng-repeat="search in homeSavedSearch.savedSearches | limitTo:6">
+							<a href="javascript:;" ng-if="homeSavedSearch.hasPermission('manage')" ng-click="homeSavedSearch.deleteSearch(search.id)" class="favorite_link">
 								<span class="icon-heart_filled"></span>
 							</a>
-							<a href="javascript:;" class="underline" ng-click="applySavedSearch(search)"><em class="txt" ng-bind="::search.title"></em></a>
+							<a href="javascript:;" class="underline" ng-click="homeSavedSearch.applySavedSearch(search)"><em class="txt" ng-bind="::search.title"></em></a>
 						</li>
 					</ul>
 				</article>
