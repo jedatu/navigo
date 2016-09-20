@@ -255,7 +255,7 @@ angular.module('voyager.search').
                 $.each(savedSearches, function(index, saved) {
                     if((authUser) && (userHasSaveSearch))
                     {
-                        if(saved.owner === authService.getUser().name) {
+                        if(saved.owner === authUser.name) {
                             personal.push(saved);
                         } else {
                             global.push(saved);
