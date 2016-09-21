@@ -47,7 +47,6 @@ angular.module('voyager.search').directive('savedContent', function(authService)
 			function _syncState() {
 				scope.isAnonymous = authService.isAnonymous();
 				scope.canSave = authService.hasPermission('save_search');
-                console.log(scope.canSave);
 			}
 
 			authService.addObserver(_syncState);
