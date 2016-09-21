@@ -5,7 +5,7 @@
     <section class="tags" ng-if="canViewTags && pageFramework.showTags">
         <header style="line-height: 3em;">
             <h1 class="tag_header">Tags</h1>
-            <div ng-show="canTag && !isRemote" class="tag_icon">
+            <div ng-show="canTag && !doc.isRemote" class="tag_icon">
                 <a href="javascript:;" class="edit_link" ng-click="toggleEditTag()" ng-show="labels.length"><span class="icon-edit"></span>{{showEditTag && 'Hide' || 'Edit'}}</a>
                 <a href="javascript:;" class="edit_link" ng-show="!labels.length" ng-click="toggleEditTag()"><span class="icon-edit"></span>{{showEditTag && 'Hide' || 'Add'}}</a>
             </div>

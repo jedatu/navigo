@@ -14,7 +14,7 @@
 </li>
 <li class="details_tools">
     <ul ng-show="pageFramework.showTools" class="util_list">
-        <li ng-show="doc.hasDownload || doc.isMappable || (canFlag && !isRemote) || doc.isEsriLayer">
+        <li ng-show="doc.hasDownload || doc.isMappable || (canFlag && !doc.isRemote) || doc.isEsriLayer">
             <div class="hover_flyout" style="position: inherit">
                 <a href="javascript:;" class="btn btn-util icon-arrow flyout_trigger"><span class="icon-tools"></span>Tools</a>
                 <div class="flyout">
@@ -24,8 +24,8 @@
                             <li ng-repeat="action in actions" ng-if="action.visible">
                                 <a href="javascript:;" ng-click="action.do()">{{action.text}}</a>
                             </li>
-                            <li ng-show="canFlag && !isRemote && !doc.tag_flags"><a href="javascript:;" ng-click="showFlagModal()">Flag This</a></li>
-                            <li ng-show="canFlag && !isRemote && doc.tag_flags"><a href="javascript:;" ng-click="removeFlag()">Remove Flag</a></li>
+                            <li ng-show="canFlag && !doc.isRemote && !doc.tag_flags"><a href="javascript:;" ng-click="showFlagModal()">Flag This</a></li>
+                            <li ng-show="canFlag && !doc.isRemote && doc.tag_flags"><a href="javascript:;" ng-click="removeFlag()">Remove Flag</a></li>
                         </ul>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
         </li>
         <li ng-show="!doc.inCart && canCart"><a href="javascript:;" class="btn btn-util" role="button" ng-click="addToCart()"><span class="icon-plus"></span>{{uiText.add.text}}</span></a></li>
         <li ng-show="doc.inCart"><a href="javascript:;" class="btn btn-util" role="button" ng-click="removeFromCart()"><span class="icon-x"></span> Remove</a></li>
-        <li ng-if="isRemote"><a href="javascript:;" class="btn btn-util" role="button" ng-click="openOnRemote()">Open on Remote Server</a></li>
+        <li ng-if="doc.isRemote"><a href="javascript:;" class="btn btn-util" role="button" ng-click="openOnRemote()">Open on Remote Server</a></li>
         <!--
         <li>
             <div class="hover_flyout">

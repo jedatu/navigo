@@ -69,14 +69,6 @@ angular.module('voyager.details')
             } else {
                 angular.element('body').removeClass('no-header');
             }
-            var shard = $location.search().shard;
-            if (angular.isDefined(shard)) {
-                var local = config.root;
-                local = local.replace('http://','').replace('https://','');
-                if (shard.toLowerCase().indexOf('local') === -1 && shard.indexOf(local) === -1) {
-                    $scope.isRemote = true;
-                }
-            }
 
             _doLookup($stateParams.id);
             detailService.fetchMetadataStyles($stateParams.id).then(function(styleSheets) {
@@ -180,9 +172,10 @@ angular.module('voyager.details')
         function _doLookup(id) {
             detailService.lookup(id, ',*', $stateParams.shard, $stateParams.disp).then(function (data) {
                 var doc = data.data.response.docs[0];
+                resultsDecorator.decorate([doc], []);
 
                 var shardInfo = data.data['shards.info'];
-                if(shardInfo) {
+                if(shardInfo && doc.isRemote) {
                     _.each(shardInfo, function(shard) {
                         doc.remoteDetails = shard.shardAddress;
                         doc.remoteDetails = doc.remoteDetails.substring(0,doc.remoteDetails.indexOf('/solr'));
@@ -231,22 +224,6 @@ angular.module('voyager.details')
                 $scope.showMap = $scope.hasBbox || $scope.doc.isMappable;
 
                 $scope.getAction = 'Download';
-                if(angular.isDefined(doc.download)) {
-                    doc.hasDownload = true;
-                    if(doc.download.indexOf('file:') === 0) {
-                        doc.canOpen = true;
-                        $scope.getAction = 'Open';
-                    }
-                }
-
-                if(angular.isDefined(doc.layerURL)) {
-                    doc.isEsriLayer = true;
-                }
-
-                //TODO remove - doc.download should now have the stream url
-                //if(doc.format_type === 'File' && doc.format_category === 'GIS' && doc.component_files && doc.component_files.length > 0) {
-                //    doc.hasDownload = true;
-                //}
 
                 $scope.recent = detailService.getRecent();
                 resultsDecorator.decorate($scope.recent, []);
