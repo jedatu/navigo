@@ -25,6 +25,13 @@ angular.module('voyager.details')
                             //TODO if we can map it do it by default
                             geoLayer = mapUtil.drawGeoJson(map, geo, true, undefined, true);
                         });
+
+                        map.on('layeradd', function () {
+                            // dynamic basemaps produce image layers which overlap drawing and jeojson - force image layers behind
+                            if(!config.map.config.cached) {
+                                $('.leaflet-image-layer').css('z-index','-1');
+                            }
+                        });
                     });
                 }
 
