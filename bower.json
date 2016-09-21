@@ -26,7 +26,6 @@
     "font-awesome": "~4.3.x",
     "jquery": "1.9.1",
     "json3": "~3.3.2",
-    "leaflet-dist": "~0.7.2",
     "leaflet.draw": "0.2.4",
     "lodash": "~2.4.1",
     "lodash-brass": "241.4.15",
