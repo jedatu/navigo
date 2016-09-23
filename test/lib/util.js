@@ -13,6 +13,25 @@ var Util = (function () {
             }, 30000);
         },
 
+        waitForUser: function() {
+            //wait for the user to be populated
+            var user = element(by.binding('vm.user.name'))
+            return browser.wait(function () {
+                return user.getText().then(function (text) {
+                    return text === 'admin';
+                });
+            }, 30000);
+        },
+
+        waitForElement: function(elem) {
+            //wait for an element to be present on the page
+            return browser.wait(function() {
+                return elem.isPresent().then(function(isPresent) {
+                    return isPresent;
+                });
+            }, 50000);
+        },
+
         getServer: function() {
             //return 'http://localhost:8888/navigo/';
             //console.log("BROWSER URL", browser.params.url);

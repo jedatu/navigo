@@ -12,11 +12,15 @@ describe('Details', function() {
     var newTimeout = 100000;
 
     beforeEach(function() {
-       originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
         jasmine.DEFAULT_TIMEOUT_INTERVAL = newTimeout;
     });
 
-    xit('should load details page', function() {
+    afterEach(function() {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    });
+
+    it('should load details page', function() {
         browser.get(server + '#/search?view=card&disp=default');
 
         Util.waitForSpinner();
@@ -26,7 +30,7 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
-        var firstResult = element.all(by.binding('doc[getNameToUse(doc, names)]')).first();
+        var firstResult = searchPage.getFirstResult();
         var name;
 
         firstResult.getInnerHtml().then(function(text) {
@@ -40,21 +44,21 @@ describe('Details', function() {
             var thumbnailElement = element(by.css('.img-thumbnail'));
             expect(thumbnailElement.isDisplayed()).toBeTruthy();
 
-            var mapElement = element(by.css('.angular-leaflet-map'));
+            var mapElement = detailsPage.getLeafletMap();
             expect(mapElement.isDisplayed()).toBeTruthy();
 
-            var detailsButton = element(by.cssContainingText('a[ng-click*=changeTab]', 'Details'));
+            var detailsButton = detailsPage.getDetailsButton();
             expect(detailsButton.isDisplayed()).toBeTruthy();
             var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
             expect(detailsButton_Selected.isPresent()).toBeTruthy();
 
-            var detailsTable = element(by.id('details-table'));
+            var detailsTable = detailsPage.getDetailsTable();
             expect(detailsTable.isDisplayed()).toBeTruthy();
         });
     });
 
 
-    xit('should load the next result', function() {
+    it('should load the next result', function() {
         browser.get(server + '#/search?view=card&disp=default');
         Util.waitForSpinner();
         Util.waitForSpinner();
@@ -63,7 +67,7 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(1);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.get(0);
         var secondResult = resultList.get(1);
         var name;
@@ -74,8 +78,7 @@ describe('Details', function() {
             firstResult.click();
             browser.waitForAngular();
 
-            var nextLink = element(by.css('a[ng-click*=Next]'));
-            nextLink.click();
+            detailsPage.gotoNextResult();
             browser.waitForAngular();
 
             expect(detailsPage.getDocName().getInnerHtml()).toEqual(name);
@@ -83,7 +86,7 @@ describe('Details', function() {
     });
 
 
-    xit('should load the previous result', function() {
+    it('should load the previous result', function() {
         browser.get(server + '#/search?view=card&disp=default');
         Util.waitForSpinner();
         Util.waitForSpinner();
@@ -92,7 +95,7 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(1);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.get(0);
         var secondResult = resultList.get(1);
         var name;
@@ -103,8 +106,7 @@ describe('Details', function() {
             secondResult.click();
             browser.waitForAngular();
 
-            var previousLink = element(by.css('a[ng-click*=Previous]'));
-            previousLink.click();
+            detailsPage.gotoPreviousResult()
             browser.waitForAngular();
 
             expect(detailsPage.getDocName().getInnerHtml()).toEqual(name);
@@ -112,7 +114,7 @@ describe('Details', function() {
     });
 
 
-    xit('should load recently viewed results', function() {
+    it('should load recently viewed results', function() {
         browser.get(server + '#/search?view=card&disp=default');
         Util.waitForSpinner();
         Util.waitForSpinner();
@@ -121,7 +123,7 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(2);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.get(0);
         var firstName;
 
@@ -137,20 +139,18 @@ describe('Details', function() {
                 firstResult.click();
                 browser.waitForAngular();
 
-                var nextLink = element(by.css('a[ng-click*=Next]'));
-                nextLink.click();
+                detailsPage.gotoNextResult();
                 browser.waitForAngular();
 
-                nextLink.click();
+                detailsPage.gotoNextResult();
                 browser.waitForAngular();
-                var firstRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(0).element(by.binding('doc.name'));
-                firstRecentlyViewedElement.click();
+
+                detailsPage.gotoRecentlyViewed(0);
                 browser.waitForAngular();
 
                 expect(detailsPage.getDocName().getInnerHtml()).toEqual(firstName);
 
-                var secondRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(1).element(by.binding('doc.name'));
-                secondRecentlyViewedElement.click();
+                detailsPage.gotoRecentlyViewed(1);
                 browser.waitForAngular();
 
                 expect(detailsPage.getDocName().getInnerHtml()).toEqual(secondName);
@@ -159,7 +159,7 @@ describe('Details', function() {
     });
 
 
-    xit('should show metadata', function() {
+    it('should show metadata', function() {
         browser.get(server + '#/search?view=card&disp=default&fq=properties:hasMetadata');
 
         Util.waitForSpinner();
@@ -169,12 +169,12 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.first();
         firstResult.click();
         browser.waitForAngular();
 
-        var metadataButton = element(by.cssContainingText('a[ng-click*=changeTab]', 'Metadata'));
+        var metadataButton = detailsPage.getMetadataButton();
         expect(metadataButton.isPresent()).toBeTruthy();
 
         var metadataButton_Selected = element(by.cssContainingText('.selected', 'Metadata'));
@@ -186,12 +186,12 @@ describe('Details', function() {
         expect(metadataButton_Selected.isPresent()).toBeTruthy();
         expect(metadataTable.isDisplayed()).toBeTruthy();
 
-        var detailsButton = element(by.cssContainingText('a[ng-click*=changeTab]', 'Details'));
+        var detailsButton = detailsPage.getDetailsButton();
         expect(detailsButton.isDisplayed()).toBeTruthy();
         var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
         expect(detailsButton_Selected.isPresent()).toBeFalsy();
 
-        var detailsTable = element(by.id('details-table'));
+        var detailsTable = detailsPage.getDetailsTable();
         expect(detailsTable.isDisplayed()).toBeFalsy();
 
         detailsButton.click();
@@ -202,7 +202,7 @@ describe('Details', function() {
     });
 
 
-    xit('should show relationships', function() {
+    it('should show relationships', function() {
         browser.get(server + '#/search?disp=default&fq=linkcount__children:1&view=card');
 
         Util.waitForSpinner();
@@ -212,12 +212,12 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.first();
         firstResult.click();
         browser.waitForAngular();
 
-        var relationshipButton = element(by.cssContainingText('a[ng-click*=changeTab]', 'Relationships'));
+        var relationshipButton = detailsPage.getRelationshipsButton();
         expect(relationshipButton.isPresent()).toBeTruthy();
 
         var relationshipButton_Selected = element(by.cssContainingText('.selected', 'Relationships'));
@@ -229,12 +229,12 @@ describe('Details', function() {
         expect(relationshipButton_Selected.isPresent()).toBeTruthy();
         expect(relationshipTable.isDisplayed()).toBeTruthy();
 
-        var detailsButton = element(by.cssContainingText('a[ng-click*=changeTab]', 'Details'));
+        var detailsButton = detailsPage.getDetailsButton();
         expect(detailsButton.isDisplayed()).toBeTruthy();
         var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
         expect(detailsButton_Selected.isPresent()).toBeFalsy();
 
-        var detailsTable = element(by.id('details-table'));
+        var detailsTable = detailsPage.getDetailsTable();
         expect(detailsTable.isDisplayed()).toBeFalsy();
 
         detailsButton.click();
@@ -245,7 +245,7 @@ describe('Details', function() {
     });
 
 
-    xit('should show schema', function() {
+    it('should show schema', function() {
         browser.get(server + '#/search?disp=default&fq=format:schema&view=card');
 
         Util.waitForSpinner();
@@ -255,16 +255,16 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.first();
         firstResult.click();
         browser.waitForAngular();
 
-        var schemaButton = element(by.cssContainingText('a[ng-click*=changeTab]', 'Schema'));
+        var schemaButton = detailsPage.getSchemaButton();
         expect(schemaButton.isPresent()).toBeTruthy();
 
         var schemaButton_Selected = element(by.cssContainingText('.selected', 'Schema'));
-        var schemaTable = element(by.id('schema-table'));
+        var schemaTable = detailsPage.getSchemaTable();
 
         expect(schemaButton_Selected.isPresent()).toBeFalsy();
         expect(schemaTable.isDisplayed()).toBeFalsy();
@@ -272,12 +272,12 @@ describe('Details', function() {
         expect(schemaButton_Selected.isPresent()).toBeTruthy();
         expect(schemaTable.isDisplayed()).toBeTruthy();
 
-        var detailsButton = element(by.cssContainingText('a[ng-click*=changeTab]', 'Details'));
+        var detailsButton = detailsPage.getDetailsButton();
         expect(detailsButton.isDisplayed()).toBeTruthy();
         var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
         expect(detailsButton_Selected.isPresent()).toBeFalsy();
 
-        var detailsTable = element(by.id('details-table'));
+        var detailsTable = detailsPage.getDetailsTable();
         expect(detailsTable.isDisplayed()).toBeFalsy();
 
         detailsButton.click();
@@ -288,7 +288,7 @@ describe('Details', function() {
     });
 
 
-    xit('should add to cart and remove from cart', function() {
+    it('should add to cart and remove from cart', function() {
         browser.get(server + '#/search?view=card&disp=default');
 
         Util.waitForSpinner();
@@ -298,12 +298,12 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.first();
         firstResult.click();
         browser.waitForAngular();
 
-        var addToCartButton = element(by.cssContainingText('a[ng-click*=addToCart]', 'Add to Cart'));
+        var addToCartButton = detailsPage.getAddToCartButton();
         detailsPage.getCartTotal().then(function(data){
             var originalCartTotal = data;
             addToCartButton.click();
@@ -311,7 +311,7 @@ describe('Details', function() {
             detailsPage.getCartTotal().then(function(data) {
                 expect(parseInt(originalCartTotal) + 1).toEqual(parseInt(data));
 
-                var removeFromCartButton = element(by.cssContainingText('a[ng-click*=removeFromCart]', 'Remove'));
+                var removeFromCartButton = detailsPage.getRemoveFromCartButton();
                 removeFromCartButton.click();
 
                 detailsPage.getCartTotal().then(function(data) {
@@ -332,30 +332,70 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
-        var resultList = element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        var resultList = searchPage.getResults();
         var firstResult = resultList.first();
         firstResult.click();
-        browser.waitForAngular();
 
-        var pathField = element(by.cssContainingText('tr[ng-repeat*="field in displayFields"]', 'Absolute Path')).element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
-        pathField.getText().then(function(data) {
-            var pathData = data;
+        var toolsButton = detailsPage.getToolsButton();
+        Util.waitForElement(toolsButton);
 
-            var openButton = element.all(by.cssContainingText('a', 'Open')).first();
-            $('a.flyout_trigger span.icon-tools').click();
-            browser.wait(protractor.ExpectedConditions.elementToBeClickable(openButton), 10000);
-            openButton.click().then(function() {
+        var openButton = detailsPage.getOpenToolButton();
+        $('a.flyout_trigger span.icon-tools').click();
+        browser.wait(protractor.ExpectedConditions.elementToBeClickable(openButton), 10000);
+        openButton.click().then(function() {
 
-                browser.getAllWindowHandles().then(function (handles) {
-                    var newWindowHandle = handles[1];
-                    browser.switchTo().window(newWindowHandle).then(function () {
-                        expect(browser.getWindowHandle()).toBe(handles[1]);
-                        //expect(browser.driver.getCurrentUrl()).toBe(pathData);
-                    });
-
+            browser.getAllWindowHandles().then(function (handles) {
+                var newWindowHandle = handles[1];
+                browser.switchTo().window(newWindowHandle).then(function () {
+                    expect(browser.getWindowHandle()).toBe(handles[1]);
+                }).then(function() {
+                    browser.close();
+                }).then(function() {
+                    browser.switchTo().window(handles[0]).then(function () {
+                        expect(browser.getWindowHandle()).toBe(handles[0]);
+                    })
                 });
 
             });
+
         });
+    });
+
+
+    it('should open the tools menu and flag the item', function() {
+        browser.get(server + '#/search?fq=format:application%2Fvnd.esri.service.layer.record&view=card&disp=default');
+
+        Util.waitForSpinner();
+        Util.waitForSpinner();
+
+        Util.loginToVoyager('admin', 'admin');
+
+        var totalAnchor = searchPage.getTotalLink();
+
+        expect(searchPage.getTotalValue()).toBeGreaterThan(0);
+
+        var resultList = searchPage.getResults();
+        var firstResult = resultList.first();
+        firstResult.click();
+
+        var toolsButton = detailsPage.getToolsButton();
+        Util.waitForElement(toolsButton);
+
+        var flag = detailsPage.getFlag('protractor');
+        expect(flag.isPresent()).toBe(false);
+
+        var flagButton = detailsPage.getFlagToolButton();
+        $('a.flyout_trigger span.icon-tools').click();
+        browser.wait(protractor.ExpectedConditions.elementToBeClickable(flagButton), 10000);
+        detailsPage.addFlag('protractor');
+
+        expect(flag.isPresent()).toBe(true);
+
+        var removeFlagButton = detailsPage.getRemoveFlagToolButton();
+        $('a.flyout_trigger span.icon-tools').click();
+        browser.wait(protractor.ExpectedConditions.elementToBeClickable(removeFlagButton), 10000);
+        detailsPage.removeFlag();
+
+        expect(flag.isPresent()).toBe(false);
     });
 });

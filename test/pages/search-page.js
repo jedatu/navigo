@@ -62,6 +62,19 @@ var searchPage = (function () {
 
             // Stop if no results
             expect(this.getQueueCount()).toBeGreaterThan(0);
+        },
+
+        getUser: function() {
+            return element(by.binding('vm.user.name'));
+        },
+
+        getResults: function()
+        {
+            return element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        },
+
+        getFirstResult: function() {
+            return this.getResults().first();
         }
 
     };

@@ -16,8 +16,8 @@ exports.config = {
     capabilities: {
         'browserName': 'chrome',
         chromeOptions: {
-            args: [
-                '--start-maximized'
+        args: ['--start-maximized',
+                '--auto-open-devtools'
             ]
         }
     },
@@ -37,6 +37,8 @@ exports.config = {
         includeStackTrace: true,
         isVerbose: true
     },
+
+    allScriptsTimeout: 50000,
 
     verbose:true,
 
