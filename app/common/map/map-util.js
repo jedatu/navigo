@@ -32,13 +32,20 @@ angular.module('voyager.map').
                     layerParams: {
 //                        noWrap: true,
 //                        continuousWorld: false
+                    },
+                    layerOptions: {
+                        showOnSelector: false
                     }
                 }
             }
         };
 
         var baseMap = _.getPath(config, 'map.config.url');
+
         if(angular.isDefined(baseMap)) {
+            if (config.map.config.proxy) {
+                baseMap = config.root + 'proxy?' + baseMap;
+            }
             if(config.map.type === 'WMSLayerDefinition') {
                 delete _defaultConfig.tileLayer;
                 _defaultConfig.crs = 'EPSG4326';
@@ -49,7 +56,8 @@ angular.module('voyager.map').
                             type: 'wms',
                             url: baseMap,
                             layerOptions: {
-                                layers: config.map.config.layers
+                                layers: config.map.config.layers,
+                                showOnSelector: false
                             },
                             layerParams: {
 //                                noWrap: true,
@@ -60,7 +68,7 @@ angular.module('voyager.map').
                 };
             } else if (config.map.type === 'MapboxLayerDefinition') {
                 _layers.baselayers.base.url = baseMap.replace(/\$/g, '');  //remove $ needed for OL (classic) map
-            } else {
+            } else {  // assumes ArcGIS
                 if(config.map.config.cached === true) {
                     _layers.baselayers.base.url = baseMap + 'tile/{z}/{y}/{x}/';
                     if(config.map.config.simpleWGS84) {
@@ -80,10 +88,23 @@ angular.module('voyager.map').
                         });
                         _defaultConfig.crs = wgs84;
                     }
-                } else {
-                    //TODO not sure what to do here, will use default arcgis for now
-                    config.hasMapError = true;
-                    //_layers.baselayers.base.url = baseMap;
+                } else {  // not a cached base map - assume ArcGIS dynamic base // TODO - support other types?  which ones?
+                    delete _defaultConfig.tileLayer;
+                    // TODO - support other crs/spatial reference?  If not leaflet supported will need proj4j
+                    //_defaultConfig.crs = 'EPSG4326';
+                    _layers = {
+                        baselayers: {
+                            base: {
+                                name: config.map.config.name,
+                                type: 'agsDynamic',
+                                url: baseMap,
+                                layerOptions: {
+                                    layers: config.map.config.layers,
+                                    showOnSelector: false
+                                }
+                            }
+                        }
+                    };
                 }
             }
         }

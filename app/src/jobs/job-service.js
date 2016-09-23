@@ -1,8 +1,7 @@
-/*global angular */
+'use strict';
 
 angular.module('taskRunner').
     factory('jobService', function ($http, config, $q) {
-        'use strict';
 
         return {
 

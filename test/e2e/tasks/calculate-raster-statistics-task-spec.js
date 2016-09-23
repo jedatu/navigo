@@ -38,7 +38,6 @@ describe('Run Calculate Raster Statistics Task', function() {
         Util.waitForSpinner();
         var ignoreValues = element.all(by.css('[type="text"]'));
         ignoreValues.get(4).sendKeys('0;255');
-        console.log(ignoreValues.get(4).name);
         expect(ignoreValues.get(4).getAttribute('value')).toEqual('0;255');
     }
 

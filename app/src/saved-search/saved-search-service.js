@@ -84,6 +84,13 @@ angular.module('voyager.search').
 
             getParams: function(saved) {
                 var solrParams = querystring.parse(sugar.trim(saved.query,'&'));
+
+                // these will get applied later to solr call - don't duplicate
+                delete solrParams.facet;
+                delete solrParams['facet.field'];
+                delete solrParams['facet.mincount'];
+                delete solrParams['extent.bbox'];
+
                 _decode(solrParams);  //workaround - seems the params get encoded twice
 
                 var voyagerParams;
@@ -193,6 +200,7 @@ angular.module('voyager.search').
                 if(angular.isUndefined(solrParams.view)) {
                     solrParams.view = display.defaultView.toLowerCase();
                 }
+
                 $scope.$emit('clearSearchEvent');
 
                 $location.search(solrParams);
@@ -239,6 +247,30 @@ angular.module('voyager.search').
                     data += 'after=' + afterId;
                 }
                 return sugar.postForm('api/rest/display/ssearch/' + id + '/order', data);
+            },
+            sortSavedSearches: function(savedSearches) {
+                var global = [], personal = [];
+                var userHasSaveSearch = authService.hasPermission('save_search');
+                var authUser = authService.getUser();
+                $.each(savedSearches, function(index, saved) {
+                    if((authUser) && (userHasSaveSearch))
+                    {
+                        if(saved.owner === authUser.name) {
+                            personal.push(saved);
+                        } else {
+                            global.push(saved);
+                        }
+                    } else {
+                        global.push(saved);
+                    }
+                });
+
+                var sortedSavedSearches = {
+                    global: global,
+                    personal: personal
+                };
+
+                return sortedSavedSearches;
             }
         };
     });

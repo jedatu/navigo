@@ -1,8 +1,7 @@
-/*global angular, $ */
+'use strict';
 
 angular.module('voyager.home')
 	.directive('vsSearchform', function($timeout) {
-		'use strict';
 
 		function _adjustMap(element) {
 			var availableHeight = $(window).height() - $('#header').height(),

@@ -8,7 +8,7 @@ angular.module('voyager.search').directive('savedContent', function(authService)
 		link: function(scope) {
 
 			scope.showSearch = true;
-			scope.showTab = scope.tab || 'saved';
+			scope.showTab = scope.tab || 'suggested';
 
 			scope.showCategory = function($event, category) {
 				$event.preventDefault();
@@ -16,11 +16,11 @@ angular.module('voyager.search').directive('savedContent', function(authService)
 				if (category === 'search') {
 					if (!scope.showSearch) {
 						scope.showSearch = true;
-						scope.showTab = scope.canSave ? 'suggested' : 'saved';
+						scope.showTab = scope.canSave ? 'saved' : 'suggested';
 					}
 				} else {
 					scope.showSearch = false;
-					scope.showTab = scope.canSave ? 'suggested' : 'saved';
+					scope.showTab = scope.canSave ? 'saved' : 'suggested';
 				}
 
 				return false;
@@ -43,10 +43,6 @@ angular.module('voyager.search').directive('savedContent', function(authService)
 
 			scope.isAnonymous = authService.isAnonymous();
 			scope.canSave = authService.hasPermission('save_search');
-
-			if(scope.canSave) {
-				scope.showTab = 'suggested';
-			}
 
 			function _syncState() {
 				scope.isAnonymous = authService.isAnonymous();

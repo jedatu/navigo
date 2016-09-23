@@ -1,8 +1,8 @@
-/*global angular, $ */
+'use strict';
 
 angular.module('voyager.filters').
     factory('statsService', function (config, $http, configService, translateService, $q, solrGrunt, sugar) {
-        'use strict';
+
         var _stats= {};
         var _statsFields = {};
 

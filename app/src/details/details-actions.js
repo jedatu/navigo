@@ -5,16 +5,20 @@
 
     function detailsActions($window, $analytics, config, sugar, authService) {
 
-        function _isVisible(action, doc) {
-            if (action.visible === true) {
+        function _isVisible(action, doc, $scope) {
+            var visible = action.visible;
+            if (visible === true) {
                 return true;
+            } else if (visible.indexOf('doc.') > -1) {
+                // expression
+                return $scope.$eval(visible) && (action.action !== 'preview' && action.action !== 'tag');
             }
             // add has a separate button, preview is automatic when page loads, tag is handled below the actions
-            return doc[action.visible] && (action.action !== 'add' && action.action !== 'preview' && action.action !== 'tag');
+            return doc[action.visible] && (action.action !== 'preview' && action.action !== 'tag');
         }
 
-        function _setAction(action, doc) {
-            action.visible = _isVisible(action, doc);
+        function _setAction(action, doc, $scope) {
+            action.visible = _isVisible(action, doc, $scope);
             doc.isopen = false;
             if (action.action === 'download') {
                 if(angular.isDefined(doc.download)) {
@@ -59,10 +63,10 @@
             }
         }
 
-        function _getActions(doc) {
+        function _getActions(doc, $scope) {
             var actions = _.cloneDeep(config.docActions);
             _.each(actions, function(action) {
-                _setAction(action, doc);
+                _setAction(action, doc, $scope);
             });
             return actions;
         }

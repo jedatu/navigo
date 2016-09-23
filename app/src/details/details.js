@@ -1,4 +1,3 @@
-/*global angular, $, _, window, document */
 'use strict';
 angular.module('voyager.details')
     .controller('DetailsCtrl', function ($scope, $stateParams, cartService, translateService, authService, config, detailService, mapServiceFactory, leafletData,
@@ -10,7 +9,7 @@ angular.module('voyager.details')
 
         loading.show('#working');
         $scope.imagePrefix = config.root + 'vres/mime/icon/';
-        $scope.showTab = 'summary';
+        $scope.showTab = '';
 
         $scope.demo = config.demo;
         $scope.rate = {};
@@ -70,16 +69,12 @@ angular.module('voyager.details')
             } else {
                 angular.element('body').removeClass('no-header');
             }
-            var shard = $location.search().shard;
-            if (angular.isDefined(shard)) {
-                var local = config.root;
-                local = local.replace('http://','').replace('https://','');
-                if (shard.toLowerCase().indexOf('local') === -1 && shard.indexOf(local) === -1) {
-                    $scope.isRemote = true;
-                }
-            }
 
             _doLookup($stateParams.id);
+            detailService.fetchMetadataStyles($stateParams.id).then(function(styleSheets) {
+                $scope.styleSheets = styleSheets;
+            });
+
             _setPermissions();
 
             tagService.fetchTags().then(function(tags) {
@@ -177,9 +172,10 @@ angular.module('voyager.details')
         function _doLookup(id) {
             detailService.lookup(id, ',*', $stateParams.shard, $stateParams.disp).then(function (data) {
                 var doc = data.data.response.docs[0];
+                resultsDecorator.decorate([doc], []);
 
                 var shardInfo = data.data['shards.info'];
-                if(shardInfo) {
+                if(shardInfo && doc.isRemote) {
                     _.each(shardInfo, function(shard) {
                         doc.remoteDetails = shard.shardAddress;
                         doc.remoteDetails = doc.remoteDetails.substring(0,doc.remoteDetails.indexOf('/solr'));
@@ -228,22 +224,6 @@ angular.module('voyager.details')
                 $scope.showMap = $scope.hasBbox || $scope.doc.isMappable;
 
                 $scope.getAction = 'Download';
-                if(angular.isDefined(doc.download)) {
-                    doc.hasDownload = true;
-                    if(doc.download.indexOf('file:') === 0) {
-                        doc.canOpen = true;
-                        $scope.getAction = 'Open';
-                    }
-                }
-
-                if(angular.isDefined(doc.layerURL)) {
-                    doc.isEsriLayer = true;
-                }
-
-                //TODO remove - doc.download should now have the stream url
-                //if(doc.format_type === 'File' && doc.format_category === 'GIS' && doc.component_files && doc.component_files.length > 0) {
-                //    doc.hasDownload = true;
-                //}
 
                 $scope.recent = detailService.getRecent();
                 resultsDecorator.decorate($scope.recent, []);
@@ -276,7 +256,15 @@ angular.module('voyager.details')
                     doc.defaultThumb = true;
                 }
 
-                $scope.actions = detailsActions.getActions($scope.doc);
+                $scope.doc.canCart = authService.hasPermission('process');
+
+                $scope.actions = detailsActions.getActions($scope.doc, $scope);
+
+                var addAction = _.find($scope.actions, {'action': 'add'});
+                $scope.canCart = $scope.doc.canCart && !$scope.isRemote && addAction.visible;
+
+                // don't show add action in drop down.  Has its own button.  Visible by canCart above.
+                addAction.visible = false;
 
                 cartService.fetchQueued([{id:doc.id}]).then(function(items) {
                     doc.inCart = items.length > 0;
@@ -298,7 +286,21 @@ angular.module('voyager.details')
                         root = 'http://' + root;
                     }
                 }
-                $scope.metadataUrl = root + 'content/' + $scope.doc.id + '/meta.xml?style=' + $scope.theme.selected;
+
+                $scope.metadataUrl = $scope.doc.content;
+
+                if($scope.metadataUrl) {
+                    if (($scope.metadataUrl.indexOf('/', $scope.metadataUrl.length - 1)) === -1) {
+                        $scope.metadataUrl += '/';
+                    }
+
+                    $scope.metadataUrl += 'meta.xml?style=' + $scope.theme.selected;
+
+                    if ($scope.doc.shard) {
+                        $scope.metadataUrl += '&shard=' + $scope.doc.shard;
+                    }
+                }
+
             });
         }
 
@@ -306,10 +308,6 @@ angular.module('voyager.details')
             // TODO what to do here to authenticate to the remote?
             // TODO what about display config?
             $window.open($scope.doc.remoteDetails, '_blank');
-        };
-
-        $scope.canCart = function () {
-            return authService.hasPermission('process') && !$scope.isRemote;
         };
 
         $scope.addToCart = function () {
@@ -456,8 +454,10 @@ angular.module('voyager.details')
         }
 
         function _setSelectedTab() {
-            if (!$scope.displayFields.length) {
-                if ($scope.doc.hasMetadata && $scope.canViewMetadata) {
+            if(!$scope.showTab) {
+                if ($scope.displayFields.length) {
+                    $scope.showTab = 'summary';
+                } else if ($scope.doc.hasMetadata && $scope.canViewMetadata) {
                     $scope.showTab = 'metadata';
                 } else if ($scope.hasRelationships) {
                     $scope.showTab = 'relationship';

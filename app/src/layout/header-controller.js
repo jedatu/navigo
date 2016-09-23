@@ -1,4 +1,3 @@
-/* global angular */
 'use strict';
 
 angular.module('voyager.layout')
@@ -19,6 +18,8 @@ angular.module('voyager.layout')
 		vm.logo = config.root + 'pub/header.png';
 
 		vm.uiText = config.ui.navbar;
+
+		vm.debug = $location.search().debug === 'true';
 
 		if(angular.isDefined($location.search().disp)) {
 			vm.disp = '?disp=' + $location.search().disp;
@@ -59,6 +60,7 @@ angular.module('voyager.layout')
 		_init();
 
 		function _init() {
+			_updateUserInfo();
 			//add queue observer
 			cartService.addObserver(_updateQueueTotal);
 			authService.addObserver(_updateUserInfo);
@@ -86,6 +88,7 @@ angular.module('voyager.layout')
 
 		function _updateUserInfo() {
 			vm.isAnonymous = authService.isAnonymous();
+			vm.state = authService.getState();
 			vm.user = authService.getUser();
 			vm.canCart = authService.hasPermission('process');
 			vm.canManage = authService.hasPermission('manage');

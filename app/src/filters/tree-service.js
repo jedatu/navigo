@@ -1,8 +1,8 @@
-/*global angular, $, _, console */
+'use strict';
 
 angular.module('voyager.filters').
     factory('treeService', function (config, $http, configService, $q, solrGrunt, sugar, facetService) {
-        'use strict';
+
         var _tree= {};
         var _fields = {};
         var _trees = {};
@@ -46,6 +46,7 @@ angular.module('voyager.filters').
                 queryString += '&voyager.config.id=' + configService.getConfigId();
             }
             queryString += '&wt=json&json.wrf=JSON_CALLBACK';
+            queryString += '&rand=' + Math.random();
             return queryString;
         }
 

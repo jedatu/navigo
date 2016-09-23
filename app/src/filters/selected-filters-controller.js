@@ -1,9 +1,7 @@
-/*global angular */
+'use strict';
 
 angular.module('voyager.filters')
     .controller('SelectedFiltersCtrl', function ($scope, filterService, $location, mapUtil, sugar) {
-
-        'use strict';
 
         function _setSelectedFilters() {
             var params = $location.search();

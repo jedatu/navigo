@@ -1,8 +1,8 @@
-/*global angular, $, _ */
+'use strict';
 
 angular.module('voyager.filters').
     factory('filterService', function (translateService, facetService, $q, configService, rangeService, converter, $filter, sugar) {
-        'use strict';
+
         var filters = [];  //user selected filters
         var filterMap = {}; //quick lookup for filters
         var filterState = {};  //expanded/collapsed
@@ -95,6 +95,15 @@ angular.module('voyager.filters').
             }
         }
 
+        function _replaceName(target, source) {
+            // TODO - regex
+            var name = target.replace(source, '').replace('( ', '(').replace(' )',')');
+            if (name.indexOf(' ') !== -1) {
+                name = name.replace('( ', '(').replace(' )',')').replace('(','').replace(')','');
+            }
+            return name;
+        }
+
         //public methods - client interface
         return {
 
@@ -170,6 +179,15 @@ angular.module('voyager.filters').
                         return el.filter === facet.filter;
                     } else {
                         return el.name === facet.name;
+                    }
+                });
+
+                // remove OR filters
+                filters.forEach(function(filter) {
+                    if (filter.name.indexOf('(') === 0 && filter.name.indexOf(facet.name) !== -1) {
+                        filter.name = _replaceName(filter.name, facet.name);
+                        filter.pretty = _replaceName(filter.pretty, facet.name);
+                        filter.humanized = _replaceName(filter.humanized, facet.name);
                     }
                 });
 

@@ -14,7 +14,7 @@ describe('Queue', function() {
 
     //need to add an item to the queue first
     it('should add to queue', function() {
-        browser.get(server + '#/search');
+        browser.get(server + '#/search?debug=true');
         Util.waitForSpinner();
         var addToQueueAnchor = element(by.css('.underline.icon-plus'));
         addToQueueAnchor.click();

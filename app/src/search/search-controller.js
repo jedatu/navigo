@@ -132,8 +132,10 @@ angular.module('voyager.search')
 					}
 				}
 			} else {
-				$scope.displaySortField = $scope.sortable[0].value;
-				$scope.sortField = $scope.sortable[0].key;
+				if ($scope.sortable.length > 0) {
+					$scope.displaySortField = $scope.sortable[0].value;
+					$scope.sortField = $scope.sortable[0].key;
+				}
 			}
 		}
 

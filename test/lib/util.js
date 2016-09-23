@@ -56,6 +56,8 @@ var Util = (function () {
                     user.sendKeys(username);
                     pass.sendKeys(password);
                     element(by.css('[ng-click="ok()"]')).click();
+                } else {
+                    return Util.waitForUser();
                 }
                 return !isVisible;
             });

@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Run Clip Data by Polygon Task', function() {
+describe('Run Mosaic to Workspace Task', function() {
 
     var Util = require('../../lib/util.js');
     var s2Util = require('../../lib/s2-util.js');
@@ -10,35 +10,27 @@ describe('Run Clip Data by Polygon Task', function() {
     var server = Util.getServer();
 
     beforeEach(function() {
-        searchPage.addAllToQueue('title:Hydrography_Lines and format:application/vnd.esri.shapefile');
-        // Open Clip Data by Polygon task UI
-        browser.get(server + '#/queue?disp=default&task=clip_data');
+        searchPage.addAllToQueue('title:n39w105f2dem and fileExtension:img');
+        browser.get(server + '#/queue?disp=default&task=mosaic_to_workspace');
         Util.waitForSpinner();
     });
 
-    it('should run using default parameter values', function() {
-        // Get the task parameter elements.
+    it('should run using default parameter values - output format is FileGDB', function() {
+        browser.sleep(1000);
+        element(by.css('[ng-click="showAdvanced = !showAdvanced"]')).click();
+        Util.waitForSpinner();
         var paramList = taskPage.getParams();
-        // Verify we have the correct number of params
-        expect(paramList.count()).toBe(5);
-        verifyDefaults(['', 'FileGDB', 'Same As Input']);
-        taskPage.executeTask();
-        browser.waitForAngular();
-    });
+        expect(paramList.count()).toBe(7);
+        verifyDefaults(['', 'Same As Input', 'FileGDB', 'LZ77']);
 
-    it('should run using Format: SHP', function() {
-        browser.sleep(1000);
-        Util.waitForSpinner();
-        setParams(2, 'Same As Input');
-        taskPage.executeTask();
-        browser.waitForAngular();
-    });
+        var compression_element = element(by.css('[type="number"]'));
+        expect(compression_element.getAttribute('value')).toEqual('75');
 
-    it('should run using Format: SHP and Projection: Web Mercator Auxiliary Sphere', function() {
-        browser.sleep(1000);
-        Util.waitForSpinner();
-        // SHP should be 2nd item in list
-        setParams(2, 'WGS 1984 Web Mercator (auxiliary sphere)');
+        // Enter invalid workspace path and execute.
+        var inputTextElements = element.all(by.css('[type="text"]'));
+        inputTextElements.get(4).sendKeys('Z:\\TestData\\Test.gdb');
+        inputTextElements.get(5).sendKeys('test');
+
         taskPage.executeTask();
         browser.waitForAngular();
     });
@@ -47,31 +39,29 @@ describe('Run Clip Data by Polygon Task', function() {
         verifyStatus();
     });
 
-    function verifyDefaults() {
+    function verifyDefaults(expectedValues) {
         // Verify default values for output format and projection
         var s2Elements = taskPage.getParameterValues();
-        var expectedValues = ['', 'FileGDB', 'Same As Input'];
         for (var i = 0; i < expectedValues.length; ++i) {
             expect(s2Elements.get(i).getText()).toEqual(expectedValues[i]);
         }
     }
 
     function setParams(formatIndex, proj) {
-        // Get the task parameter elements.
-        var paramList = taskPage.getParams();
         // Verify we have the correct number of params
-        expect(paramList.count()).toBe(5);
+        var paramList = taskPage.getParams();
+        expect(paramList.count()).toBe(6);
 
         return paramList.then(function(params) {
-            var outputFormat = params[1];
+            var outputFormat = params[2];
             outputFormat.element(by.css('.select2-choice')).click();
             Util.waitForSpinner();
             var lis = element.all(by.css('li.select2-results-dept-0'));
             return lis.then(function(li) {
                 li[formatIndex-1].click();
                 Util.waitForSpinner();
-                // now set the projection
-                var projection = params[2];
+                // Set the projection
+                var projection = params[1];
                 return s2Util.setText(projection, proj);
             });
         });
@@ -80,7 +70,6 @@ describe('Run Clip Data by Polygon Task', function() {
     function verifyStatus() {
         // Verify there are no errors or warnings (warnings may be possible bug and to be investigated)
         expect(browser.getCurrentUrl()).toMatch(/\/#\/status/);
-        expect(taskStatusPage.getSuccess().isPresent()).toBeTruthy();
-        expect(taskStatusPage.getDownloadLink().isPresent()).toBeTruthy();
+        expect(taskStatusPage.getError().isPresent()).toBeTruthy();
     }
 });

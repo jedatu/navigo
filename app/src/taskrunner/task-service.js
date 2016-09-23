@@ -16,7 +16,7 @@ angular.module('taskRunner').
             if (isAdmin) {
                 filter = '';
             }
-            return config.root + 'solr/tasks/select?q=*:*' + filter + '&rows=1000&sort=display_sort+asc&wt=json&json.wrf=JSON_CALLBACK';
+            return config.root + 'solr/tasks/select?q=*:*' + filter + '&rows=1000&sort=display_sort+asc&wt=json&json.wrf=JSON_CALLBACK&rand=' + Math.random();
         }
 
         function _post(request, validate) {

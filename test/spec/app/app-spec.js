@@ -36,13 +36,10 @@ describe('portalApp', function() {
 
         $state.go('search');
 
-        //TODO why dup calls
         $http.expectGET(new RegExp('auth')).respond({permissions:{view:true}});
-        //$http.expectGET(new RegExp('auth')).respond({permissions:{view:true}});
         $http.expectGET(new RegExp('location')).respond({});
-        //$http.expectGET(new RegExp('location')).respond({});
+        $http.expectGET(new RegExp('federation')).respond({servers:[]});
         $http.expectJSONP(new RegExp('search')).respond({response:{docs:[]}});
-        //$http.expectJSONP(new RegExp('search')).respond({response:{docs:[]}});
 
         $http.flush();
 
@@ -54,12 +51,9 @@ describe('portalApp', function() {
 
         $state.go('details');
 
-        //TODO why dup calls
         $http.expectGET(new RegExp('auth')).respond({permissions:{view:true}});
-        //$http.expectGET(new RegExp('auth')).respond({permissions:{view:true}});
         $http.expectGET(new RegExp('location')).respond({});
-        //$http.expectGET(new RegExp('location')).respond({});
-        //$http.expectGET(new RegExp('config')).respond({display:{path:'path',fields:[]}});
+        $http.expectGET(new RegExp('federation')).respond({servers:[]});
         $http.expectJSONP(new RegExp('search')).respond({response:{docs:[]}});
 
         $http.flush();
@@ -72,10 +66,9 @@ describe('portalApp', function() {
 
         $state.go('queue');
 
-        //TODO why dup calls
-       // $http.expectGET(new RegExp('auth')).respond({permissions:{view:true}});
         $http.expectGET(new RegExp('auth')).respond({permissions:{view:true}});
         $http.expectGET(new RegExp('location')).respond({});
+        $http.expectGET(new RegExp('federation')).respond({servers:[]});
         $http.expectJSONP(new RegExp('search')).respond({response:{docs:[]}});
 
         $http.flush();

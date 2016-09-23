@@ -39,7 +39,7 @@ describe('Run Create Layer Files Task', function() {
     function setMetaFolderPath() {
         var textInputs = element.all(by.css('[ng-model="param.value"]'));
         return textInputs.then(function(textInput) {
-            textInput[0].sendKeys("\\\\bigdisk\\data\\VoyagerInstances\\protractor\\meta.dir");
+            textInput[0].sendKeys("C:\\voyager\\data\\default\\meta");
         });
     }
 

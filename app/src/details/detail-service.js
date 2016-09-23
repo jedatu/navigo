@@ -1,7 +1,7 @@
 /*global angular */
 
 angular.module('voyager.details').
-    factory('detailService', function($http, config, $q, resultsDecorator) {
+    factory('detailService', function($http, config, $q, resultsDecorator, solrUtil) {
 
         'use strict';
 
@@ -12,14 +12,14 @@ angular.module('voyager.details').
 
         var buildRequest = function(id, displayFields, shard, disp) {
             var service = config.root + 'solr/v0/select?q=id:' + id;
-            var fields = '&fl=id,name:[name],fullpath:[absolute],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox,format,hasMetadata,root,tree,tag_tags,links,geo:[geo],hasMissingData,schema,layerURL:[lyrURL]';
+            var fields = '&fl=id,name:[name],fullpath:[absolute],absolute_path:[absolute],content:[contentURL],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox,format,hasMetadata,root,tree,tag_tags,links,geo:[geo],hasMissingData,schema,layerURL:[lyrURL]';
             fields += displayFields;
             var shards = '';
             if (angular.isDefined(shard)) {
                 shards = '&shards.info=true&shards.tolerant=true&shards=' + shard;
             }
 
-            return service + fields + shards + _type + '&rand=' + Math.random() + '&disp=' + disp; // avoid browser caching?;
+            return service + fields + shards + _type + '&rand=' + Math.random() + '&disp=' + disp;
         };
 
         function _buildTreeRequest(id, shard) {
@@ -29,18 +29,18 @@ angular.module('voyager.details').
             if (angular.isDefined(shard)) {
                 shards = '&shards.info=true&shards.tolerant=true&shards=' + shard;
             }
-            return service + fields + shards + _type;
+            return service + fields + shards + _type + '&r=' + Math.random();
         }
 
         function _buildRelationshipRequest(id, shard, type, direction, displayFields) {
             var service = config.root + 'solr/v0/select?links.' + direction + '=' + id + ':' + type;
-            var fields = '&fl=id,name:[name],path:[absolute],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox, format, hasMetadata, root, tree, tag_tags, links, hasMissingData';
+            var fields = '&fl=id,name:[name],fullpath:[absolute],content:[contentURL],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox, format, hasMetadata, root, tree, tag_tags, links, hasMissingData';
             fields += displayFields;
             var shards = '';
             if (angular.isDefined(shard)) {
                 shards = '&shards.info=true&shards.tolerant=true&shards=' + shard;
             }
-            return service + fields + shards + _type;
+            return service + fields + shards + _type + '&r=' + Math.random();
         }
 
         function _fetchTranslation() {
@@ -106,9 +106,11 @@ angular.module('voyager.details').
 
         function _getFields() {
             if(_.isEmpty(_fields)) {
-                var request = config.root + 'solr/fields/select?fl=name,multivalued,disp:disp_en,stype,displayable' + _type + '&rows=10000';
+                var request = config.root + 'solr/fields/select?fl=name,multivalued,disp:disp_en,stype,displayable' + _type + '&rows=100000' + '&r=' + Math.random();
                 return $http.jsonp(request).then(function(res) {
-                    _fields = _.indexBy(res.data.response.docs,'name');
+                    _fields = _.indexBy(res.data.response.docs, function(key) {
+                        return solrUtil.stripAugmented(key.name);
+                    });
                     return _fields;
                 });
             } else {
@@ -192,6 +194,12 @@ angular.module('voyager.details').
 
             getFields: function() {
                 return _fields;
+            },
+
+            fetchMetadataStyles: function(id) {
+                return $http.get(config.root + 'api/rest/appearance/metadata/styles/' + id).then(function(res) {
+                    return res.data;
+                });
             }
         };
 

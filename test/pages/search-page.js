@@ -41,7 +41,7 @@ var searchPage = (function () {
 
         addAllToQueue: function(query) {
 
-            browser.get(Util.getServer() + '#/search?q=' + query + '&disp=default&view=card');
+            browser.get(Util.getServer() + '#/search?q=' + query + '&disp=default&view=card&debug=true');
 
             // TODO need a better solution here...the spinner can reappear for other ajax calls
             Util.waitForSpinner();
@@ -50,6 +50,7 @@ var searchPage = (function () {
 
             // Login into Voyager
             Util.loginToVoyager('admin', 'admin');
+            browser.waitForAngular();
             browser.waitForAngular();
 
             // Stop if no results

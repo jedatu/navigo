@@ -1,0 +1,6 @@
+<div id="metadata-tab">
+    <select ui-select2="{dropdownAutoWidth: 'true', minimumResultsForSearch: -1}" ng-model="theme.selected">
+        <option ng-repeat="style in ::styleSheets" value="{{::style}}">{{::style}}</option>
+    </select>
+    <iframe ng-src="{{trustSrc(metadataUrl)}}" class="metadata {{frameLoading}}" id="metadataFrame" iframe-load></iframe>
+</div>

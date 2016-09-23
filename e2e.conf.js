@@ -16,7 +16,8 @@ exports.config = {
     capabilities: {
         'browserName': 'chrome',
         chromeOptions: {
-        args: ['--start-maximized',
+            args: ['--lang=en',
+                '--window-size=1080,1920',
                 '--auto-open-devtools'
             ]
         }

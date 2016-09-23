@@ -1,7 +1,7 @@
-/*global angular, _ */
+'use strict';
+
 angular.module('voyager.search')
     .controller('FlagAllCtrl', function ($scope, $uibModalInstance, tagService, resultData, $controller) {
-        'use strict';
 
         $controller('BaseUpdateCtrl', { $scope: $scope, resultTotalCount: resultData.totalItemCount , $uibModalInstance: $uibModalInstance});
 

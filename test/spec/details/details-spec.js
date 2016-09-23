@@ -37,6 +37,7 @@ describe('DetailsCtrl', function () {
         //$http.expectGET(new RegExp('auth')).respond({permissions:{manage:true, process:true}});  // auth call
         $http.expectJSONP(new RegExp('solr\/fields')).respond({response: {docs:[]}}); // fields call
         $http.expectJSONP(new RegExp('solr\/v0')).respond(lookupResponse.data); // lookup call
+        $http.expectGET(new RegExp('metadata')).respond(lookupResponse.data); // stylesheets call
         $http.expectJSONP(new RegExp('solr\/usertags')).respond({facet_counts: {facet_fields:{fss_tag_tags:[]}}}); // tags call
         $http.expectJSONP(new RegExp('tree')).respond(lookupResponse.data); // tree call
         $http.expectGET(new RegExp('links')).respond(lookupResponse.data); // link types call
@@ -87,6 +88,7 @@ describe('DetailsCtrl', function () {
             //$http.expectGET(new RegExp('auth')).respond({permissions:{manage:true}});  // auth call
             $http.expectJSONP(new RegExp('solr\/fields')).respond({response: {docs:[]}}); // fields call
             $http.expectJSONP(new RegExp('solr\/v0')).respond(lookupResponse.data); // lookup call
+            $http.expectGET(new RegExp('metadata')).respond(lookupResponse.data); // stylesheets call
             $http.expectJSONP(new RegExp('solr\/usertags')).respond({facet_counts: {facet_fields:{fss_tag_tags:[]}}}); // tags call
 
             $http.expectJSONP(new RegExp('solr\/v0')).respond(lookupResponse.data); // search call
@@ -226,9 +228,7 @@ describe('DetailsCtrl', function () {
             spyOn(authServiceSpy, 'hasPermission').and.returnValue(true);
             loadController();
 
-            var canCart = scope.canCart();
-
-            expect(canCart).toBeTruthy();  //auth http mock response has process = true above
+            expect(scope.canCart).toBeTruthy();  //auth http mock response has process = true above
         });
 
         it('should add to cart', function() {
