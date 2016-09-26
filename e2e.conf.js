@@ -17,8 +17,7 @@ exports.config = {
         'browserName': 'chrome',
         chromeOptions: {
             args: ['--lang=en',
-                '--window-size=1080,1920',
-                '--auto-open-devtools'
+                '--window-size=1080,1920'
             ]
         }
     },
