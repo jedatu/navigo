@@ -9,8 +9,8 @@ var reporter= new HtmlReporter({
 exports.config = {
 
     //seleniumAddress: 'http://localhost:4444/wd/hub',
-
-    //directConnect: true,
+	
+	//directConnect: true,
 
     // Capabilities to be passed to the webdriver instance.
     capabilities: {
@@ -37,6 +37,8 @@ exports.config = {
         includeStackTrace: true,
         isVerbose: true
     },
+
+    allScriptsTimeout: 50000,
 
     verbose:true,
 

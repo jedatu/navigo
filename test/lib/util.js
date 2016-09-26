@@ -23,9 +23,21 @@ var Util = (function () {
             }, 30000);
         },
 
+        waitForElement: function(elem) {
+            //wait for an element to be present on the page
+            return browser.wait(function() {
+                return elem.isPresent().then(function(isPresent) {
+                    return isPresent;
+                });
+            }, 50000);
+        },
+
         getServer: function() {
             //return 'http://localhost:8888/navigo/';
+            //console.log("BROWSER URL", browser.params.url);
             return browser.params.url;
+            //return 'http://localhost:9000/';
+            //return 'http://voyagerdemo.com/daily/';
         },
 
         loginToVoyager: function(username, password) {

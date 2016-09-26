@@ -67,6 +67,15 @@ var searchPage = (function () {
 
         getUser: function() {
             return element(by.binding('vm.user.name'));
+        },
+
+        getResults: function()
+        {
+            return element.all(by.binding('doc[getNameToUse(doc, names)]'));
+        },
+
+        getFirstResult: function() {
+            return this.getResults().first();
         }
 
     };
