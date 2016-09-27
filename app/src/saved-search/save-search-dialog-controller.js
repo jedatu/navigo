@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('voyager.search')
-    .controller('SaveSearchDialog', function($scope, $uibModalInstance, savedSearchService, $location, authService, $analytics, recentSearchService, searchItem) {
+    .controller('SaveSearchDialog', function($scope, $uibModalInstance, savedSearchService, $location, authService, $analytics, recentSearchService, searchItem, displayConfigResource) {
 
         $scope.savedSearch = {query:searchItem.query};
 
@@ -56,6 +56,30 @@ angular.module('voyager.search')
 
             var savedSearchCopy = _.cloneDeep($scope.savedSearch);  //copy so not to alter binding
             savedSearchCopy.share = _.pluck(savedSearchCopy.share,'id');
+
+            var promises = [savedSearchService.fetch(savedSearchCopy), displayConfigResource.getDisplayConfig(savedSearchCopy.config)];
+
+            $q.all(promises).then(function(response) {
+                var docs = response[0];
+                var dispConfig = response[1].data;
+                if (docs.length === 0 || _.contains($scope.error,'Overwrite')) {
+                    delete $scope.error;
+                    if (docs.length > 0) {
+                        savedSearchCopy.id = docs[0].id;
+                    }
+                    if (savedSearchCopy.view === dispConfig.defaultView) {
+                        delete savedSearchCopy.view;  // don't override view if same as disp config default
+                    }
+                    return _saveSearch(savedSearchCopy);
+                } else {
+                    var existingSearch = docs[0];
+                    if (existingSearch.owner === authService.getUser().id || authService.hasPermission('manage')) {
+                        $scope.error = 'Saved Search exists. Overwrite?';
+                    } else {
+                        $scope.error = 'Saved Search exists. You don\'t have permission to overwrite. Please rename your search.';
+                    }
+                }
+            });
 
             savedSearchService.fetch(savedSearchCopy).then(function(docs) {
                 if (docs.length === 0 || _.contains($scope.error,'Overwrite')) {
