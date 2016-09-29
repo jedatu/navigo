@@ -8,6 +8,7 @@ angular.module('voyager.search')
 
         var _shareGroups = [];
         var _coreRoles = [{id:'_EVERYONE',text:'EVERYONE'},{id:'_LOGGEDIN',text:'LOGGEDIN'},{id:'_ANONYMOUS',text:'ANONYMOUS'}];
+        var _existingSearch = {};
 
         $scope.sharedOptions = {
             'multiple': true,
@@ -64,6 +65,7 @@ angular.module('voyager.search')
                 var dispConfig = response[1].data;
                 if (docs.length === 0 || _.contains($scope.error,'Overwrite')) {
                     delete $scope.error;
+                    savedSearchCopy.labels = _existingSearch.labels;
                     if (docs.length > 0) {
                         savedSearchCopy.id = docs[0].id;
                     }
@@ -72,8 +74,8 @@ angular.module('voyager.search')
                     }
                     return _saveSearch(savedSearchCopy);
                 } else {
-                    var existingSearch = docs[0];
-                    if (existingSearch.owner === authService.getUser().id || authService.hasPermission('manage')) {
+                    if (docs[0].owner === authService.getUser().id || authService.hasPermission('manage')) {
+                        _existingSearch = docs[0];
                         $scope.error = 'Saved Search exists. Overwrite?';
                     } else {
                         $scope.error = 'Saved Search exists. You don\'t have permission to overwrite. Please rename your search.';
