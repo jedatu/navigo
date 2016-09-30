@@ -1,11 +1,30 @@
 'use strict';
 
 angular.module('voyager.filters')
-    .controller('SelectedFiltersCtrl', function ($scope, filterService, $location, mapUtil, sugar) {
+    .controller('SelectedFiltersCtrl', function ($scope, filterService, $location, mapUtil, sugar, translateService) {
+
+        function _applyOrFacets() {
+            $scope.filters.forEach(function(filter) {
+                filter.isOr = filter.name.indexOf('(') === 0;
+                if (filter.isOr) {
+                    filter.parts = [];
+                    var parts = filter.name.replace('(','').replace(')','').trim().split(' ');
+                    parts.forEach(function(part) {
+                        var facet = {name:part, pretty:part};
+                        filter.parts.push(facet);
+                        if (filter.filter === 'location') {
+                            facet.pretty = translateService.getLocation(part);
+                        }
+                    });
+                }
+            });
+        }
 
         function _setSelectedFilters() {
             var params = $location.search();
             $scope.filters = filterService.getFilters().slice(0);
+
+            _applyOrFacets();
 
             if (params.q && params.q !== '*:*') {
                 $scope.filters.push({'isInput': true, 'name': 'search', 'humanized': 'Search:' +params.q, pretty: params.q});
