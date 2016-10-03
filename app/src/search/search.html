@@ -19,25 +19,7 @@
 			<div class="result_container no_padding" ng-class="{'open_filter' : (filterVisible && hasResults())}">
 				<header class="sticky clearfix {{headerClass}}" ng-include="'src/search/results-header.html'"></header>
 				<div class="container-fluid clearfix">
-				<div id="selectedFilters" ng-controller="SelectedFiltersCtrl" vs-selected-filter data-view="{{view}}">
-					<div class="overtop" ng-if="filters.length">
-						<div class="hover_flyout">
-							<div class="semi" ng-show="view == 'table'">Filters</div>
-							<a href="javascript:;" ng-hide="view == 'table'" class="semi icon-arrow flyout_trigger">Filters</a>
-							<div class="flyout">
-								<div class="flyout_arrow"></div>
-								<div class="flyout_inner">
-									<ul>
-										<li><a href="javascript:;" ng-click="clearAllFilter()">Clear All</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<ul class="selected_list">
-							<li style="margin-left: -20px; margin-right: 20px; background-color: #fa8333"><a class="btn" style="background-color: #fa8333; color: white" href="javascript:;" ng-show="view == 'table'" ng-click="clearAllFilter()">Clear All<span class="icon-x"></span></a></li>
-							<li ng-repeat="selected in filters"><a href="javascript:;" ng-click="removeFilter(selected)">{{selected.pretty}}<span class="icon-x"></span></a></li>
-						</ul>
-					</div>
+				<div id="selectedFilters" ng-controller="SelectedFiltersCtrl" vs-selected-filter data-view="{{view}}" ng-include="'src/filters/selected-filters.html'">
 				</div>
 
 				<div class="list_wrap">

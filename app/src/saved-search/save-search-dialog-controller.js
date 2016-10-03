@@ -2,12 +2,13 @@
 'use strict';
 
 angular.module('voyager.search')
-    .controller('SaveSearchDialog', function($scope, $uibModalInstance, savedSearchService, $location, authService, $analytics, recentSearchService, searchItem) {
+    .controller('SaveSearchDialog', function($scope, $uibModalInstance, savedSearchService, $location, authService, $analytics, recentSearchService, searchItem, displayConfigResource, $q) {
 
         $scope.savedSearch = {query:searchItem.query};
 
         var _shareGroups = [];
         var _coreRoles = [{id:'_EVERYONE',text:'EVERYONE'},{id:'_LOGGEDIN',text:'LOGGEDIN'},{id:'_ANONYMOUS',text:'ANONYMOUS'}];
+        var _existingSearch = {};
 
         $scope.sharedOptions = {
             'multiple': true,
@@ -57,16 +58,24 @@ angular.module('voyager.search')
             var savedSearchCopy = _.cloneDeep($scope.savedSearch);  //copy so not to alter binding
             savedSearchCopy.share = _.pluck(savedSearchCopy.share,'id');
 
-            savedSearchService.fetch(savedSearchCopy).then(function(docs) {
+            var promises = [savedSearchService.fetch(savedSearchCopy), displayConfigResource.getDisplayConfig($location.search().disp)];
+
+            $q.all(promises).then(function(response) {
+                var docs = response[0];
+                var dispConfig = response[1].data;
                 if (docs.length === 0 || _.contains($scope.error,'Overwrite')) {
                     delete $scope.error;
+                    savedSearchCopy.labels = _existingSearch.labels;
                     if (docs.length > 0) {
                         savedSearchCopy.id = docs[0].id;
                     }
+                    if (searchItem.view === dispConfig.defaultView.toLowerCase()) {
+                        delete searchItem.view;  // don't override view if same as disp config default
+                    }
                     return _saveSearch(savedSearchCopy);
                 } else {
-                    var existingSearch = docs[0];
-                    if (existingSearch.owner === authService.getUser().id || authService.hasPermission('manage')) {
+                    if (docs[0].owner === authService.getUser().id || authService.hasPermission('manage')) {
+                        _existingSearch = docs[0];
                         $scope.error = 'Saved Search exists. Overwrite?';
                     } else {
                         $scope.error = 'Saved Search exists. You don\'t have permission to overwrite. Please rename your search.';

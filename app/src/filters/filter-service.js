@@ -155,16 +155,6 @@ angular.module('voyager.filters').
 
             addFilter: function (facet) {
                 if (!filterMap[facet.name]) {
-                    //TODO may.shi what is this for? committed on 2/20
-                    if (facet.filter === 'rowCount') {
-                        filters = _.reject(filters, function(el){
-                            if (el.filter === 'rowCount') {
-                                delete filterMap[el.name];
-                                return true;
-                            }
-                            return false;
-                        });
-                    }
                     filters.push(facet);
                     filterMap[facet.name] = facet;
                 }
@@ -182,13 +172,18 @@ angular.module('voyager.filters').
                     }
                 });
 
-                // remove OR filters
+                // remove OR facets
                 filters.forEach(function(filter) {
                     if (filter.name.indexOf('(') === 0 && filter.name.indexOf(facet.name) !== -1) {
                         filter.name = _replaceName(filter.name, facet.name);
                         filter.pretty = _replaceName(filter.pretty, facet.name);
                         filter.humanized = _replaceName(filter.humanized, facet.name);
                     }
+                });
+
+                // remove empty OR filters
+                filters = filters.filter(function(filter) {
+                    return filter.name !== '()';
                 });
 
                 if (isCalendar || isRange) {

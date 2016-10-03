@@ -37,7 +37,17 @@ describe('SelectedFilters:', function () {
             controllerService('SelectedFiltersCtrl', {$scope: scope});
             scope.$apply();
 
-            //expect(scope.maxFacets).toBe(10);
+            expect(scope.filters.length).toBe(3);
+        });
+
+        it('should load with OR filters', function () {
+            $location.search().fq = 'filter:(facet1 facet2)';
+            controllerService('SelectedFiltersCtrl', {$scope: scope});
+            scope.$apply();
+
+            expect(scope.filters.length).toBe(1);
+            expect(scope.filters[0].parts.length).toBe(2);
+            expect(scope.filters[0].isOr).toBeTruthy();
         });
 
         it('should remove place filter', function () {
@@ -75,6 +85,17 @@ describe('SelectedFilters:', function () {
             scope.removeFilter({name:'facet'});
 
             expect($location.search().fq.length).toBe(0);
+        });
+
+        it('should remove OR facet', function () {
+            $location.search().fq = 'filter:(facet1 facet2)';
+
+            controllerService('SelectedFiltersCtrl', {$scope: scope});
+            scope.$apply();
+
+            scope.removeFilter({name:'facet1'});
+
+            expect($location.search().fq.length).toBe(1);
         });
 
         it('should clear all', function () {
