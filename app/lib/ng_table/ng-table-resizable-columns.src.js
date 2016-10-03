@@ -32,9 +32,6 @@ angular.module('ngTableResizableColumns', [])
       this.setHeaders();
       this.restoreColumnWidths();
       this.syncHandleWidths();
-      $(window).on('resize.rc', (function() {
-        return _this.syncHandleWidths();
-      }));
     }
 
     ResizableColumns.prototype.getColumnId = function($el) {
@@ -190,6 +187,11 @@ angular.module('ngTableResizableColumns', [])
             scope.$watch('$data', function() {
                 data.destroy();
                 data = new ResizableColumns(element);
+            });
+            scope.$watch(function() {
+                return element[0].clientWidth;
+            }, function() {
+                data.syncHandleWidths();
             });
             data = new ResizableColumns(element, true);
         }
