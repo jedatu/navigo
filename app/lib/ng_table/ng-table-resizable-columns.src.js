@@ -83,13 +83,13 @@ angular.module('ngTableResizableColumns', [])
       if ((_ref = this.$handleContainer) != null) {
         _ref.remove();
       }
-      this.$table.before((this.$handleContainer = $("<div class='rc-handle-container'>")));
+      this.$table.before((this.$handleContainer = $("<div class='rc-handle-container' />")));
       this.$tableHeaders.each(function(i, el) {
         var $handle;
         if (_this.$tableHeaders.eq(i + 1).length === 0 || (_this.$tableHeaders.eq(i).attr('data-noresize') != null) || (_this.$tableHeaders.eq(i + 1).attr('data-noresize') != null)) {
           return;
         }
-        $handle = $("<div class='rc-handle'>");
+        $handle = $("<div class='rc-handle' />");
         $handle.data('th', $(el));
         return $handle.appendTo(_this.$handleContainer);
       });
