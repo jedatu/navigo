@@ -15,10 +15,6 @@ angular.module('voyager.results')
             return table.clientWidth;
         };
 
-        vm.getHandleLocation = function(index){
-
-        };
-
         var addAction = _.find(config.docActions, {action:'add'});
         $scope.addActionText = 'Add to Queue';
         if(addAction) {
@@ -26,9 +22,9 @@ angular.module('voyager.results')
         }
 
         function _setDefaultColumnWidths() {
-            var defaultWidth = 88 / $scope.tableFields.length, width = 0, totalWidth = 0;
+            var defaultWidth = 88 / vm.tableFields.length, width = 0, totalWidth = 0;
 
-            $.each($scope.tableFields, function(index, field) {
+            $.each(vm.tableFields, function(index, field) {
                 if(angular.isUndefined(field.width)) {
                     field.width = '' + defaultWidth + '%';
                 } else if (field.width.indexOf('%') === -1) {
@@ -55,8 +51,8 @@ angular.module('voyager.results')
 
         window.store = Store;  //for resizable cols directive - storing changes to col width
 
-        $scope.tableFields = configService.getTableFields();
-        $scope.textWrappingNotAllowed = !configService.getAllowsTextWrappingOnTableView();
+        vm.tableFields = configService.getTableFields();
+        vm.textWrappingNotAllowed = !configService.getAllowsTextWrappingOnTableView();
 
         _setDefaultColumnWidths();
 
@@ -97,8 +93,8 @@ angular.module('voyager.results')
         };
 
         $scope.$on('searchResults', function (event, data) {
-            $scope.tableLoading = false;
-            $scope.tableFields = configService.getTableFields();
+            vm.tableLoading = false;
+            vm.tableFields = configService.getTableFields();
             _setDefaultColumnWidths();
             var docs = data.response.docs;
             if(!loaded) {
@@ -127,7 +123,7 @@ angular.module('voyager.results')
             var view = $location.search().view;
             if (view === 'table') {
                 $scope.$emit('doSearch', {});
-                $scope.tableLoading = true;
+                vm.tableLoading = true;
             }
         });
 
@@ -163,7 +159,7 @@ angular.module('voyager.results')
                     $scope.$emit('doSearch', sort);
                 } else if (!loaded) {
                     $scope.$emit('doSearch', {force:true});
-                    $scope.tableLoading = true;
+                    vm.tableLoading = true;
                 }
 
                 if(!isSort) {  //set sort icon and highlight on column header that is sorted

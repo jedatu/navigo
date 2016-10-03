@@ -1,6 +1,6 @@
 // based on https://github.com/dobtco/jquery-resizable-columns
 angular.module('ngTableResizableColumns', [])
-.directive('ngTableResizableColumns', function($rootScope) {
+.directive('ngTableResizableColumns', function() {
 
     var parseWidth = function(node) {
         return parseFloat(node.style.width.replace('%', ''));
@@ -83,7 +83,7 @@ angular.module('ngTableResizableColumns', [])
       if ((_ref = this.$handleContainer) != null) {
         _ref.remove();
       }
-      this.$table.before((this.$handleContainer = $("<div class='rc-handle-container' />")));
+      this.$table.before((this.$handleContainer = $("<div class='rc-handle-container'>")));
       this.$tableHeaders.each(function(i, el) {
         var $handle;
         if (_this.$tableHeaders.eq(i + 1).length === 0 || (_this.$tableHeaders.eq(i).attr('data-noresize') != null) || (_this.$tableHeaders.eq(i + 1).attr('data-noresize') != null)) {
@@ -193,7 +193,7 @@ angular.module('ngTableResizableColumns', [])
             }, function() {
                 data.syncHandleWidths();
             });
-            data = new ResizableColumns(element, true, scope);
+            data = new ResizableColumns(element, true);
         }
     };
 
