@@ -197,7 +197,7 @@ angular.module('voyager.results')
             return formatted;
         };
 
-        $scope.hover = function(doc) {
+        vm.hover = function(doc) {
             $scope.$emit('resultHoverEvent', {
                 doc: doc
             });
