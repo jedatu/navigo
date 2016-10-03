@@ -1,6 +1,6 @@
 // based on https://github.com/dobtco/jquery-resizable-columns
 angular.module('ngTableResizableColumns', [])
-.directive('ngTableResizableColumns', function() {
+.directive('ngTableResizableColumns', function($rootScope) {
 
     var parseWidth = function(node) {
         return parseFloat(node.style.width.replace('%', ''));
@@ -32,9 +32,6 @@ angular.module('ngTableResizableColumns', [])
       this.setHeaders();
       this.restoreColumnWidths();
       this.syncHandleWidths();
-      $(window).on('resize.rc', (function() {
-        return _this.syncHandleWidths();
-      }));
     }
 
     ResizableColumns.prototype.getColumnId = function($el) {
@@ -92,7 +89,7 @@ angular.module('ngTableResizableColumns', [])
         if (_this.$tableHeaders.eq(i + 1).length === 0 || (_this.$tableHeaders.eq(i).attr('data-noresize') != null) || (_this.$tableHeaders.eq(i + 1).attr('data-noresize') != null)) {
           return;
         }
-        $handle = $("<div class='rc-handle' />");
+        $handle = $("<div class='rc-handle'>");
         $handle.data('th', $(el));
         return $handle.appendTo(_this.$handleContainer);
       });
@@ -191,7 +188,12 @@ angular.module('ngTableResizableColumns', [])
                 data.destroy();
                 data = new ResizableColumns(element);
             });
-            data = new ResizableColumns(element, true);
+            scope.$watch(function() {
+                return element[0].clientWidth;
+            }, function() {
+                data.syncHandleWidths();
+            });
+            data = new ResizableColumns(element, true, scope);
         }
     };
 

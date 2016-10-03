@@ -3,10 +3,21 @@ angular.module('voyager.results')
     .controller('TableCtrl', function ($scope, ngTableParams, $timeout, $location, configService, translateService, $filter, filterService, config, sugar, tableResultsService) {
         'use strict';
 
+        var vm = this;
+
         var loaded = false;
         var reloading = false;
         var deferred;
         var lastSort = {};
+
+        vm.getTableWidth = function(){
+            var table = angular.element(document.getElementById('resultsTable'))[0];
+            return table.clientWidth;
+        };
+
+        vm.getHandleLocation = function(index){
+
+        };
 
         var addAction = _.find(config.docActions, {action:'add'});
         $scope.addActionText = 'Add to Queue';
