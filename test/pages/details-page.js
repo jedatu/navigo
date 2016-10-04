@@ -77,14 +77,17 @@ var detailsPage = (function () {
         gotoPreviousResult: function() {
             var previousLink = element(by.css('a[ng-click*=Previous]'));
             previousLink.click();
+            browser.waitForAngular();
         },
         gotoNextResult: function() {
             var nextLink = element(by.css('a[ng-click*=Next]'));
             nextLink.click();
+            browser.waitForAngular();
         },
         gotoRecentlyViewed: function(index) {
             var firstRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(index).element(by.binding('doc.name'));
             firstRecentlyViewedElement.click();
+            browser.waitForAngular();
         }
     };
 })();  // jshint ignore:line

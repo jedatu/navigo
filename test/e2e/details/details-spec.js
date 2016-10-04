@@ -20,7 +20,7 @@ describe('Details', function() {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
 
-    it('should load details page', function() {
+    xit('should load details page', function() {
         browser.get(server + '#/search?view=card&disp=default');
 
         Util.waitForSpinner();
@@ -33,7 +33,7 @@ describe('Details', function() {
         var firstResult = searchPage.getFirstResult();
         var name;
 
-        firstResult.getInnerHtml().then(function(text) {
+        searchPage.getResultNameElement(firstResult).getInnerHtml().then(function(text) {
             name = text;
 
             firstResult.click();
@@ -67,26 +67,28 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(1);
 
+        //browser.pause();
+
         var resultList = searchPage.getResults();
         var firstResult = resultList.get(0);
         var secondResult = resultList.get(1);
         var name;
 
-        secondResult.getInnerHtml().then(function(text) {
+        searchPage.getResultNameElement(secondResult).getInnerHtml().then(function(text) {
             name = text;
 
             firstResult.click();
             browser.waitForAngular();
+            //browser.pause();
 
             detailsPage.gotoNextResult();
-            browser.waitForAngular();
 
             expect(detailsPage.getDocName().getInnerHtml()).toEqual(name);
         });
     });
 
 
-    it('should load the previous result', function() {
+    xit('should load the previous result', function() {
         browser.get(server + '#/search?view=card&disp=default');
         Util.waitForSpinner();
         Util.waitForSpinner();
@@ -107,14 +109,13 @@ describe('Details', function() {
             browser.waitForAngular();
 
             detailsPage.gotoPreviousResult()
-            browser.waitForAngular();
 
             expect(detailsPage.getDocName().getInnerHtml()).toEqual(name);
         });
     });
 
 
-    it('should load recently viewed results', function() {
+    xit('should load recently viewed results', function() {
         browser.get(server + '#/search?view=card&disp=default');
         Util.waitForSpinner();
         Util.waitForSpinner();
@@ -140,18 +141,14 @@ describe('Details', function() {
                 browser.waitForAngular();
 
                 detailsPage.gotoNextResult();
-                browser.waitForAngular();
 
                 detailsPage.gotoNextResult();
-                browser.waitForAngular();
 
                 detailsPage.gotoRecentlyViewed(0);
-                browser.waitForAngular();
 
                 expect(detailsPage.getDocName().getInnerHtml()).toEqual(firstName);
 
                 detailsPage.gotoRecentlyViewed(1);
-                browser.waitForAngular();
 
                 expect(detailsPage.getDocName().getInnerHtml()).toEqual(secondName);
             });
@@ -159,7 +156,7 @@ describe('Details', function() {
     });
 
 
-    it('should show metadata', function() {
+    xit('should show metadata', function() {
         browser.get(server + '#/search?view=card&disp=default&fq=properties:hasMetadata');
 
         Util.waitForSpinner();
@@ -202,7 +199,7 @@ describe('Details', function() {
     });
 
 
-    it('should show relationships', function() {
+    xit('should show relationships', function() {
         browser.get(server + '#/search?disp=default&fq=linkcount__children:1&view=card');
 
         Util.waitForSpinner();
@@ -245,7 +242,7 @@ describe('Details', function() {
     });
 
 
-    it('should show schema', function() {
+    xit('should show schema', function() {
         browser.get(server + '#/search?disp=default&fq=format:schema&view=card');
 
         Util.waitForSpinner();
@@ -288,7 +285,7 @@ describe('Details', function() {
     });
 
 
-    it('should add to cart and remove from cart', function() {
+    xit('should add to cart and remove from cart', function() {
         browser.get(server + '#/search?view=card&disp=default');
 
         Util.waitForSpinner();
@@ -322,7 +319,7 @@ describe('Details', function() {
     });
 
 
-    it('should open the tools menu and then open the path', function() {
+    xit('should open the tools menu and then open the path', function() {
         browser.get(server + '#/search?fq=format:application%5C%2Fvnd.ogc.wms_layer_xml&view=card&disp=default');
 
         Util.waitForSpinner();
@@ -362,7 +359,7 @@ describe('Details', function() {
     });
 
 
-    it('should open the tools menu and flag the item', function() {
+    xit('should open the tools menu and flag the item', function() {
         browser.get(server + '#/search?fq=format:application%2Fvnd.esri.service.layer.record&view=card&disp=default');
 
         Util.waitForSpinner();
@@ -397,5 +394,36 @@ describe('Details', function() {
         detailsPage.removeFlag();
 
         expect(flag.isPresent()).toBe(false);
+    });
+
+    xit('should edit fields', function() {
+
+        var mock = function() {
+            config.editAll = true;
+        };
+        browser.addMockModule('portalApp', mock);
+
+        browser.get(server + '#/search?view=card&disp=default');
+
+        Util.waitForSpinner();
+        Util.waitForSpinner();
+
+        Util.loginToVoyager('admin', 'admin');
+        browser.waitForAngular();
+        browser.waitForAngular();
+
+        var totalAnchor = searchPage.getTotalLink();
+
+        expect(searchPage.getTotalValue()).toBeGreaterThan(0);
+
+        //browser.pause();
+
+        var resultList = searchPage.getResults();
+        var firstResult = resultList.first();
+        firstResult.click();
+
+        browser.pause();
+
+
     });
 });
