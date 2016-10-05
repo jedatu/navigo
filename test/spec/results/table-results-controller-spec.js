@@ -38,7 +38,7 @@ describe('TableCtrl', function () {
         }
         spyOn(configService, 'getTableFields').and.returnValue([{field: 'field'}]);
 
-        controllerService('TableCtrl', {$scope: scope});
+        var ctrl = controllerService('TableCtrl', {$scope: scope});
 
         //$http.expectGET(new RegExp('auth')).respond(authResponse); //auth info call
         if (search) {
@@ -47,6 +47,8 @@ describe('TableCtrl', function () {
             timeout.flush();
         }
         scope.$apply();
+
+        return ctrl;
     }
 
     describe('Load', function () {
@@ -121,9 +123,9 @@ describe('TableCtrl', function () {
                 expect(args.doc.id).toBe(response.docs[0].id);
             });
 
-            initCtrl({response: response}, false);
+            var ctrl = initCtrl({response: response}, false);
 
-            scope.hover(response.docs[0]);
+            ctrl.hover(response.docs[0]);
         });
 
     });
