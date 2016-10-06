@@ -21,7 +21,7 @@ var detailsPage = (function () {
             return element.all(by.cssContainingText('tr[ng-repeat="field in displayFields"]', title)).first();
         },
         getAbsolutePath: function() {
-            var pathRow = this.getDetailsTableRow('Absolute Path').element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
+            var pathField = this.getDetailsTableRow('Absolute Path').element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
             return pathField.getText();
         },
         getMetadataButton: function() {
