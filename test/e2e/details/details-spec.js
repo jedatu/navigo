@@ -205,29 +205,51 @@ describe('Details', function() {
         var firstResult = resultList.first();
         searchPage.clickResult(firstResult);
 
+        var detailsButton = detailsPage.getDetailsButton();
+        expect(detailsButton.isPresent()).toBeTruthy();
+
+        var detailsTable = detailsPage.getDetailsTable();
+        expect(detailsTable.isDisplayed()).toBeTruthy();
+
         var relationshipButton = detailsPage.getRelationshipsButton();
         expect(relationshipButton.isPresent()).toBeTruthy();
 
+        var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
         var relationshipButton_Selected = element(by.cssContainingText('.selected', 'Relationships'));
-        var relationshipTable = element(by.css('section .relationship'));
+        var relationshipTableData = element.all(by.css('section .relationship'));
 
         expect(relationshipButton_Selected.isPresent()).toBeFalsy();
-        expect(relationshipTable.isDisplayed()).toBeFalsy();
+        var relationshipTableData_Displayed = relationshipTableData.reduce(function(acc, relationshipTable) {
+            return relationshipTable.isDisplayed().then(function(disp) {
+                return acc && disp;
+            });
+        }, true);
+        expect(relationshipTableData_Displayed).toBeFalsy();
+
         relationshipButton.click();
+
         expect(relationshipButton_Selected.isPresent()).toBeTruthy();
-        expect(relationshipTable.isDisplayed()).toBeTruthy();
+        relationshipTableData_Displayed = relationshipTableData.reduce(function(acc, relationshipTable) {
+            return relationshipTable.isDisplayed().then(function(disp) {
+                return acc && disp;
+            });
+        }, true);
+        expect(relationshipTableData_Displayed).toBeTruthy();
 
-        var detailsButton = detailsPage.getDetailsButton();
         expect(detailsButton.isDisplayed()).toBeTruthy();
-        var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
         expect(detailsButton_Selected.isPresent()).toBeFalsy();
-
-        var detailsTable = detailsPage.getDetailsTable();
         expect(detailsTable.isDisplayed()).toBeFalsy();
 
         detailsButton.click();
+
         expect(relationshipButton_Selected.isPresent()).toBeFalsy();
-        expect(relationshipTable.isDisplayed()).toBeFalsy();
+        relationshipTableData_Displayed = relationshipTableData.reduce(function(acc, relationshipTable) {
+            return relationshipTable.isDisplayed().then(function(disp) {
+                return acc && disp;
+            });
+        }, true);
+        expect(relationshipTableData_Displayed).toBeFalsy();
+
         expect(detailsButton_Selected.isPresent()).toBeTruthy();
         expect(detailsTable.isDisplayed()).toBeTruthy();
     });

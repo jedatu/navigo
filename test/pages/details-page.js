@@ -74,7 +74,8 @@ var detailsPage = (function () {
             browser.waitForAngular();
         },
         removeFlag: function() {
-            this.getRemoveFlagToolButton().click();
+            var removeFlagButton = this.getRemoveFlagToolButton();
+            removeFlagButton.click();
             browser.waitForAngular();
         },
         gotoPreviousResult: function() {
