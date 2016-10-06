@@ -105,7 +105,7 @@ describe('Search', function() {
         browser.sleep(10000);
         browser.waitForAngular();
 
-        var tableColumns = element.all(by.repeater('field in tableFields'));
+        var tableColumns = element.all(by.repeater('field in vm.tableFields'));
         expect(tableColumns.count()).toBeGreaterThan(0);
 
         var rows = element.all(by.repeater('doc in $data'));
