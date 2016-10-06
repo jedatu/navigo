@@ -80,6 +80,12 @@ var searchPage = (function () {
             return resultElement.element(by.binding('getNameToUse(doc, names)'));
         },
 
+        clickResult: function(resultElement)
+        {
+            resultElement.element(by.css('img')).click();
+            browser.waitForAngular();
+        },
+
         getFirstResult: function() {
             return this.getResults().first();
         }

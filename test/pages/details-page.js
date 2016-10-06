@@ -17,8 +17,11 @@ var detailsPage = (function () {
         getDetailsTable: function() {
             return element(by.id('details-table'));
         },
+        getDetailsTableRow: function(title) {
+            return element.all(by.cssContainingText('tr[ng-repeat="field in displayFields"]', title)).first();
+        },
         getAbsolutePath: function() {
-            var pathField = element(by.cssContainingText('tr[ng-repeat*="field in displayFields"]', 'Absolute Path')).element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
+            var pathRow = this.getDetailsTableRow('Absolute Path').element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
             return pathField.getText();
         },
         getMetadataButton: function() {

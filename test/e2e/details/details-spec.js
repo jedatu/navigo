@@ -20,7 +20,7 @@ describe('Details', function() {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
 
-    xit('should load details page', function() {
+    it('should load details page', function() {
         browser.get(server + '#/search?view=card&disp=default');
 
         Util.waitForSpinner();
@@ -36,8 +36,7 @@ describe('Details', function() {
         searchPage.getResultNameElement(firstResult).getInnerHtml().then(function(text) {
             name = text;
 
-            firstResult.click();
-            browser.waitForAngular();
+            searchPage.clickResult(firstResult);
 
             expect(detailsPage.getDocName().getInnerHtml()).toEqual(name);
 
@@ -67,8 +66,6 @@ describe('Details', function() {
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(1);
 
-        //browser.pause();
-
         var resultList = searchPage.getResults();
         var firstResult = resultList.get(0);
         var secondResult = resultList.get(1);
@@ -77,9 +74,7 @@ describe('Details', function() {
         searchPage.getResultNameElement(secondResult).getInnerHtml().then(function(text) {
             name = text;
 
-            firstResult.click();
-            browser.waitForAngular();
-            //browser.pause();
+            searchPage.clickResult(firstResult);
 
             detailsPage.gotoNextResult();
 
@@ -88,7 +83,7 @@ describe('Details', function() {
     });
 
 
-    xit('should load the previous result', function() {
+    it('should load the previous result', function() {
         browser.get(server + '#/search?view=card&disp=default');
         Util.waitForSpinner();
         Util.waitForSpinner();
@@ -102,20 +97,19 @@ describe('Details', function() {
         var secondResult = resultList.get(1);
         var name;
 
-        firstResult.getInnerHtml().then(function(text) {
+        searchPage.getResultNameElement(firstResult).getInnerHtml().then(function(text) {
             name = text;
 
-            secondResult.click();
-            browser.waitForAngular();
+            searchPage.clickResult(secondResult);
 
-            detailsPage.gotoPreviousResult()
+            detailsPage.gotoPreviousResult();
 
             expect(detailsPage.getDocName().getInnerHtml()).toEqual(name);
         });
     });
 
 
-    xit('should load recently viewed results', function() {
+    it('should load recently viewed results', function() {
         browser.get(server + '#/search?view=card&disp=default');
         Util.waitForSpinner();
         Util.waitForSpinner();
@@ -128,17 +122,16 @@ describe('Details', function() {
         var firstResult = resultList.get(0);
         var firstName;
 
-        firstResult.getInnerHtml().then(function(firstText) {
+        searchPage.getResultNameElement(firstResult).getInnerHtml().then(function(firstText) {
             firstName = firstText;
 
             var secondResult = resultList.get(1);
             var secondName;
 
-            secondResult.getInnerHtml().then(function(secondText) {
+            searchPage.getResultNameElement(secondResult).getInnerHtml().then(function(secondText) {
                 secondName = secondText;
 
-                firstResult.click();
-                browser.waitForAngular();
+                searchPage.clickResult(firstResult);
 
                 detailsPage.gotoNextResult();
 
@@ -156,7 +149,7 @@ describe('Details', function() {
     });
 
 
-    xit('should show metadata', function() {
+    it('should show metadata', function() {
         browser.get(server + '#/search?view=card&disp=default&fq=properties:hasMetadata');
 
         Util.waitForSpinner();
@@ -168,8 +161,7 @@ describe('Details', function() {
 
         var resultList = searchPage.getResults();
         var firstResult = resultList.first();
-        firstResult.click();
-        browser.waitForAngular();
+        searchPage.clickResult(firstResult);
 
         var metadataButton = detailsPage.getMetadataButton();
         expect(metadataButton.isPresent()).toBeTruthy();
@@ -199,7 +191,7 @@ describe('Details', function() {
     });
 
 
-    xit('should show relationships', function() {
+    it('should show relationships', function() {
         browser.get(server + '#/search?disp=default&fq=linkcount__children:1&view=card');
 
         Util.waitForSpinner();
@@ -211,8 +203,7 @@ describe('Details', function() {
 
         var resultList = searchPage.getResults();
         var firstResult = resultList.first();
-        firstResult.click();
-        browser.waitForAngular();
+        searchPage.clickResult(firstResult);
 
         var relationshipButton = detailsPage.getRelationshipsButton();
         expect(relationshipButton.isPresent()).toBeTruthy();
@@ -242,7 +233,7 @@ describe('Details', function() {
     });
 
 
-    xit('should show schema', function() {
+    it('should show schema', function() {
         browser.get(server + '#/search?disp=default&fq=format:schema&view=card');
 
         Util.waitForSpinner();
@@ -254,8 +245,7 @@ describe('Details', function() {
 
         var resultList = searchPage.getResults();
         var firstResult = resultList.first();
-        firstResult.click();
-        browser.waitForAngular();
+        searchPage.clickResult(firstResult);
 
         var schemaButton = detailsPage.getSchemaButton();
         expect(schemaButton.isPresent()).toBeTruthy();
@@ -285,7 +275,7 @@ describe('Details', function() {
     });
 
 
-    xit('should add to cart and remove from cart', function() {
+    it('should add to cart and remove from cart', function() {
         browser.get(server + '#/search?view=card&disp=default');
 
         Util.waitForSpinner();
@@ -297,8 +287,7 @@ describe('Details', function() {
 
         var resultList = searchPage.getResults();
         var firstResult = resultList.first();
-        firstResult.click();
-        browser.waitForAngular();
+        searchPage.clickResult(firstResult);
 
         var addToCartButton = detailsPage.getAddToCartButton();
         detailsPage.getCartTotal().then(function(data){
@@ -319,7 +308,7 @@ describe('Details', function() {
     });
 
 
-    xit('should open the tools menu and then open the path', function() {
+    it('should open the tools menu and then open the path', function() {
         browser.get(server + '#/search?fq=format:application%5C%2Fvnd.ogc.wms_layer_xml&view=card&disp=default');
 
         Util.waitForSpinner();
@@ -331,7 +320,7 @@ describe('Details', function() {
 
         var resultList = searchPage.getResults();
         var firstResult = resultList.first();
-        firstResult.click();
+        searchPage.clickResult(firstResult);
 
         var toolsButton = detailsPage.getToolsButton();
         Util.waitForElement(toolsButton);
@@ -359,7 +348,7 @@ describe('Details', function() {
     });
 
 
-    xit('should open the tools menu and flag the item', function() {
+    it('should add and remove flags', function() {
         browser.get(server + '#/search?fq=format:application%2Fvnd.esri.service.layer.record&view=card&disp=default');
 
         Util.waitForSpinner();
@@ -373,7 +362,7 @@ describe('Details', function() {
 
         var resultList = searchPage.getResults();
         var firstResult = resultList.first();
-        firstResult.click();
+        searchPage.clickResult(firstResult);
 
         var toolsButton = detailsPage.getToolsButton();
         Util.waitForElement(toolsButton);
@@ -396,7 +385,7 @@ describe('Details', function() {
         expect(flag.isPresent()).toBe(false);
     });
 
-    xit('should edit fields', function() {
+    it('should edit fields', function() {
 
         var mock = function() {
             config.editAll = true;
@@ -409,21 +398,40 @@ describe('Details', function() {
         Util.waitForSpinner();
 
         Util.loginToVoyager('admin', 'admin');
-        browser.waitForAngular();
-        browser.waitForAngular();
 
         var totalAnchor = searchPage.getTotalLink();
 
         expect(searchPage.getTotalValue()).toBeGreaterThan(0);
 
-        //browser.pause();
-
         var resultList = searchPage.getResults();
         var firstResult = resultList.first();
-        firstResult.click();
+        searchPage.clickResult(firstResult);
 
-        browser.pause();
+        var descriptionRow = detailsPage.getDetailsTableRow('Description');
+        var editLink = descriptionRow.element(by.css('a.edit_link'));
+        var descriptionInput = descriptionRow.element(by.css('input.input_field'));
+        var descriptionSaveButton = descriptionRow.element(by.css('button[ng-click="doSave(field)"]'));
+        var descriptionValue = descriptionRow.element(by.binding('field.formattedValue'));
 
+        var testDescription = 'Protractor Description';
 
+        editLink.click().then(function() {
+            descriptionInput.clear();
+            descriptionSaveButton.click().then(function() {
+                expect(descriptionValue.getText()).toEqual('');
+                editLink.click().then(function() {
+                    descriptionInput.sendKeys(testDescription);
+                    descriptionSaveButton.click().then(function() {
+                        expect(descriptionValue.getText()).toEqual(testDescription);
+                        editLink.click().then(function() {
+                            descriptionInput.clear();
+                            descriptionSaveButton.click().then(function() {
+                                expect(descriptionValue.getText()).toEqual('');
+                            });
+                        });
+                    });
+                });
+            });
+        });
     });
 });
