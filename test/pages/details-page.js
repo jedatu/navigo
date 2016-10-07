@@ -11,14 +11,28 @@ var detailsPage = (function () {
         getLeafletMap: function () {
             return  element(by.css('.angular-leaflet-map'));
         },
+        getThumbnail: function() {
+            return element(by.css('.img-thumbnail'));
+        },
         getDetailsButton: function () {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Details'));
+        },
+        getDetailsButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Details'));
         },
         getDetailsTable: function() {
             return element(by.id('details-table'));
         },
         getDetailsTableRow: function(title) {
-            return element.all(by.cssContainingText('tr[ng-repeat="field in displayFields"]', title)).first();
+            var rowElement = element.all(by.cssContainingText('tr[ng-repeat="field in displayFields"]', title)).first();
+            var row = {
+                'element': rowElement,
+                'editLink': rowElement.element(by.css('a.edit_link')),
+                'input': rowElement.element(by.css('input.input_field')),
+                'saveButton': rowElement.element(by.css('button[ng-click="doSave(field)"]')),
+                'value': rowElement.element(by.binding('field.formattedValue'))
+            }
+            return row;
         },
         getAbsolutePath: function() {
             var pathField = this.getDetailsTableRow('Absolute Path').element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
@@ -27,11 +41,26 @@ var detailsPage = (function () {
         getMetadataButton: function() {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Metadata'));
         },
+        getMetadataButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Metadata'));
+        },
+        getMetadataTable: function() {
+            return element(by.id('metadata-tab'));
+        },
         getRelationshipsButton: function() {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Relationships'));
         },
+        getRelationshipsButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Relationships'));
+        },
+        getRelationshipTable: function() {
+            return element.all(by.css('section .relationship'));
+        },
         getSchemaButton: function() {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Schema'));
+        },
+        getSchemaButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Schema'));
         },
         getSchemaTable: function() {
             return element(by.id('schema-table'));

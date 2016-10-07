@@ -40,7 +40,7 @@ describe('Details', function() {
 
             expect(detailsPage.getDocName().getInnerHtml()).toEqual(name);
 
-            var thumbnailElement = element(by.css('.img-thumbnail'));
+            var thumbnailElement = detailsPage.getThumbnail();
             expect(thumbnailElement.isDisplayed()).toBeTruthy();
 
             var mapElement = detailsPage.getLeafletMap();
@@ -48,7 +48,7 @@ describe('Details', function() {
 
             var detailsButton = detailsPage.getDetailsButton();
             expect(detailsButton.isDisplayed()).toBeTruthy();
-            var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
+            var detailsButton_Selected = detailsPage.getDetailsButtonSelected();
             expect(detailsButton_Selected.isPresent()).toBeTruthy();
 
             var detailsTable = detailsPage.getDetailsTable();
@@ -166,8 +166,8 @@ describe('Details', function() {
         var metadataButton = detailsPage.getMetadataButton();
         expect(metadataButton.isPresent()).toBeTruthy();
 
-        var metadataButton_Selected = element(by.cssContainingText('.selected', 'Metadata'));
-        var metadataTable = element(by.id('metadata-tab'));
+        var metadataButton_Selected = detailsPage.getMetadataButtonSelected();
+        var metadataTable = detailsPage.getMetadataTable();
 
         expect(metadataButton_Selected.isPresent()).toBeFalsy();
         expect(metadataTable.isDisplayed()).toBeFalsy();
@@ -177,7 +177,7 @@ describe('Details', function() {
 
         var detailsButton = detailsPage.getDetailsButton();
         expect(detailsButton.isDisplayed()).toBeTruthy();
-        var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
+        var detailsButton_Selected = detailsPage.getDetailsButtonSelected();
         expect(detailsButton_Selected.isPresent()).toBeFalsy();
 
         var detailsTable = detailsPage.getDetailsTable();
@@ -214,9 +214,9 @@ describe('Details', function() {
         var relationshipButton = detailsPage.getRelationshipsButton();
         expect(relationshipButton.isPresent()).toBeTruthy();
 
-        var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
-        var relationshipButton_Selected = element(by.cssContainingText('.selected', 'Relationships'));
-        var relationshipTableData = element.all(by.css('section .relationship'));
+        var detailsButton_Selected = detailsPage.getDetailsButtonSelected();
+        var relationshipButton_Selected = detailsPage.getRelationshipsButtonSelected();
+        var relationshipTableData = detailsPage.getRelationshipTable();
 
         expect(relationshipButton_Selected.isPresent()).toBeFalsy();
         var relationshipTableData_Displayed = relationshipTableData.reduce(function(acc, relationshipTable) {
@@ -272,7 +272,7 @@ describe('Details', function() {
         var schemaButton = detailsPage.getSchemaButton();
         expect(schemaButton.isPresent()).toBeTruthy();
 
-        var schemaButton_Selected = element(by.cssContainingText('.selected', 'Schema'));
+        var schemaButton_Selected = detailsPage.getSchemaButtonSelected();
         var schemaTable = detailsPage.getSchemaTable();
 
         expect(schemaButton_Selected.isPresent()).toBeFalsy();
@@ -283,7 +283,7 @@ describe('Details', function() {
 
         var detailsButton = detailsPage.getDetailsButton();
         expect(detailsButton.isDisplayed()).toBeTruthy();
-        var detailsButton_Selected = element(by.cssContainingText('.selected', 'Details'));
+        var detailsButton_Selected = detailsPage.getDetailsButtonSelected();
         expect(detailsButton_Selected.isPresent()).toBeFalsy();
 
         var detailsTable = detailsPage.getDetailsTable();
@@ -430,25 +430,21 @@ describe('Details', function() {
         searchPage.clickResult(firstResult);
 
         var descriptionRow = detailsPage.getDetailsTableRow('Description');
-        var editLink = descriptionRow.element(by.css('a.edit_link'));
-        var descriptionInput = descriptionRow.element(by.css('input.input_field'));
-        var descriptionSaveButton = descriptionRow.element(by.css('button[ng-click="doSave(field)"]'));
-        var descriptionValue = descriptionRow.element(by.binding('field.formattedValue'));
 
         var testDescription = 'Protractor Description';
 
-        editLink.click().then(function() {
-            descriptionInput.clear();
-            descriptionSaveButton.click().then(function() {
-                expect(descriptionValue.getText()).toEqual('');
-                editLink.click().then(function() {
-                    descriptionInput.sendKeys(testDescription);
-                    descriptionSaveButton.click().then(function() {
-                        expect(descriptionValue.getText()).toEqual(testDescription);
-                        editLink.click().then(function() {
-                            descriptionInput.clear();
-                            descriptionSaveButton.click().then(function() {
-                                expect(descriptionValue.getText()).toEqual('');
+        descriptionRow.editLink.click().then(function() {
+            descriptionRow.input.clear();
+            descriptionRow.saveButton.click().then(function() {
+                expect(descriptionRow.value.getText()).toEqual('');
+                descriptionRow.editLink.click().then(function() {
+                    descriptionRow.input.sendKeys(testDescription);
+                    descriptionRow.saveButton.click().then(function() {
+                        expect(descriptionRow.value.getText()).toEqual(testDescription);
+                        descriptionRow.editLink.click().then(function() {
+                            descriptionRow.input.clear();
+                            descriptionRow.saveButton.click().then(function() {
+                                expect(descriptionRow.value.getText()).toEqual('');
                             });
                         });
                     });
