@@ -71,7 +71,18 @@ var searchPage = (function () {
 
         getResults: function()
         {
-            return element.all(by.binding('doc[getNameToUse(doc, names)]'));
+            return element.all(by.repeater('doc in results'));
+        },
+
+        getResultNameElement: function(resultElement)
+        {
+            return resultElement.element(by.binding('getNameToUse(doc, names)'));
+        },
+
+        clickResult: function(resultElement)
+        {
+            resultElement.element(by.css('img')).click();
+            browser.waitForAngular();
         },
 
         getFirstResult: function() {

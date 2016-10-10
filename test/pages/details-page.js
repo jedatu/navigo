@@ -11,24 +11,56 @@ var detailsPage = (function () {
         getLeafletMap: function () {
             return  element(by.css('.angular-leaflet-map'));
         },
+        getThumbnail: function() {
+            return element(by.css('.img-thumbnail'));
+        },
         getDetailsButton: function () {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Details'));
+        },
+        getDetailsButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Details'));
         },
         getDetailsTable: function() {
             return element(by.id('details-table'));
         },
+        getDetailsTableRow: function(title) {
+            var rowElement = element.all(by.cssContainingText('tr[ng-repeat="field in displayFields"]', title)).first();
+            var row = {
+                'element': rowElement,
+                'editLink': rowElement.element(by.css('a.edit_link')),
+                'input': rowElement.element(by.css('input.input_field')),
+                'saveButton': rowElement.element(by.css('button[ng-click="doSave(field)"]')),
+                'value': rowElement.element(by.binding('field.formattedValue'))
+            }
+            return row;
+        },
         getAbsolutePath: function() {
-            var pathField = element(by.cssContainingText('tr[ng-repeat*="field in displayFields"]', 'Absolute Path')).element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
+            var pathField = this.getDetailsTableRow('Absolute Path').element(by.css('td')).element(by.css('div.formatted_value.ng-binding.ng-scope'));
             return pathField.getText();
         },
         getMetadataButton: function() {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Metadata'));
         },
+        getMetadataButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Metadata'));
+        },
+        getMetadataTable: function() {
+            return element(by.id('metadata-tab'));
+        },
         getRelationshipsButton: function() {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Relationships'));
         },
+        getRelationshipsButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Relationships'));
+        },
+        getRelationshipTable: function() {
+            return element.all(by.css('section .relationship'));
+        },
         getSchemaButton: function() {
             return element(by.cssContainingText('a[ng-click*=changeTab]', 'Schema'));
+        },
+        getSchemaButtonSelected: function () {
+            return element(by.cssContainingText('li.selected a[ng-click*=changeTab]', 'Schema'));
         },
         getSchemaTable: function() {
             return element(by.id('schema-table'));
@@ -71,20 +103,24 @@ var detailsPage = (function () {
             browser.waitForAngular();
         },
         removeFlag: function() {
-            this.getRemoveFlagToolButton().click();
+            var removeFlagButton = this.getRemoveFlagToolButton();
+            removeFlagButton.click();
             browser.waitForAngular();
         },
         gotoPreviousResult: function() {
             var previousLink = element(by.css('a[ng-click*=Previous]'));
             previousLink.click();
+            browser.waitForAngular();
         },
         gotoNextResult: function() {
             var nextLink = element(by.css('a[ng-click*=Next]'));
             nextLink.click();
+            browser.waitForAngular();
         },
         gotoRecentlyViewed: function(index) {
             var firstRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(index).element(by.binding('doc.name'));
             firstRecentlyViewedElement.click();
+            browser.waitForAngular();
         }
     };
 })();  // jshint ignore:line
