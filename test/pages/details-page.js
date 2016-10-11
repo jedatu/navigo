@@ -3,6 +3,7 @@ var detailsPage = (function () {
 
     var Util = require('../lib/util.js');
 
+
     return {
 
         getDocName: function() {
@@ -95,25 +96,22 @@ var detailsPage = (function () {
         addFlag: function(flag) {
             var flagButton = this.getFlagToolButton();
             flagButton.click();
-            browser.waitForAngular();
             Util.waitForSpinner();
 
             var flagInput = element(by.id('flagText'));
             flagInput.sendKeys(flag);
             element(by.css('[ng-click="save()"]')).click();
-            browser.waitForAngular();
             Util.waitForSpinner();
         },
         removeFlag: function() {
             var removeFlagButton = this.getRemoveFlagToolButton();
             removeFlagButton.click();
-            browser.waitForAngular();
             Util.waitForSpinner();
         },
         gotoPreviousResult: function() {
             var previousLink = element(by.css('a[ng-click*=Previous]'));
             previousLink.click();
-            browser.waitForAngular();
+            //Util.waitForUI();
             Util.waitForSpinner();
         },
         gotoNextResult: function() {
@@ -125,7 +123,6 @@ var detailsPage = (function () {
         gotoRecentlyViewed: function(index) {
             var firstRecentlyViewedElement = element.all(by.repeater('doc in recent')).get(index).element(by.binding('doc.name'));
             firstRecentlyViewedElement.click();
-            browser.waitForAngular();
             Util.waitForSpinner();
         }
     };

@@ -9,7 +9,7 @@ describe('Details', function() {
     var server = Util.getServer();
 
     var originalTimeout;
-    var newTimeout = 100000;
+    var newTimeout = 600000;  //10 minutes
 
     beforeEach(function() {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -21,9 +21,7 @@ describe('Details', function() {
     });
 
     it('should load details page', function() {
-        browser.get(server + '#/search?view=card&disp=default');
-
-        Util.waitForSpinner();
+        browser.get(server + '#/search?q=name:%5B*%20TO%20*%5D&view=card&disp=default');
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -58,8 +56,7 @@ describe('Details', function() {
 
 
     it('should load the next result', function() {
-        browser.get(server + '#/search?view=card&disp=default');
-        Util.waitForSpinner();
+        browser.get(server + '#/search?q=name:%5B*%20TO%20*%5D&view=card&disp=default');
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -84,8 +81,7 @@ describe('Details', function() {
 
 
     it('should load the previous result', function() {
-        browser.get(server + '#/search?view=card&disp=default');
-        Util.waitForSpinner();
+        browser.get(server + '#/search?q=name:%5B*%20TO%20*%5D&view=card&disp=default');
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -110,8 +106,7 @@ describe('Details', function() {
 
 
     it('should load recently viewed results', function() {
-        browser.get(server + '#/search?view=card&disp=default');
-        Util.waitForSpinner();
+        browser.get(server + '#/search?q=name:%5B*%20TO%20*%5D&view=card&disp=default');
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -151,8 +146,6 @@ describe('Details', function() {
 
     it('should show metadata', function() {
         browser.get(server + '#/search?view=card&disp=default&fq=properties:hasMetadata');
-
-        Util.waitForSpinner();
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -193,8 +186,6 @@ describe('Details', function() {
 
     it('should show relationships', function() {
         browser.get(server + '#/search?disp=default&fq=linkcount__children:1&view=card');
-
-        Util.waitForSpinner();
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -257,8 +248,6 @@ describe('Details', function() {
 
     it('should show schema', function() {
         browser.get(server + '#/search?disp=default&fq=format:schema&view=card');
-
-        Util.waitForSpinner();
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -298,9 +287,7 @@ describe('Details', function() {
 
 
     it('should add to cart and remove from cart', function() {
-        browser.get(server + '#/search?view=card&disp=default');
-
-        Util.waitForSpinner();
+        browser.get(server + '#/search?view=card&disp=default&fq=format_type:File');
         Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
@@ -334,7 +321,7 @@ describe('Details', function() {
         browser.get(server + '#/search?fq=format:application%5C%2Fvnd.ogc.wms_layer_xml&view=card&disp=default');
 
         Util.waitForSpinner();
-        Util.waitForSpinner();
+       // Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
 
@@ -374,7 +361,7 @@ describe('Details', function() {
         browser.get(server + '#/search?fq=format:application%2Fvnd.esri.service.layer.record&view=card&disp=default');
 
         Util.waitForSpinner();
-        Util.waitForSpinner();
+       // Util.waitForSpinner();
 
         Util.loginToVoyager('admin', 'admin');
 
@@ -417,7 +404,7 @@ describe('Details', function() {
         browser.get(server + '#/search?view=card&disp=default');
 
         Util.waitForSpinner();
-        Util.waitForSpinner();
+        //Util.waitForSpinner();
 
         Util.loginToVoyager('admin', 'admin');
 

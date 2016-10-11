@@ -82,7 +82,6 @@ var searchPage = (function () {
         clickResult: function(resultElement)
         {
             resultElement.element(by.css('img')).click();
-            browser.waitForAngular();
             Util.waitForSpinner();
         },
 
