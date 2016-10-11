@@ -162,7 +162,7 @@ angular.module('voyager.results')
                 $scope.getNameToUse = function(doc, names) {
                     var selectedName = null;
                     $.each(names, function(idx, name){
-                        if(selectedName === null && doc[name.field] !== null) {
+                        if(!(selectedName) && !(_.isEmpty(doc[name.field]))) {
                             selectedName = name;
                         }
                     });
