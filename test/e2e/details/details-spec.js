@@ -319,9 +319,7 @@ describe('Details', function() {
 
     it('should open the tools menu and then open the path', function() {
         browser.get(server + '#/search?fq=format:application%5C%2Fvnd.ogc.wms_layer_xml&view=card&disp=default');
-
         Util.waitForSpinner();
-       // Util.waitForSpinner();
 
         var totalAnchor = searchPage.getTotalLink();
 
@@ -359,9 +357,7 @@ describe('Details', function() {
 
     it('should add and remove flags', function() {
         browser.get(server + '#/search?fq=format:application%2Fvnd.esri.service.layer.record&view=card&disp=default');
-
         Util.waitForSpinner();
-       // Util.waitForSpinner();
 
         Util.loginToVoyager('admin', 'admin');
 
@@ -402,9 +398,7 @@ describe('Details', function() {
         browser.addMockModule('portalApp', mock);
 
         browser.get(server + '#/search?view=card&disp=default');
-
         Util.waitForSpinner();
-        //Util.waitForSpinner();
 
         Util.loginToVoyager('admin', 'admin');
 

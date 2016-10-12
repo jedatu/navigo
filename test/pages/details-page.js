@@ -3,7 +3,6 @@ var detailsPage = (function () {
 
     var Util = require('../lib/util.js');
 
-
     return {
 
         getDocName: function() {
@@ -111,13 +110,11 @@ var detailsPage = (function () {
         gotoPreviousResult: function() {
             var previousLink = element(by.css('a[ng-click*=Previous]'));
             previousLink.click();
-            //Util.waitForUI();
             Util.waitForSpinner();
         },
         gotoNextResult: function() {
             var nextLink = element(by.css('a[ng-click*=Next]'));
             nextLink.click();
-            browser.waitForAngular();
             Util.waitForSpinner();
         },
         gotoRecentlyViewed: function(index) {
