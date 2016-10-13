@@ -35,7 +35,7 @@ var config = {
     markerLimit:10001,
     proxy:'http://localhost:8888/proxy/jsonp/',
     docActions: [
-        {text:'Add to Cart', action:'add', visible:'doc.canCart && !doc.isService', toggle:'inCart', off:'Remove', onIcon:'icon-plus', offIcon:'icon-x', offListIcon:'fa fa-shopping-cart', offList:'Remove from Cart'},
+        {text:'Add to Cart', action:'add', visible:'canCart', toggle:'inCart', off:'Remove', onIcon:'icon-plus', offIcon:'icon-x', offListIcon:'fa fa-shopping-cart', offList:'Remove from Cart'},
         {text:'Download', action:'download', visible:'hasDownload', alt:'Open'},
         {text:'Open in Map Viewer', action:'open', visible:'isService', url:'http://voyagerdemo.com/voyagerwidget/'},
         {text:'Open in ArcMap', action:'openArcMap', visible:'isEsriLayer'}
