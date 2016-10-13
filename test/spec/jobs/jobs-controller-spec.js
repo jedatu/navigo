@@ -73,7 +73,7 @@ describe('Controller: JobsCtrl', function () {
 
         $scope.download(jobs[1]);
 
-        expect($window.location.href).toMatch(new RegExp(escapeRegExp('status/id2')));
+        expect($window.location.href).toContain('status?id=id2');
     });
 
     it('should run', function () {

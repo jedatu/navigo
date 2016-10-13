@@ -6,7 +6,7 @@
     <tr ng:repeat="item in items">
         <td><img ng-src="{{item['[thumbURL]']}}" alt="..." class="img-thumbnail" style="height:50px; width:50px"></td>
         <td>
-            <a href="#/show/{{item.id}}">{{item.name}}</a>
+            <a href="show?id={{item.id}}&disp={{disp}}">{{item.name}}</a>
         </td>
     </tr>
 </table>

@@ -8,7 +8,7 @@ angular.module('taskRunner')
         // TODO appears this will only go back to classic?
         $scope.goBack = function() {
             var params = sugar.retroParams($stateParams);
-            $window.location.href = config.root + config.explorePath + '/#/' + params;
+            $window.location.href = config.root + config.explorePath + '/' + params;
         };
 
         function getIcon(status) {
@@ -68,7 +68,7 @@ angular.module('taskRunner')
                 return param.indexOf('bbox:') > -1;
             });
 
-            $window.location = '#/search?disp=' + params.disp + '&' + sugar.toQueryString(resultsParam.query);
+            $window.location = 'search?disp=' + params.disp + '&' + sugar.toQueryString(resultsParam.query);
         };
 
         function _getFiles(output) {
@@ -83,7 +83,7 @@ angular.module('taskRunner')
                 var downloadUrl = taskService.getFileUrl(job.id, file);
                 $window.location.href = downloadUrl;
             } else {
-                $window.location.href = '#/status/' + job.id;
+                $window.location.href = 'status?id=' + job.id;
             }
         };
 
@@ -95,7 +95,7 @@ angular.module('taskRunner')
             usSpinnerService.spin('job-spinner');
             jobService.execute(job).then(function(response) {
                 var newJobId = response.data.id;
-                $window.location.href = '#/status/' + newJobId;
+                $window.location.href = 'status?id=' + newJobId;
             },
             function() {
                 usSpinnerService.stop('job-spinner');

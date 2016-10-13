@@ -71,7 +71,7 @@ describe('TaskCtrl', function () {
 
             httpMock.flush();
 
-            expect(location.path()).toBe('/status/id');
+            expect(location.path()).toBe('/status?id=id');
         });
 
         it('should exec using filters and bbox', function () {
@@ -88,7 +88,7 @@ describe('TaskCtrl', function () {
 
             httpMock.flush();
 
-            expect(location.path()).toBe('/status/id');
+            expect(location.path()).toBe('/status?id=id');
         });
 
         it('should exec using filters', function () {
@@ -105,7 +105,7 @@ describe('TaskCtrl', function () {
 
             httpMock.flush();
 
-            expect(location.path()).toBe('/status/id');
+            expect(location.path()).toBe('/status?id=id');
         });
 
         it('should fail validation', function () {

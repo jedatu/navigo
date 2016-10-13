@@ -196,7 +196,7 @@ angular.module('taskRunner')
             inputItems.query = _getQuery(cartService.getQuery(), cartService.getItemIds());
             //console.log('Task ' + request.task + ' Query: ' + JSON.stringify(inputItems.query));
             return taskService.execute(request).then(function (response) {
-                $location.path('/status/' + response.data.id);
+                $location.path('/status?id=' + response.data.id);
             }, function(error) {
                 _errorHandler(error, params);
             });

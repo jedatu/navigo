@@ -100,11 +100,11 @@ angular.module('taskRunner')
                     var query = readOnlyParams.inputItems[0].query;
                     if(query) {
                         _applyBbox(query);
-                        $scope.searchItemURL = '#/search?disp=' + searchParams.disp + '&' + sugar.toNavigoQueryString(query);
+                        $scope.searchItemURL = 'search?disp=' + searchParams.disp + '&' + sugar.toNavigoQueryString(query);
                     } else {
                         var ids = readOnlyParams.inputItems[0].ids;
                         var idParams = ids.join('&fq=id:');
-                        $scope.searchItemURL = '#/search?disp=' + searchParams.disp + '&fq=id:' + idParams;
+                        $scope.searchItemURL = 'search?disp=' + searchParams.disp + '&fq=id:' + idParams;
                     }
 
                     $scope.hasMap = readOnlyParams.hasMap;
@@ -398,7 +398,7 @@ angular.module('taskRunner')
         //        $scope.selectTask($scope.task);
         //    } else {
         //        var params = _getParams($scope.inputItems[0]); //this is an array so it doesn't get rendered if empty (could use ng-if instead)
-        //        $window.location.href = '#/cart?' + params + '&rerun=' + $stateParams.id;
+        //        $window.location.href = 'cart?' + params + '&rerun=' + $stateParams.id;
         //    }
         //};
 

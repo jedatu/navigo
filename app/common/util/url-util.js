@@ -4,7 +4,7 @@ angular.module('voyager.util').
     factory('urlUtil', function (filterService) {
 
         'use strict';
-        var lastUrl = '#/search';
+        var lastUrl = 'search';
 
         var getPrefix = function (url) {
             var prefix = '&';
@@ -17,7 +17,7 @@ angular.module('voyager.util').
         return {
             //TODO just store location.search() instead of doing all this?
             buildSearchUrl: function (config, query, page, mapView, view, sort) {
-                var url = '#/search';
+                var url = 'search';
                 var sep = '?';
                 if (config) {
                     url += sep + 'disp=' + config;
@@ -50,7 +50,7 @@ angular.module('voyager.util').
             },
 
             buildSearchUrl2: function (solrParams, page, mapView, view, sort) {
-                var url = '#/search';
+                var url = 'search';
                 var sep = '?';
                 $.each(solrParams,function(key, value) {
                     if(value !== '*:*' && key !== 'sort') {  //don't apply all (default) wildcard to url, its implicit

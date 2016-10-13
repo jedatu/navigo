@@ -27,7 +27,7 @@ describe('Controller: HeaderCtrl', function () {
             $controller = _$controller_;
             q = _$q_;
             authService = _authService_;
-            $window = _$window_;
+            $window = {location:{href:''}, open: function() {}};
             $state = _$state_;
         });
 
@@ -38,7 +38,9 @@ describe('Controller: HeaderCtrl', function () {
 
     function initController() {
         $location.search().disp = 'disp';
-        sut = $controller('HeaderCtrl', {$scope: $scope, authService: authService});
+        sut = $controller('HeaderCtrl', {$scope: $scope, authService: authService, $window: $window});
+
+        //spyOn($window, 'location');
 
         //$http.expectGET(new RegExp('auth')).respond({}); // transitive auth call
         //$http.flush();
@@ -109,7 +111,7 @@ describe('Controller: HeaderCtrl', function () {
 
         sut.gotoPage('junk');
 
-        expect($window.location.hash).toEqual('#junk?disp=disp');
+        expect($window.location.href).toEqual('junk?disp=disp');
     });
 
     it('should clear queue', function () {
@@ -125,7 +127,7 @@ describe('Controller: HeaderCtrl', function () {
 
     it('should goto classic details from details', function () {
         $location.search().view = 'card';
-        $location.path('/show/12345');
+        $location.path('/show?id=12345');
 
         initController();
 

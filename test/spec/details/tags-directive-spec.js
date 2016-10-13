@@ -1,4 +1,4 @@
-describe('Preview Directive:', function () {
+describe('Tags Directive:', function () {
     'use strict';
 
     beforeEach(function () {
@@ -8,6 +8,9 @@ describe('Preview Directive:', function () {
         module('voyager.tagging');
         module(function ($provide) {
             $provide.constant('config', config);
+            $provide.service('$window', function(){
+                this.location = {href: ''};
+            });
         });
     });
 

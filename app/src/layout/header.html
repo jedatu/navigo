@@ -1,6 +1,6 @@
 <div class="header-controller" ng-controller="HeaderCtrl as vm"> 
 	<div class="inner">
-		<h1 title="{{vm.buildRev}}"><a href="#/home{{vm.disp}}"><img class="logo" src="{{vm.logo}}" alt="" /></a></h1>
+		<h1 title="{{vm.buildRev}}"><a href="home{{vm.disp}}"><img class="logo" src="{{vm.logo}}" alt="" /></a></h1>
 		<ng-include src="'src/search/search-input.html'"></ng-include>
 
 		<div id="hamburger" class="tablet_only" ng-show="vm.showNav">

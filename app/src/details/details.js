@@ -97,7 +97,7 @@ angular.module('voyager.details')
 
         function createFolderLinks(doc, url) {
             $scope.doc_path = {
-                url: '#search?disp=' + $scope.disp + '&fq=location:' + doc.location,
+                url: 'search?disp=' + $scope.disp + '&fq=location:' + doc.location,
                 path: doc.fullpath.substring(0, doc.fullpath.indexOf(doc.folder.replace(/\//g, '\\')))
             };
 
@@ -110,14 +110,14 @@ angular.module('voyager.details')
                 url += encodeURI(item);
                 $scope.sub_paths.push({
                     path: item + '\\',
-                    url: '#search?disp=' + $scope.disp + '&fq=path:' + url + '&fq=location:' + doc.location
+                    url: 'search?disp=' + $scope.disp + '&fq=path:' + url + '&fq=location:' + doc.location
                 });
             });
 
             var filename = doc.fullpath.split('\\').pop();
             $scope.sub_paths.push({
                 path: filename,
-                url: '#search?disp=' + $scope.disp + '&fq=path:' + (url + '\/' + filename) + '&fq=location:' + doc.location
+                url: 'search?disp=' + $scope.disp + '&fq=path:' + (url + '\/' + filename) + '&fq=location:' + doc.location
             });
         }
 
@@ -126,7 +126,7 @@ angular.module('voyager.details')
 
             if (tempFolders) {
                 $scope.doc_path = {
-                    url: '#search?disp=' + $scope.disp + '&fq=location:' + doc.location,
+                    url: 'search?disp=' + $scope.disp + '&fq=location:' + doc.location,
                     path: (tempFolders[0] + 'Dataset')
                 };
 
@@ -134,7 +134,7 @@ angular.module('voyager.details')
                     var path = tempFolders[1].replace(/^[\/\\]/, '').replace(/\s[|]\s/g, '\\').replace(/\\/g, '%255C');
                     $scope.sub_paths.push({
                         path: tempFolders[1],
-                        url: '#search?disp=' + $scope.disp + '&fq=location:' + doc.location + '&fq=path:' + path
+                        url: 'search?disp=' + $scope.disp + '&fq=location:' + doc.location + '&fq=path:' + path
                     });
                 }
             }
@@ -179,7 +179,7 @@ angular.module('voyager.details')
                     _.each(shardInfo, function(shard) {
                         doc.remoteDetails = shard.shardAddress;
                         doc.remoteDetails = doc.remoteDetails.substring(0,doc.remoteDetails.indexOf('/solr'));
-                        doc.remoteDetails += '/#/show/' + doc.id + '?disp=default';
+                        doc.remoteDetails += '/show?id=' + doc.id + '&disp=default';
                     });
                 }
                 $scope.doc = doc;
@@ -215,7 +215,7 @@ angular.module('voyager.details')
                 doc.hasSchema = angular.isDefined(doc.schema);
                 if(doc.hasSchema) {
                     $scope.schema = JSON.parse(doc.schema);
-                    $scope.schemaLink = '#/search?disp=' + $scope.disp + '&fq=schema_hash:' + $scope.schema.hash;
+                    $scope.schemaLink = 'search?disp=' + $scope.disp + '&fq=schema_hash:' + $scope.schema.hash;
                 }
 
                 $scope.doc.isMappable = mapServiceFactory.isMappable(doc.format);
@@ -537,7 +537,7 @@ angular.module('voyager.details')
             if(id !== null) {
                 $scope[flag] = false;
                 var encodedId = encodeURIComponent(encodeURIComponent(id.id));  // TODO it doesn't work with just 1 encode
-                var detailsUrl = '#/show/' + encodedId + '?disp=' + configService.getConfigId();
+                var detailsUrl = 'show?id= ' + encodedId + '&disp=' + configService.getConfigId();
                 if (angular.isDefined(id.shard) && id.shard !== '[not a shard request]') {
                     detailsUrl += '&shard=' + id.shard;
                 }

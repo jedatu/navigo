@@ -4,6 +4,10 @@ describe('portalApp', function() {
 
     var $rootScope, $state, $injector, $http;
 
+    beforeAll( function(){
+        window.onbeforeunload = function() { return '';};
+    });
+
     beforeEach(function() {
         module('templates');
         module('portalApp');

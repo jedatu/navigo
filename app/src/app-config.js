@@ -1,7 +1,9 @@
 /*global config */
 angular.module('portalApp')
-    .config(function ($stateProvider, $httpProvider, $urlRouterProvider, $analyticsProvider) {
+    .config(function ($stateProvider, $httpProvider, $urlRouterProvider, $analyticsProvider, $locationProvider) {
         'use strict';
+
+        $locationProvider.html5Mode(true);
 
         function _loadIfAllowed(authService, $q, configLoader, $location) {
             return authService.getPrivileges().then(function() {
@@ -69,7 +71,7 @@ angular.module('portalApp')
                 }
             })
             .state('details', {
-                url: '/show/:id?disp&shard',
+                url: '/show?id&disp&shard',
                 views: {
                     '': {
                         templateUrl: 'src/details/details.html'
@@ -134,7 +136,7 @@ angular.module('portalApp')
                 }
             })
             .state('status', {
-                url: '/status/:id',
+                url: '/status?id',
                 templateUrl: 'src/taskrunner/status.html',
                 resolve: {
                     load: function ($q, authService) {

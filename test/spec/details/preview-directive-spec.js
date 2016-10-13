@@ -18,7 +18,7 @@ describe('Preview Directive:', function () {
         $compile = _$compile_;
         timeout = $timeout;
         httpMock = $httpBackend;
-        $window = _$window_;
+        $window = {location:{href:''}};
         $document = _$document_;
     }));
 

@@ -24,6 +24,7 @@
     "angular": false,
     "before": false,
     "beforeEach": false,
+    "beforeAll": false,
     "browser": false,
     "describe": false,
     "expect": false,

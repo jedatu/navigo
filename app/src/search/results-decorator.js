@@ -103,8 +103,7 @@
 
         function _getDetailsLink(doc, disp) {
             //rss issue hack - encoding twice works
-            var link = '#/show/' +  encodeURIComponent(encodeURIComponent(doc.id)) + '?disp=' + disp;
-            //var link = '#/show/' +  doc.id + '?disp=' + disp;
+            var link = 'show?id=' +  encodeURIComponent(encodeURIComponent(doc.id)) + '&disp=' + disp;
             if(angular.isDefined(doc.shard) && doc.shard !== '[not a shard request]') {
                 link += '&shard=' + doc.shard;
                 doc.isRemote = catalogService.isRemote(doc.shard);
@@ -144,7 +143,7 @@
                 }
                 if (!_.isEmpty(doc.format)) {
                     doc.formatValue = translateService.getTypeAbbr(doc.format);
-                    doc.formatLink = '#/search?fq=format:' + doc.format + '&disp=' + disp;
+                    doc.formatLink = 'search?fq=format:' + doc.format + '&disp=' + disp;
                 }
 
                 if(angular.isDefined(doc.bytes)) {
