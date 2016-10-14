@@ -24,6 +24,21 @@
 		<link rel="stylesheet" href="assets/css/main.css">
 		<!-- endbuild -->
 		<base href="/">
+		<script>
+			var folders = window.location.pathname.split('/');
+			folders.shift();
+			var base = '/';
+			if (folders.length > 1 && folders[0] !== 'navigo') {
+				for (var i=0; i<folders.length; i++) {
+					base += folders[i] + '/';
+					if (folders[i] === 'navigo') {
+						break;
+					}
+				}
+				document.getElementsByTagName('base')[0].setAttribute('href',base);
+			}
+			//document.write('<base href="' + base + '">');
+		</script>
 	</head>
     <!-- ecobar - add class to body tag to enable - see example below-->
     <body vs-popover vs-layout>
