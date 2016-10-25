@@ -65,6 +65,8 @@
                 } else {
                     formattedValue = translateService.getType(field.value);
                 }
+            } else if (field.raw === 'bytes') {
+                formattedValue = $filter('bytes')(field.value);
             } else if (sugar.isDate(field.value)) {
                 formattedValue = $filter('date')(Date.parse(field.value), 'M/d/yyyy, hh:mma');
             }
