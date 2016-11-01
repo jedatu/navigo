@@ -61,7 +61,9 @@ angular.module('voyager.util').
             if(angular.isDefined(params[from])) {
                 var pArr = sugar.toArray(params[from]), f, filter, filterValue;
                 $.each(pArr, function(index, value) {
-                    if (value.indexOf(':') !== -1) {
+                    if (to.indexOf('links.') > -1) {
+                        converted += '/' + to + '=' + encodeURIComponent(encodeURIComponent(value));
+                    } else if (value.indexOf(':') !== -1) {
                         f = value.split(':');
                         filter = f[0];
                         filterValue = f[1];
@@ -239,7 +241,11 @@ angular.module('voyager.util').
                 voyagerParams += _toClassic(params, 'place', 'place');
                 voyagerParams += _toClassic(params, 'place.op', 'place.op');
 
-                voyagerParams += _toClassic(params, 'voyager.list', 'voyager.list');
+                voyagerParams += _toClassic(params, 'voyager.list', 'voyager.list')
+
+                voyagerParams += _toClassic(params, 'links.to', 'links.to');
+                voyagerParams += _toClassic(params, 'links.from', 'links.from');
+
                 if(angular.isDefined(params.view) && params.view !== 'card') {
                     voyagerParams += '/view=' + params.view;
                 }
