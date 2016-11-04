@@ -17,8 +17,9 @@ angular.module('voyager.search').
             solrParams['place.op'] = (voyagerParams['bbox.mode'] === 'WITHIN') ? 'within':'intersects';
         }
 
-        function _getView(voyagerParams) {
-            var view = {'type':'card'};
+        function _getView(voyagerParams, defaultView) {
+            defaultView = ((defaultView) ? defaultView.toLowerCase() : 'card');
+            var view = {'type':defaultView};
             if(angular.isDefined(voyagerParams.view)) {
                 voyagerParams.view = voyagerParams.view.toLowerCase();
                 if(voyagerParams.view === 'table' || voyagerParams.view === 'map') {
@@ -115,7 +116,7 @@ angular.module('voyager.search').
                     solrParams.disp = voyagerParams.disp;
                 }
 
-                var view = _getView(voyagerParams);
+                var view = _getView(voyagerParams, saved.display.defaultView);
                 solrParams.view = view.type;
                 if (angular.isDefined(solrParams.sort)) {
                     var sort = solrParams.sort.split(' ');
@@ -195,11 +196,7 @@ angular.module('voyager.search').
             },
             applySavedSearch: function(saved, $scope) {
                 var currentView = $location.search().view;
-                var display = saved.display;
                 var solrParams = this.getParams(saved);
-                if(angular.isUndefined(solrParams.view)) {
-                    solrParams.view = display.defaultView.toLowerCase();
-                }
 
                 $scope.$emit('clearSearchEvent');
 
