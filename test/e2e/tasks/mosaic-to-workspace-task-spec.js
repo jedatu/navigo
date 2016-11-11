@@ -69,7 +69,7 @@ describe('Run Mosaic to Workspace Task', function() {
 
     function verifyStatus() {
         // Verify there are no errors or warnings (warnings may be possible bug and to be investigated)
-        expect(browser.getCurrentUrl()).toMatch(/\/#\/status/);
+        expect(browser.getCurrentUrl()).toMatch(/\/status/);
         expect(taskStatusPage.getError().isPresent()).toBeTruthy();
     }
 });

@@ -53,7 +53,7 @@ describe('Open Publish to Portal for ArcGIS task', function() {
     }
 
     function verifyStatus() {
-        expect(browser.getCurrentUrl()).toMatch(/\/#\/status/);
+        expect(browser.getCurrentUrl()).toMatch(/\/status/);
         expect(taskStatusPage.getSuccess().isPresent()).toBeTruthy();
     }
 });

@@ -27,7 +27,7 @@ describe('Run Convert to KML Task', function() {
         browser.waitForAngular();
 
         // Check the status and expect no errors
-        expect(browser.getCurrentUrl()).toMatch(/\/#\/status/);
+        expect(browser.getCurrentUrl()).toMatch(/\/status/);
         expect(taskStatusPage.getSuccess().isPresent()).toBeTruthy();
         // Expect download link
         expect(taskStatusPage.getDownloadLink().isPresent()).toBeTruthy();
