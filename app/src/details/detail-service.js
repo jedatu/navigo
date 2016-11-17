@@ -63,9 +63,9 @@ angular.module('voyager.details').
             });
         }
 
-        function _fetchToTypes() {
+        function _fetchTypes(direction) {
             return _fetchTranslation().then(function(types) {
-                return types.to;
+                return types[direction];
             });
         }
 
@@ -118,9 +118,27 @@ angular.module('voyager.details').
             }
         }
 
-        return {
-            lookup: function(id, fields, shard, disp) {
-                var promises = [];
+        function _fetchRelationships(direction, id, shard, fields) {
+            var relationships = {}, promises = [], deferred = $q.defer();
+
+            _fetchTypes(direction).then(function (types) {
+                _.each(types, function (name, type) {
+                    var relationship = _getRelationship(relationships, name, type);
+                    var promise = _fetchLink(relationship, id, shard, type, direction, fields);
+                    promises.push(promise);
+                });
+
+                $q.all(promises).then(function () {
+                    deferred.resolve(relationships);
+                });
+            });
+
+            return deferred.promise;
+        }
+
+    return {
+        lookup: function(id, fields, shard, disp) {
+            var promises = [];
                 promises.push(_getFields());
                 var request = buildRequest(id, fields, shard, disp);
                 promises.push($http.jsonp(request));
@@ -143,38 +161,13 @@ angular.module('voyager.details').
             },
 
             fetchToRelationships: function(id, fields, shard) {
-                var relationships = {}, promises = [], deferred = $q.defer();
-
-                _fetchToTypes().then(function(types) {
-                    _.each(types, function(name, type) {
-                        var relationship = _getRelationship(relationships, name, type);
-                        var promise = _fetchLink(relationship, id, shard, type, 'to', fields);
-                        promises.push(promise);
-                    });
-
-                    $q.all(promises).then(function () {
-                        deferred.resolve(relationships);
-                    });
-                });
-
-                return deferred.promise;
+                var direction = 'to';
+                return _fetchRelationships(direction, id, shard, fields);
             },
 
             fetchFromRelationships: function(doc, fields, shard) {
-                var relationships = {}, links = [], promises = [];
-
-                if(angular.isDefined(doc.links)) {
-                    links = JSON.parse(doc.links).links;
-                }
-                _.each(links, function(link) {
-                    var relationship = _getRelationship(relationships, link.relation, link.relation);
-                    var promise = _fetchLink(relationship, doc.id, shard, link.relation, 'from', fields);
-                    promises.push(promise);
-                });
-
-                return $q.all(promises).then(function () {
-                    return _translate(relationships,'from');
-                });
+                var direction = 'from';
+                return _fetchRelationships(direction, doc.id, shard, fields);
             },
 
             addRecent: function (doc) {
