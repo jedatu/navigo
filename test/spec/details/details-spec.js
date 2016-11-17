@@ -101,8 +101,8 @@ describe('DetailsCtrl', function () {
 
         function expectLinksAndQueue() {
             $http.expectGET(new RegExp('links')).respond(lookupResponse.data); // link types call
-            $http.expectJSONP(new RegExp('fq=id')).respond(lookupResponse.data); // queue call
             $http.expectGET(new RegExp('links')).respond(lookupResponse.data); // link types call
+            $http.expectJSONP(new RegExp('fq=id')).respond(lookupResponse.data); // queue call
         }
 
         it('should get next', function() {
