@@ -15,7 +15,7 @@ angular.module('voyager.details').
         var fields = '&fl=id,name:[name],fullpath:[absolute],absolute_path:[absolute],content:[contentURL],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox,format,hasMetadata,root,tree,tag_tags,links,geo:[geo],hasMissingData,schema,layerURL:[lyrURL]';
         fields += displayFields;
         var shards = '';
-        if (angular.isDefined(shard)) {
+        if (!_.isEmpty(shard)) {
             shards = '&shards.info=true&shards.tolerant=true&shards=' + shard;
         }
 
@@ -26,7 +26,7 @@ angular.module('voyager.details').
         var service = config.root + 'solr/v0/select?q=id:' + id;
         var fields = '&fl=tree, format, id';
         var shards = '';
-        if (angular.isDefined(shard)) {
+        if (!_.isEmpty(shard)) {
             shards = '&shards.info=true&shards.tolerant=true&shards=' + shard;
         }
         return service + fields + shards + _type + '&r=' + Math.random();
@@ -37,7 +37,7 @@ angular.module('voyager.details').
         var fields = '&fl=id,name:[name],fullpath:[absolute],content:[contentURL],thumb:[thumbURL],preview:[previewURL],download:[downloadURL],bbox, format, hasMetadata, root, tree, tag_tags, links, hasMissingData';
         fields += displayFields;
         var shards = '';
-        if (angular.isDefined(shard)) {
+        if (!_.isEmpty(shard)) {
             shards = '&shards.info=true&shards.tolerant=true&shards=' + shard;
         }
         return service + fields + shards + _type + '&r=' + Math.random();
