@@ -7,14 +7,18 @@
 
         function _isVisible(action, doc, $scope) {
             var visible = action.visible;
+            action.enabled = angular.isUndefined(action.enabled) ? true : action.enabled;
+            visible = action.enabled ? visible : false;
             if (visible === true) {
                 return true;
             } else if (visible.indexOf('doc.') > -1) {
                 // expression
-                return $scope.$eval(visible) && (action.action !== 'preview' && action.action !== 'tag');
+                visible = $scope.$eval(visible) && (action.action !== 'preview' && action.action !== 'tag');
+            } else {
+                // add has a separate button, preview is automatic when page loads, tag is handled below the actions
+                visible = doc[action.visible] && (action.action !== 'preview' && action.action !== 'tag');
             }
-            // add has a separate button, preview is automatic when page loads, tag is handled below the actions
-            return doc[action.visible] && (action.action !== 'preview' && action.action !== 'tag');
+            return action.enabled ? visible : false;
         }
 
         function _setAction(action, doc, $scope) {
@@ -67,6 +71,7 @@
             var actions = _.cloneDeep(config.docActions);
             _.each(actions, function(action) {
                 _setAction(action, doc, $scope);
+                action.display = angular.isDefined(action.display) ? action.display : action.text;
             });
             return actions;
         }
