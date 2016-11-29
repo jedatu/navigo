@@ -32,7 +32,6 @@ angular.module('voyager.results')
                 actionManager.setAction($scope.link, $scope);
                 $scope.toggleCart = function(doc) {
                     var action = _.find($scope.actions,{action:'add'});
-
                     if(doc.inCart) {
                         cartService.remove(doc.id);
                         $scope.cartAction = 'Add';
@@ -65,7 +64,7 @@ angular.module('voyager.results')
                     });
                 };
 
-                var actions = actionManager.initActions($scope);
+                var actions = actionManager.initActions($scope, 'table');
                 $scope.actions = actions.display;
                 $scope.default = actions.defaultAction;
 

@@ -112,10 +112,9 @@
             }
         }
 
-        function _initActions(scope) {
+        function _initActions(scope, view) {
             var actionMap = {}, defaultAction = null, displayActions = [], actions = sugar.copy(config.docActions);  //copy so we don't change config and every card has separate instance of actions
 
-            //var self = this;
             $.each(actions, function(index, action) {
                 action.buttonType = 'btn-primary';
                 _setAction(action, scope);
@@ -130,7 +129,7 @@
                 action.visible = action.enabled ? action.visible : false;
 
                 if(action.visible) {
-                    if(defaultAction === null) {
+                    if(defaultAction === null && view !== 'table') {
                         defaultAction = action;
                     } else {
                         displayActions.push(action);
