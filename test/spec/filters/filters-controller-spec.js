@@ -16,15 +16,14 @@ describe('Filters:', function () {
         module('voyager.security'); //auth service module - apparently this is needed to mock the auth service
         module(function ($provide) {
             $provide.constant('config', cfg);
-            $provide.value('authService',{});  //mock the transitive auth service so it doesn't call the init methods
         });
         module('voyager.filters');
         module('ui.bootstrap');
     });
 
-    var httpMock, _configService, scope, controllerService, _filterService, q, _treeService, $location, $timeout;
+    var httpMock, _configService, scope, controllerService, _filterService, q, _treeService, $location, $timeout, catalogService;
 
-    beforeEach(inject(function ($rootScope, configService, $httpBackend, $controller, filterService, $q, treeService, _$location_, _$timeout_) {
+    beforeEach(inject(function ($rootScope, configService, $httpBackend, $controller, filterService, $q, treeService, _$location_, _$timeout_, _catalogService_) {
         httpMock = $httpBackend;
         _configService = configService;
         scope = $rootScope.$new();
@@ -34,6 +33,10 @@ describe('Filters:', function () {
         _treeService = treeService;
         $location = _$location_;
         $timeout = _$timeout_;
+        catalogService = _catalogService_;
+        spyOn(catalogService,'removeInvalid').and.callFake(function(val) {
+            return val;
+        });
     }));
 
     describe('filtersController events', function () {
@@ -275,7 +278,7 @@ describe('Filters:', function () {
 
             $location.search('shards','shard');
             $location.path('/search');
-            controllerService('FiltersCtrl', {$scope: scope, filterService: _filterService});
+            controllerService('FiltersCtrl', {$scope: scope, filterService: _filterService, catalogService: catalogService});
             var facet = {isSelected: false, field:'shard', id:'shard'};
 
             spyOn(_configService,'getCatalogs').and.returnValue(q.when());
