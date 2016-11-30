@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('voyager.util').
-    factory('queryBuilder', function (config, filterService, configService, sugar) {
+    factory('queryBuilder', function (config, filterService, configService, sugar, catalogService) {
 
         var actionFields = null;
         var selectPath = 'solr/v0/select';
@@ -85,6 +85,9 @@ angular.module('voyager.util').
             } else {
                 solrParams = {};
             }
+            if (angular.isDefined(solrParams.shards)) {
+                solrParams.shards = catalogService.removeInvalid(solrParams.shards);
+            }
             //solrParams.q = getInput(solrParams.q); //default to all if no input filter  //TODO do we need to convert empty to *:* seems to work without it
             var queryString = config.root + selectPath;
             queryString += '?' + sugar.toQueryString(solrParams);
@@ -135,6 +138,9 @@ angular.module('voyager.util').
 
         function _buildIdList(solrParams) {
             delete solrParams.fq; //filter service will apply filter params below
+            if (angular.isDefined(solrParams.shards)) {
+                solrParams.shards = catalogService.removeInvalid(solrParams.shards);
+            }
             solrParams.q = getInput(solrParams.q); //default to all if no input filter
             var queryString = config.root + selectPath;
             queryString += '?' + sugar.toQueryString(solrParams);
@@ -148,6 +154,9 @@ angular.module('voyager.util').
 
         function _buildBboxList(solrParams) {
             delete solrParams.fq; //filter service will apply filter params below
+            if (angular.isDefined(solrParams.shards)) {
+                solrParams.shards = catalogService.removeInvalid(solrParams.shards);
+            }
             solrParams.q = getInput(solrParams.q); //default to all if no input filter
             var queryString = config.root + selectPath;
             queryString += '?' + sugar.toQueryString(solrParams);
@@ -172,6 +181,9 @@ angular.module('voyager.util').
             buildAllFacets: function(params, field) {
                 delete params.fq; //filter service will apply filter params below
                 delete params.sort; //don't sort
+                if (angular.isDefined(params.shards)) {
+                    params.shards = catalogService.removeInvalid(params.shards);
+                }
                 params.q = getInput(params.q); //default to all if no input filter
                 var queryString = config.root + selectPath, facetLimit = -1, rows = 0;
                 queryString += '?' + sugar.toQueryString(params);
@@ -204,6 +216,9 @@ angular.module('voyager.util').
                 delete params.fq; //filter service will apply filter params below
                 delete params.sort; //don't sort
                 delete params.view;
+                if (angular.isDefined(params.shards)) {
+                    params.shards = catalogService.removeInvalid(params.shards);
+                }
                 params.q = getInput(params.q); //default to all if no input filter
                 var queryString = config.root + url, rows = 999999;
                 queryString += '?' + sugar.toQueryString(params);
