@@ -9,8 +9,8 @@
             var visible = action.visible;
             action.enabled = angular.isUndefined(action.enabled) ? true : action.enabled;
             visible = action.enabled ? visible : false;
-            if (visible === true) {
-                return true;
+            if (visible === true || visible === false) {
+                return visible;
             } else if (visible.indexOf('doc.') > -1) {
                 // expression
                 visible = $scope.$eval(visible) && (action.action !== 'preview' && action.action !== 'tag');

@@ -8,8 +8,8 @@
 
         function _isVisible(action, scope) {
             var visible = action.visible;
-            if (visible === true) {
-                return true;
+            if (visible === true || visible === false) {
+                return visible;
             } else if (visible.indexOf('doc.') > -1) {
                 // expression
                 return scope.$eval(visible);
