@@ -2,6 +2,7 @@
   "name": "navigo",
   "version": "1.9.8",
   "dependencies": {
+    "decompress-tar": "^4.1.0",
     "jasmine-core": "^2.3.4",
     "phantomjs-prebuilt": "^2.1.4",
     "serve-static": "^1.11.1",
