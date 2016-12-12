@@ -24,14 +24,14 @@ describe('Queue', function() {
         browser.get(server + '/queue?disp=default');
 
         var items = element.all(by.repeater('item in cartItems'));
-        expect(items.count()).toBe(1);
+        expect(items.count()).toBeGreaterThan(0);
     });
 
     it('should show task list', function() {
         browser.get(server + '/queue?disp=default');
 
         var items = element.all(by.repeater('item in cartItems'));
-        expect(items.count()).toBe(1);
+        expect(items.count()).toBeGreaterThan(0);
 
         Util.waitForSpinner();
         Util.waitForSpinner();
