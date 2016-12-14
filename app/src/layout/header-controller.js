@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('voyager.layout')
-	.controller('HeaderCtrl', function(config, $rootScope, $scope, $uibModal, $window, $location, $stateParams, sugar, cartService, authService, savedSearchService, $state, catalogService) {
+	.controller('HeaderCtrl', function(config, $rootScope, $scope, $uibModal, $window, $location, $stateParams, $timeout, sugar, cartService, authService, systemService, savedSearchService, $state, catalogService) {
 
 		var vm = this;
 
@@ -164,6 +164,15 @@ angular.module('voyager.layout')
 			}
 
 			$window.open(baseUrl + params, '_blank');
+		};
+
+		vm.restart = function() {
+            $uibModal.open({
+                templateUrl: 'common/modal/confirm-modal.html',
+                controller: 'ConfirmRestartCtrl',
+				controllerAs: 'vm',
+				size: 'md'
+            });
 		};
 
 		$scope.$on('$destroy', function() {
