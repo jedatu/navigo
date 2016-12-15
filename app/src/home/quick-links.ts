@@ -26,16 +26,17 @@ namespace VoyagerHome {
       if (changesObj.list && changesObj.list.currentValue) {
         var categoryMap = this.sugar.toMapList('categories',changesObj.list.currentValue);
         var categoryList = this.sugar.mapToList(categoryMap);
-        // put any with missing category into "Other"
-        var others = changesObj.list.currentValue.filter((item) => {
-          return item.categories === undefined;
-        });
 
-        if (others.length > 0) {
-          categoryList.push({key: 'Others', list: others})
-        }
-        this.categories = _.sortBy(categoryList, 'title');
-        if (this.categories.length > 0) {
+        if (categoryList.length > 0) {
+          // put any with missing category into "Other"
+          var others = changesObj.list.currentValue.filter((item) => {
+            return item.categories === undefined;
+          });
+
+          if (others.length > 0) {
+            categoryList.push({key: 'Others', list: others})
+          }
+          this.categories = _.sortBy(categoryList, 'title');
           this.categories[0].displayState = 'in';  // default 1st item to open
         }
       }
