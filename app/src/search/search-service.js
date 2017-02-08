@@ -56,15 +56,6 @@ angular.module('voyager.search').
             });
         }
 
-//        function appendTransform(defaults, transform) {
-//            defaults = angular.isArray(defaults) ? defaults : [defaults];
-//            return defaults.concat(transform);
-//        }
-
-//        $jsonpCallbacks.getResponse = function(callbackPath) {
-//            console.log(callbackPath);
-//        };
-
 //        function _featureGroupVisitor(featureGroups, doc) {
 //            if(angular.isDefined(doc.tag_flags)) {
 //                doc.featureGroup = featureGroups[doc.tag_flags[0]];
